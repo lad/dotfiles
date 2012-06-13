@@ -1,4 +1,6 @@
 #!/bin/bash
+# Make links for all dot-files found in $HOME/dotfiles
+# ** Will not remove any non-links found in $HOME **
 
 curdir="$PWD"
 dotfiles_dir=$(readlink -f $(dirname $0))
@@ -20,5 +22,4 @@ for f in ${files[@]}; do
     fi
 done
 
-cd - >> /dev/null
-exit 0
+cd $curdir

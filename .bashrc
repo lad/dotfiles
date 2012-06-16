@@ -90,6 +90,8 @@ alias   more=less
 alias   grep='grep --color'
 alias   fgrep='fgrep --color'
 alias   egrep='egrep --color'
+alias   yyyymmddhhmm='date +%Y-%m-%d-%H-%M'
+
 
 alias   daily="vim $HOME/Documents/todo/daily.txt"
 alias   todo="vim $HOME/Documents/todo/todo.txt"
@@ -176,3 +178,6 @@ function i
         \rm -f "$f"
     fi
 }
+
+HOSTNAME=`hostname`
+test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME

@@ -6,7 +6,7 @@ curdir="$PWD"
 dotfiles_dir=$(readlink -f $(dirname $0))
 
 cd $dotfiles_dir
-files=$(ls -ad .[A-z]* | egrep -v '.git|.*.swp')
+files=$(ls -ad .[A-z]* | egrep -v '.git$|.*.swp')
 
 cd $HOME
 for f in ${files[@]}; do

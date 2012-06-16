@@ -96,7 +96,6 @@ alias   todo="vim $HOME/Documents/todo/todo.txt"
 alias   qs="vim $HOME/Documents/todo/questions.txt"
 
 # Completions
-
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi

@@ -6,3 +6,5 @@
 	st = status
 [color]
 	ui = auto
+[core]
+	excludesfile = ~/.gitignore

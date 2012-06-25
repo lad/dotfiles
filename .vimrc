@@ -91,8 +91,8 @@ function! MyFoldText()
   return sub
 endfunction
 
-au BufWinLeave *.c,*.cpp,*.h,*.java,*.py,*.pp mkview
-au BufWinEnter *.c,*.cpp,*.h,*.java,*.py,*.pp silent loadview
+au BufWinLeave *.c,*.cpp,*.h,*.java,*.py,*.pp silent! mkview
+au BufWinEnter *.c,*.cpp,*.h,*.java,*.py,*.pp silent! loadview
 
 set nopaste
 function! TogglePaste()
@@ -191,6 +191,9 @@ map     <leader>ts  :ts
 map     <leader>cn  :cn
 map     <leader>cp  :cp
 map     <leader>cl  :cl
+
+" PEP8 plugin shortcut
+let     g:pep8_map="<leader>P"
 
 " Shortcuts for switching buffers
 

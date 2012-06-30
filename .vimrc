@@ -172,7 +172,7 @@ map     <leader>[   :call ToggleStyle()
 map     <leader>s   :buffers
 
 " Grep shortcuts
-map     \g      :grep "<cword>" *.py
+"map     \g      :grep "<cword>" *.py
 
 " Draw line of ----
 map     <leader>l   o75A-0k

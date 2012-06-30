@@ -1,0 +1,34 @@
+import readline
+readline.parse_and_bind("tab: complete")
+
+import rlcompleter
+import os
+import sys
+cd=os.chdir
+
+"""
+from Cheetah.Template import Template as T
+
+G='sw/go'
+
+cd(G)
+sys.path.append(os.getcwd())
+sys.path.append(os.path.join(os.getcwd(), 'bc'))
+
+import bc
+import ctrl
+import util
+
+db = None
+
+def start():
+    global db
+    db = bc.db.DB()
+    db.open_db()
+    ctrl.init(db)
+
+def listall():
+    for name in db.class_names:
+        print name
+        print db.__dict__[name]().list()
+"""

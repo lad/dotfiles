@@ -1,5 +1,7 @@
 [ -z "$PS1" ] && return
 
+export PATH=${HOME}/bin:${PATH}
+
 ################################### HISTORY ###################################
 
 HISTCONTROL=ignoredups:ignorespace

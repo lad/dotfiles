@@ -188,84 +188,87 @@ let b:doecho = 1
 
 let mapleader="\\"
 
-map     W               :w
+map     W               :w<CR>
 
+" Next file
+map     <leader>n       :n<CR>
+map     <leader>N       :N<CR>
 " Grep shortcuts
-"map     \g      :grep "<cword>" *.py
+"map     \g      :grep "<cword>" *.py<CR>
 " Turn on syntax highlighting
-map     <leader>h       :call ToggleSyntax()
-map     <leader>p       :call TogglePaste()
-map     <leader>z       :call ToggleSpell()
-map     <leader>[       :call GnuMapUnmap()
-map     <leader>s       :buffers
+map     <leader>h       :call ToggleSyntax()<CR>
+map     <leader>p       :call TogglePaste()<CR>
+map     <leader>z       :call ToggleSpell()<CR>
+map     <leader>[       :call GnuMapUnmap()<CR>
+map     <leader>s       :buffers<CR>
 
 " Draw line of ----
 map     <leader>l       o75A-0k
 map     <leader>L       o120A-k
 
 " Draw line under current line of text, same length
-map     <leader>k       yyp:.,.s/./-/g
+map     <leader>k       yyp:.,.s/./-/g<CR>
 
 " Todo list
-map     <leader>to      :e ~/Documents/todo/todo.txt
+map     <leader>to      :e ~/Documents/todo/todo.txt<CR>
 " Daily
-map     <leader>da      :e ~/Documents/todo/daily.txt
+map     <leader>da      :e ~/Documents/todo/daily.txt<CR>
 " Issues
 map     <leader>i       :e ~/Documents/todo/issue-
 
 
-map     <leader>r       :reg
+map     <leader>r       :reg<CR>
 "
 " Grep
-map     <leader>gc      :execute "vimgrep /" . expand("<cword>") . "/" . expand("%:p:h") . "/**"
-map     <leader>ga      :execute "vimgrep /" . expand("<cword>") . "/ " . expand("~/dev/git") . "/**"
-map     <leader>e       :%s/\s\+$//g
+map     <leader>gc      :execute "vimgrep /" . expand("<cword>") . "/" . expand("%:p:h") . "/**"<CR>
+map     <leader>ga      :execute "vimgrep /" . expand("<cword>") . "/ " . expand("~/dev/git") . "/**"<CR>
+map     <leader>e       :%s/\s\+$//g<CR>
 
 " tags
-map     <leader>tn      :tn
-map     <leader>tp      :tp
-map     <leader>ts      :ts
+map     <leader>tn      :tn<CR>
+map     <leader>tp      :tp<CR>
+map     <leader>ts      :ts<CR>
 
 " make errors
-map     <leader>cn      :cn
-map     <leader>cp      :cp
-map     <leader>cl      :clist
+map     <leader>cn      :cn<CR>
+map     <leader>cp      :cp<CR>
+map     <leader>cl      :clist<CR>
 
-map     <leader>bd      :bdel
-map     <leader>bw      :bwipe
+map     <leader>bd      :bdel<CR>
+map     <leader>bw      :bwipe<CR>
 
 
 " Alt-1 to Alt-9
-map     <leader>1       :b 1
-map     <leader>2       :b 2
-map     <leader>3       :b 3
-map     <leader>4       :b 4
-map     <leader>5       :b 5
-map     <leader>6       :b 6
-map     <leader>7       :b 7
-map     <leader>8       :b 8
-map     <leader>9       :b 9
+map     <leader>1       :b 1<CR>
+map     <leader>2       :b 2<CR>
+map     <leader>3       :b 3<CR>
+map     <leader>4       :b 4<CR>
+map     <leader>5       :b 5<CR>
+map     <leader>6       :b 6<CR>
+map     <leader>7       :b 7<CR>
+map     <leader>8       :b 8<CR>
+map     <leader>9       :b 9<CR>
 
 " Alt-10 to Alt-19
-map     <leader>10      :b 10
-map     <leader>11      :b 11
-map     <leader>12      :b 12
-map     <leader>13      :b 13
-map     <leader>14      :b 14
-map     <leader>15      :b 15
-map     <leader>16      :b 16
-map     <leader>17      :b 17
-map     <leader>18      :b 18
-map     <leader>19      :b 19
+map     <leader>10      :b 10<CR>
+map     <leader>11      :b 11<CR>
+map     <leader>12      :b 12<CR>
+map     <leader>13      :b 13<CR>
+map     <leader>14      :b 14<CR>
+map     <leader>15      :b 15<CR>
+map     <leader>16      :b 16<CR>
+map     <leader>17      :b 17<CR>
+map     <leader>18      :b 18<CR>
+map     <leader>19      :b 19<CR>
 
 " Alt-20 to Alt-29
-map     <leader>20      :b 20
-map     <leader>21      :b 21
-map     <leader>22      :b 22
-map     <leader>23      :b 23
-map     <leader>24      :b 24
-map     <leader>25      :b 25
-map     <leader>26      :b 26
-map     <leader>27      :b 27
-map     <leader>28      :b 28
-map     <leader>29      :b 29
+map     <leader>20      :b 20<CR>
+map     <leader>21      :b 21<CR>
+map     <leader>22      :b 22<CR>
+map     <leader>23      :b 23<CR>
+map     <leader>24      :b 24<CR>
+map     <leader>25      :b 25<CR>
+map     <leader>26      :b 26<CR>
+map     <leader>27      :b 27<CR>
+map     <leader>28      :b 28<CR>
+map     <leader>29      :b 29<CR>

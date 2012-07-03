@@ -160,9 +160,11 @@ function! ToggleSyntax()
 
     if b:togglesyntax == 0
         syntax on
-        hi comment ctermfg=red guifg=darkblue
-        hi string guifg=darkmagenta
-        hi javaLangClass guifg=blue
+        hi statement ctermfg=yellow
+        hi string ctermfg=grey
+        hi PreProc ctermfg=white
+        hi special ctermfg=cyan
+        hi comment ctermfg=blue guifg=darkblue
 
         let b:togglesyntax = 1
         if b:doecho == 1

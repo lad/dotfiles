@@ -51,22 +51,22 @@ nnoremap ' `
 nnoremap ` '
 
 function! GnuMapUnmap()
-    if !exists("b:gnumap")
-        let b:gnumap = "unmap"
+    if !exists("g:gnumap")
+        let g:gnumap = "unmap"
     endif
 
-    if b:gnumap == "map"
+    if g:gnumap == "map"
         echo "Gnu Style"
 
         call GnuMap()
         call GnuIndent()
-        let b:gnumap = "unmap"
+        let g:gnumap = "unmap"
     else
         echo "ANSI Style"
 
         call UnGnuMap()
         call UnGnuIndent()
-        let b:gnumap = "map"
+        let g:gnumap = "map"
     endif
 endfunction
 
@@ -121,68 +121,69 @@ au BufWinEnter * silent! loadview
 
 set nopaste
 function! TogglePaste()
-    if !exists("b:togglepaste")
-        let b:togglepaste = 0
+    if !exists("g:togglepaste")
+        let g:togglepaste = 0
     endif
 
-    if b:togglepaste == 0
+    if g:togglepaste == 0
         set paste
-        let b:togglepaste = 1
+        let g:togglepaste = 1
         echo "paste on"
     else
         set nopaste
-        let b:togglepaste = 0
+        let g:togglepaste = 0
         echo "paste off"
     endif
 endfunction
 
 set nospell
 function! ToggleSpell()
-    if !exists("b:togglespell")
-        let b:togglespell = 0
+    if !exists("g:togglespell")
+        let g:togglespell = 0
     endif
 
-    if b:togglespell == 0
+    if g:togglespell == 0
         set spell
-        let b:togglespell = 1
+        let g:togglespell = 1
         echo "spell on"
     else
         set nospell
-        let b:togglespell = 0
+        let g:togglespell = 0
         echo "spell off"
     endif
 endfunction
 
 function! ToggleSyntax()
-    if !exists("b:togglesyntax")
-        let b:togglesyntax = 0
+    if !exists("g:togglesyntax")
+        let g:togglesyntax = 0
     endif
 
-    if b:togglesyntax == 0
+    if g:togglesyntax == 0
         syntax on
         hi statement ctermfg=yellow
         hi string ctermfg=grey
         hi PreProc ctermfg=white
         hi special ctermfg=cyan
         hi comment ctermfg=blue guifg=darkblue
+        hi Folded ctermfg=7 ctermbg=0
 
-        let b:togglesyntax = 1
-        if b:doecho == 1
+        let g:togglesyntax = 1
+        if g:doecho == 1
             echo "syntax on"
         endif
     else
         syntax off
-        let b:togglesyntax = 0
-        if b:doecho == 1
+        let g:togglesyntax = 0
+        if g:doecho == 1
             echo "syntax off"
         endif
     endif
 endfunction
 
-let b:togglesyntax = 0
-let b:doecho = 0
+let g:togglesyntax = 0
+let g:doecho = 0
 call ToggleSyntax()
-let b:doecho = 1
+let g:doecho = 1
 
 
 
@@ -191,6 +192,7 @@ let b:doecho = 1
 let mapleader="\\"
 
 map     W               :w<CR>
+map     \;              :so %<CR>
 
 " Next file
 map     <leader>n       :n<CR>

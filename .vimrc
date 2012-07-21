@@ -32,6 +32,7 @@ set statusline=%<%f\ (%n)\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set titlestring=%t\ (%n)\ %m
 set tags=~/Louis/Tracks/PD/pypd/tags,./tags
 set splitright
+set undofile
 
 set path=.,./**,~/dev/git/**
 "set path=.,./**
@@ -166,6 +167,10 @@ function! ToggleSyntax()
         hi special ctermfg=cyan
         hi comment ctermfg=blue guifg=darkblue
         hi Folded ctermfg=7 ctermbg=0
+        hi String ctermfg=2 cterm=bold
+        hi PythonExceptions ctermfg=1
+        hi pythonFunction ctermfg=4 cterm=bold
+        hi Constant ctermfg=1 cterm=bold
 
         let g:togglesyntax = 1
         if g:doecho == 1
@@ -191,88 +196,98 @@ let g:doecho = 1
 
 let mapleader="\\"
 
-map     W               :w<CR>
-map     \;              :so %<CR>
+nnoremap    W               :w<CR>
+nnoremap    \;              :so %<CR>
 
 " Next file
-map     <leader>n       :n<CR>
-map     <leader>N       :N<CR>
+nnoremap    <leader>n       :n<CR>
+nnoremap    <leader>N       :N<CR>
 " Grep shortcuts
 "map     \g      :grep "<cword>" *.py<CR>
 " Turn on syntax highlighting
-map     <leader>h       :call ToggleSyntax()<CR>
-map     <leader>p       :call TogglePaste()<CR>
-map     <leader>z       :call ToggleSpell()<CR>
-map     <leader>[       :call GnuMapUnmap()<CR>
-map     <leader>s       :buffers<CR>
+nnoremap    <leader>h       :call ToggleSyntax()<CR>
+nnoremap    <leader>p       :call TogglePaste()<CR>
+nnoremap    <leader>z       :call ToggleSpell()<CR>
+nnoremap    <leader>[       :call GnuMapUnmap()<CR>
+nnoremap    <leader>s       :buffers<CR>
+" Shows the highlighting in use for the item under the cursor
+map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+                            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+                            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+" quotes current word
+nnoremap    <leader>"       viw<esc>a"<esc>hbi"<esc>lel<CR>
 
 " Draw line of ----
-map     <leader>l       o75A-0k
-map     <leader>L       o120A-k
+nnoremap    <leader>l       o75A-0k
+nnoremap    <leader>L       o120A-k
 
 " Draw line under current line of text, same length
-map     <leader>k       yyp:.,.s/./-/g<CR>
+nnoremap    <leader>k       yyp:.,.s/./-/g<CR>
 
 " Todo list
-map     <leader>to      :e ~/Documents/todo/todo.txt<CR>
+nnoremap    <leader>to      :e ~/Documents/todo/todo.txt<CR>
 " Daily
-map     <leader>da      :e ~/Documents/todo/daily.txt<CR>
+nnoremap    <leader>da      :e ~/Documents/todo/daily.txt<CR>
 " Issues
-map     <leader>i       :e ~/Documents/todo/issue-
+nnoremap    <leader>i       :e ~/Documents/todo/issue-
 
-
-map     <leader>r       :reg<CR>
+nnoremap    <leader>r       :reg<CR>
 "
 " Grep
-map     <leader>gc      :execute "vimgrep /" . expand("<cword>") . "/" . expand("%:p:h") . "/**"<CR>
-map     <leader>ga      :execute "vimgrep /" . expand("<cword>") . "/ " . expand("~/dev/git") . "/**"<CR>
-map     <leader>e       :%s/\s\+$//g<CR>
+nnoremap    <leader>gc      :execute "vimgrep /" . expand("<cword>") . "/" . expand("%:p:h") . "/**"<CR>
+nnoremap    <leader>ga      :execute "vimgrep /" . expand("<cword>") . "/ " . expand("~/dev/git") . "/**"<CR>
+nnoremap    <leader>e       :%s/\s\+$//g<CR>
 
 " tags
-map     <leader>tn      :tn<CR>
-map     <leader>tp      :tp<CR>
-map     <leader>ts      :ts<CR>
+nnoremap    <leader>tn      :tn<CR>
+nnoremap    <leader>tp      :tp<CR>
+nnoremap    <leader>ts      :ts<CR>
 
 " make errors
-map     <leader>cn      :cn<CR>
-map     <leader>cp      :cp<CR>
-map     <leader>cl      :clist<CR>
+nnoremap    <leader>cn      :cn<CR>
+nnoremap    <leader>cp      :cp<CR>
+nnoremap    <leader>cl      :clist<CR>
 
-map     <leader>bd      :bdel<CR>
-map     <leader>bw      :bwipe<CR>
+nnoremap    <leader>bd      :bdel<CR>
+nnoremap    <leader>bw      :bwipe<CR>
 
 
 " Alt-1 to Alt-9
-map     <leader>1       :b 1<CR>
-map     <leader>2       :b 2<CR>
-map     <leader>3       :b 3<CR>
-map     <leader>4       :b 4<CR>
-map     <leader>5       :b 5<CR>
-map     <leader>6       :b 6<CR>
-map     <leader>7       :b 7<CR>
-map     <leader>8       :b 8<CR>
-map     <leader>9       :b 9<CR>
+nnoremap    <leader>1       :b 1<CR>
+nnoremap    <leader>2       :b 2<CR>
+nnoremap    <leader>3       :b 3<CR>
+nnoremap    <leader>4       :b 4<CR>
+nnoremap    <leader>5       :b 5<CR>
+nnoremap    <leader>6       :b 6<CR>
+nnoremap    <leader>7       :b 7<CR>
+nnoremap    <leader>8       :b 8<CR>
+nnoremap    <leader>9       :b 9<CR>
 
 " Alt-10 to Alt-19
-map     <leader>10      :b 10<CR>
-map     <leader>11      :b 11<CR>
-map     <leader>12      :b 12<CR>
-map     <leader>13      :b 13<CR>
-map     <leader>14      :b 14<CR>
-map     <leader>15      :b 15<CR>
-map     <leader>16      :b 16<CR>
-map     <leader>17      :b 17<CR>
-map     <leader>18      :b 18<CR>
-map     <leader>19      :b 19<CR>
+nnoremap    <leader>10      :b 10<CR>
+nnoremap    <leader>11      :b 11<CR>
+nnoremap    <leader>12      :b 12<CR>
+nnoremap    <leader>13      :b 13<CR>
+nnoremap    <leader>14      :b 14<CR>
+nnoremap    <leader>15      :b 15<CR>
+nnoremap    <leader>16      :b 16<CR>
+nnoremap    <leader>17      :b 17<CR>
+nnoremap    <leader>18      :b 18<CR>
+nnoremap    <leader>19      :b 19<CR>
 
 " Alt-20 to Alt-29
-map     <leader>20      :b 20<CR>
-map     <leader>21      :b 21<CR>
-map     <leader>22      :b 22<CR>
-map     <leader>23      :b 23<CR>
-map     <leader>24      :b 24<CR>
-map     <leader>25      :b 25<CR>
-map     <leader>26      :b 26<CR>
-map     <leader>27      :b 27<CR>
-map     <leader>28      :b 28<CR>
-map     <leader>29      :b 29<CR>
+nnoremap    <leader>20      :b 20<CR>
+nnoremap    <leader>21      :b 21<CR>
+nnoremap    <leader>22      :b 22<CR>
+nnoremap    <leader>23      :b 23<CR>
+nnoremap    <leader>24      :b 24<CR>
+nnoremap    <leader>25      :b 25<CR>
+nnoremap    <leader>26      :b 26<CR>
+nnoremap    <leader>27      :b 27<CR>
+nnoremap    <leader>28      :b 28<CR>
+nnoremap    <leader>29      :b 29<CR>
+
+" Taglist plguin
+map         <leader>tl      :TlistToggle<CR>
+let         TlistWinWidth=40

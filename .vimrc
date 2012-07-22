@@ -30,12 +30,11 @@ set sessionoptions=buffers,curdir,folds,globals,help,localoptions,options,winpos
 set nowrapscan
 set statusline=%<%f\ (%n)\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set titlestring=%t\ (%n)\ %m
-set tags=~/Louis/Tracks/PD/pypd/tags,./tags
+set tags=./tags,tags
 set splitright
 set undofile
 
-set path=.,./**,~/dev/git/**
-"set path=.,./**
+set path=.,./**
 
 filetype on
 filetype plugin indent on
@@ -171,6 +170,8 @@ function! ToggleSyntax()
         hi PythonExceptions ctermfg=1
         hi pythonFunction ctermfg=4 cterm=bold
         hi Constant ctermfg=1 cterm=bold
+        hi pythonFunction ctermfg=6 cterm=bold
+        hi pythonBuiltin ctermfg=4 cterm=bold
 
         let g:togglesyntax = 1
         if g:doecho == 1
@@ -235,8 +236,7 @@ nnoremap    <leader>i       :e ~/Documents/todo/issue-
 nnoremap    <leader>r       :reg<CR>
 "
 " Grep
-nnoremap    <leader>gc      :execute "vimgrep /" . expand("<cword>") . "/" . expand("%:p:h") . "/**"<CR>
-nnoremap    <leader>ga      :execute "vimgrep /" . expand("<cword>") . "/ " . expand("~/dev/git") . "/**"<CR>
+nnoremap    <leader>gv      :execute "vimgrep /" . expand("<cword>") . "/" . expand("%:p:h") . "/**/*." . expand("%:e")<CR>
 nnoremap    <leader>e       :%s/\s\+$//g<CR>
 
 " tags

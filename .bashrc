@@ -76,8 +76,7 @@ export GIT_PS1_SHOWSTASHSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWUPSTREAM=auto
 
-export G=${HOME}/dev/git
-export CDPATH=${HOME}:${G}
+export CDPATH=${HOME}:~/Louis/dev/src
 export LESS="-XRF -P?f%f:stdin. ?m(%i of %m) .?ltLine\: %lt. ?PB(%PB\%) ."
 export IGNOREEOF=10
 export PAGER="less"

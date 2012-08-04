@@ -7,7 +7,6 @@ set shiftwidth=4
 set expandtab
 set ts=4
 set shortmess=aotT
-set backupdir=~/BAK
 set backup
 set bex=.bak
 set viewdir=~/view
@@ -24,7 +23,6 @@ set history=100
 set wildmode=list:full
 set ignorecase
 set smartcase
-set foldcolumn=2
 set foldmethod=manual
 set sessionoptions=buffers,curdir,folds,globals,help,localoptions,options,winpos,winsize,resize,unix
 set nowrapscan
@@ -33,6 +31,10 @@ set titlestring=%t\ (%n)\ %m
 set tags=./tags,tags
 set splitright
 set undofile
+
+set backupdir=~/.vim/bak//
+set dir=~/.vim/swp//
+set undodir=~/.vim/undo//
 
 set path=.,./**
 
@@ -102,6 +104,14 @@ function! MyFoldText()
   return sub
 endfunction
 
+function! ToggleFoldColumn()
+    if &foldcolumn
+        set foldcolumn=0
+    else
+        set foldcolumn=2
+    endif
+endfunction
+
 "function! Leave()
 	"if exists("v:this_session")
         "exe "mksession!" . v:this_session
@@ -121,75 +131,69 @@ au BufWinEnter * silent! loadview
 
 set nopaste
 function! TogglePaste()
-    if !exists("g:togglepaste")
-        let g:togglepaste = 0
-    endif
-
-    if g:togglepaste == 0
-        set paste
-        let g:togglepaste = 1
-        echo "paste on"
-    else
+    if &paste
         set nopaste
         let g:togglepaste = 0
         echo "paste off"
+    else
+        set paste
+        let g:togglepaste = 1
+        echo "paste on"
     endif
 endfunction
 
 set nospell
 function! ToggleSpell()
-    if !exists("g:togglespell")
-        let g:togglespell = 0
-    endif
-
-    if g:togglespell == 0
-        set spell
-        let g:togglespell = 1
-        echo "spell on"
-    else
+    if &spell
         set nospell
         let g:togglespell = 0
         echo "spell off"
+    else
+        set spell
+        let g:togglespell = 1
+        echo "spell on"
     endif
+endfunction
+
+function! MyHi()
+    hi statement ctermfg=yellow
+    hi string ctermfg=grey
+    hi PreProc ctermfg=white
+    hi special ctermfg=cyan
+    hi comment ctermfg=blue guifg=darkblue
+    hi Folded ctermfg=7 ctermbg=0
+    hi String ctermfg=2 cterm=bold
+    hi PythonExceptions ctermfg=1
+    hi pythonFunction ctermfg=4 cterm=bold
+    hi Constant ctermfg=1 cterm=bold
+    hi pythonFunction ctermfg=6 cterm=bold
+    hi pythonBuiltin ctermfg=4 cterm=bold
 endfunction
 
 function! ToggleSyntax()
-    if !exists("g:togglesyntax")
-        let g:togglesyntax = 0
-    endif
-
-    if g:togglesyntax == 0
-        syntax on
-        hi statement ctermfg=yellow
-        hi string ctermfg=grey
-        hi PreProc ctermfg=white
-        hi special ctermfg=cyan
-        hi comment ctermfg=blue guifg=darkblue
-        hi Folded ctermfg=7 ctermbg=0
-        hi String ctermfg=2 cterm=bold
-        hi PythonExceptions ctermfg=1
-        hi pythonFunction ctermfg=4 cterm=bold
-        hi Constant ctermfg=1 cterm=bold
-        hi pythonFunction ctermfg=6 cterm=bold
-        hi pythonBuiltin ctermfg=4 cterm=bold
-
-        let g:togglesyntax = 1
-        if g:doecho == 1
-            echo "syntax on"
-        endif
-    else
+    if exists("g:syntax_on")
         syntax off
-        let g:togglesyntax = 0
-        if g:doecho == 1
-            echo "syntax off"
-        endif
+        echo "syntax off"
+    else
+        syntax enable
+        call MyHi()
+        echo "syntax on"
     endif
 endfunction
 
-let g:togglesyntax = 0
-let g:doecho = 0
-call ToggleSyntax()
-let g:doecho = 1
+syntax enable
+call MyHi()
+
+function! ToggleQuickfix()
+    if exists("g:quickfix_open")
+        cclose
+        unlet g:quickfix_open
+    else
+        copen
+        let g:quickfix_open = 1
+        nnoremap <buffer> q :call ToggleQuickfix()<cr>
+    endif
+endfunction
 
 
 
@@ -203,12 +207,11 @@ nnoremap    \;              :so %<CR>
 " Next file
 nnoremap    <leader>n       :n<CR>
 nnoremap    <leader>N       :N<CR>
-" Grep shortcuts
-"map     \g      :grep "<cword>" *.py<CR>
-" Turn on syntax highlighting
 nnoremap    <leader>h       :call ToggleSyntax()<CR>
 nnoremap    <leader>p       :call TogglePaste()<CR>
 nnoremap    <leader>z       :call ToggleSpell()<CR>
+nnoremap    <leader>q       :silent call ToggleQuickfix()<CR>
+nnoremap    zz              :silent call ToggleFoldColumn()<CR>
 nnoremap    <leader>[       :call GnuMapUnmap()<CR>
 nnoremap    <leader>s       :buffers<CR>
 " Shows the highlighting in use for the item under the cursor
@@ -251,6 +254,7 @@ nnoremap    <leader>cl      :clist<CR>
 
 nnoremap    <leader>bd      :bdel<CR>
 nnoremap    <leader>bw      :bwipe<CR>
+nnoremap    <leader>bW      :bwipe!<CR>
 
 
 " Alt-1 to Alt-9
@@ -291,3 +295,5 @@ nnoremap    <leader>29      :b 29<CR>
 " Taglist plguin
 map         <leader>tl      :TlistToggle<CR>
 let         TlistWinWidth=40
+let         Tlist_GainFocus_On_ToggleOpen=1
+let         Tlist_Exit_OnlyWindow=1

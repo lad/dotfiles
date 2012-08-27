@@ -32,20 +32,36 @@ set tags=./tags,tags
 set splitright
 set undofile
 
-set backupdir=~/.vim/bak//
-set dir=~/.vim/swp//
-set undodir=~/.vim/undo//
+set backupdir=~/vim-working/bak//
+set dir=~/vim-working/swp//
+set undodir=~/vim-working/undo//
 
 set path=.,./**
 
+let c_syntax_for_h=1
+
+let giddy_dev=1
+
 filetype on
 filetype plugin indent on
+
+" Taglist plguin
+map     <leader>tl      :TlistToggle<CR>
+let     TlistWinWidth=40
+let     Tlist_GainFocus_On_ToggleOpen=1
+let     Tlist_Exit_OnlyWindow=1
+
+" Load giddy plugin each time
+let     g:giddy_dev=1
 
 " highlight spaces at the end of lines
 highlight RedundantSpaces term=standout ctermbg=red guibg=red
 match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
 
-let c_syntax_for_h=1
+" Yellow titles
+highlight Title ctermfg=3 cterm=bold
+highlight Identifier ctermfg=6 cterm=bold
+
 
 " Misc
 noremap Q gq
@@ -196,6 +212,12 @@ function! ToggleQuickfix()
 endfunction
 
 
+" ---------------- COMMANDS ------------------------
+
+command! Srepl execute '%s/\<' . expand('<cword>') . '\>/s:' . expand('<cword>') . '/g'
+command! Markdown silent execute '!markdown ' . expand('%') . ' > /tmp/' . expand('%:t:r') . '.html' <bar> silent execute '!chromium-browser /tmp/' . expand('%:t:r') . '.html' <bar> redraw!
+command! Wsudo w !sudo tee % >/dev/null
+
 
 " ---------------- SHORTCUTS -----------------------
 
@@ -291,9 +313,3 @@ nnoremap    <leader>26      :b 26<CR>
 nnoremap    <leader>27      :b 27<CR>
 nnoremap    <leader>28      :b 28<CR>
 nnoremap    <leader>29      :b 29<CR>
-
-" Taglist plguin
-map         <leader>tl      :TlistToggle<CR>
-let         TlistWinWidth=40
-let         Tlist_GainFocus_On_ToggleOpen=1
-let         Tlist_Exit_OnlyWindow=1

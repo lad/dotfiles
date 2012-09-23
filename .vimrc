@@ -58,9 +58,7 @@ let     g:giddy_dev=1
 match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
 highlight RedundantSpaces term=standout ctermbg=red guibg=red
 
-" Yellow titles
-highlight Title ctermfg=3 cterm=bold
-highlight Identifier ctermfg=6 cterm=bold
+
 
 
 " Misc
@@ -172,18 +170,20 @@ function! ToggleSpell()
 endfunction
 
 function! MyHi()
-    hi statement ctermfg=yellow
-    hi string ctermfg=grey
-    hi PreProc ctermfg=white
-    hi special ctermfg=cyan
-    hi comment ctermfg=blue guifg=darkblue
-    hi Folded ctermfg=7 ctermbg=0
-    hi String ctermfg=2 cterm=bold
-    hi PythonExceptions ctermfg=1
-    hi pythonFunction ctermfg=4 cterm=bold
-    hi Constant ctermfg=1 cterm=bold
-    hi pythonFunction ctermfg=6 cterm=bold
-    hi pythonBuiltin ctermfg=4 cterm=bold
+    highlight Title ctermfg=3 cterm=bold
+    highlight Identifier ctermfg=6 cterm=bold
+    highlight statement ctermfg=yellow
+    highlight string ctermfg=grey
+    highlight PreProc ctermfg=white
+    highlight special ctermfg=cyan
+    highlight Comment ctermbg=0 ctermfg=123
+    highlight Folded ctermfg=7 ctermbg=0
+    highlight String ctermfg=2 cterm=bold
+    highlight PythonExceptions ctermfg=1
+    highlight pythonFunction ctermfg=4 cterm=bold
+    highlight Constant ctermfg=1 cterm=bold
+    highlight pythonFunction ctermfg=6 cterm=bold
+    highlight pythonBuiltin ctermfg=4 cterm=bold
 endfunction
 
 function! ToggleSyntax()

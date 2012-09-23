@@ -55,8 +55,8 @@ let     Tlist_Exit_OnlyWindow=1
 let     g:giddy_dev=1
 
 " highlight spaces at the end of lines
-match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
 highlight RedundantSpaces term=standout ctermbg=red guibg=red
+match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
 
 
 
@@ -214,8 +214,13 @@ endfunction
 
 " ---------------- COMMANDS ------------------------
 
+" Put 's:' before all occurances of current word (for vimscript development)
 command! Srepl execute '%s/\<' . expand('<cword>') . '\>/s:' . expand('<cword>') . '/g'
+
+" Run the current file through markdown and open in chromium
 command! Markdown silent execute '!markdown ' . expand('%') . ' > /tmp/' . expand('%:t:r') . '.html' <bar> silent execute '!chromium-browser /tmp/' . expand('%:t:r') . '.html' <bar> redraw!
+
+" Write out the current file as root
 command! Wsudo w !sudo tee % >/dev/null
 
 
@@ -226,7 +231,6 @@ let mapleader="\\"
 nnoremap    W               :w<CR>
 nnoremap    \;              :so %<CR>
 
-" Next file
 nnoremap    <leader>n       :n<CR>
 nnoremap    <leader>N       :N<CR>
 nnoremap    <leader>h       :call ToggleSyntax()<CR>
@@ -236,12 +240,15 @@ nnoremap    <leader>q       :silent call ToggleQuickfix()<CR>
 nnoremap    zz              :silent call ToggleFoldColumn()<CR>
 nnoremap    <leader>[       :call GnuMapUnmap()<CR>
 nnoremap    <leader>s       :buffers<CR>
+nnoremap    <leader>r       :reg<CR>
+nnoremap    <leader>e       :%s/\s\+$//g<CR>
+
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
                             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
                             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-" quotes current word
+" quotes around current word
 nnoremap    <leader>"       ve<esc>a"<esc>hbi"<esc>lel<CR>
 
 " Draw line of ----
@@ -258,58 +265,30 @@ nnoremap    <leader>da      :e ~/Documents/todo/daily.txt<CR>
 " Issues
 nnoremap    <leader>i       :e ~/Documents/todo/issue-
 
-nnoremap    <leader>r       :reg<CR>
-"
-" Grep
-nnoremap    <leader>gv      :execute "vimgrep /" . expand("<cword>") . "/" . expand("%:p:h") . "/**/*." . expand("%:e")<CR>
-nnoremap    <leader>e       :%s/\s\+$//g<CR>
-
-" tags
+" For tags
 nnoremap    <leader>tn      :tn<CR>
 nnoremap    <leader>tp      :tp<CR>
 nnoremap    <leader>ts      :ts<CR>
 
-" make errors
+" For quickfix list
 nnoremap    <leader>cn      :cn<CR>
 nnoremap    <leader>cp      :cp<CR>
 nnoremap    <leader>cl      :clist<CR>
 
+" For buffers
 nnoremap    <leader>bd      :bdel<CR>
 nnoremap    <leader>bw      :bwipe<CR>
 nnoremap    <leader>bW      :bwipe!<CR>
 
 
-" Alt-1 to Alt-9
-nnoremap    <leader>1       :b 1<CR>
-nnoremap    <leader>2       :b 2<CR>
-nnoremap    <leader>3       :b 3<CR>
-nnoremap    <leader>4       :b 4<CR>
-nnoremap    <leader>5       :b 5<CR>
-nnoremap    <leader>6       :b 6<CR>
-nnoremap    <leader>7       :b 7<CR>
-nnoremap    <leader>8       :b 8<CR>
-nnoremap    <leader>9       :b 9<CR>
+" Map <leader>1...9 to buffers 1...9
+for i in range(1, 9)
+    exe "nnoremap <leader>" . i . " :b " . i . "<CR>"
+endfor
 
-" Alt-10 to Alt-19
-nnoremap    <leader>10      :b 10<CR>
-nnoremap    <leader>11      :b 11<CR>
-nnoremap    <leader>12      :b 12<CR>
-nnoremap    <leader>13      :b 13<CR>
-nnoremap    <leader>14      :b 14<CR>
-nnoremap    <leader>15      :b 15<CR>
-nnoremap    <leader>16      :b 16<CR>
-nnoremap    <leader>17      :b 17<CR>
-nnoremap    <leader>18      :b 18<CR>
-nnoremap    <leader>19      :b 19<CR>
-
-" Alt-20 to Alt-29
-nnoremap    <leader>20      :b 20<CR>
-nnoremap    <leader>21      :b 21<CR>
-nnoremap    <leader>22      :b 22<CR>
-nnoremap    <leader>23      :b 23<CR>
-nnoremap    <leader>24      :b 24<CR>
-nnoremap    <leader>25      :b 25<CR>
-nnoremap    <leader>26      :b 26<CR>
-nnoremap    <leader>27      :b 27<CR>
-nnoremap    <leader>28      :b 28<CR>
-nnoremap    <leader>29      :b 29<CR>
+" Map <leader>10...99 to buffers 10...99
+for i in range(1, 9)
+    for j in range(1, 9)
+        exe "nnoremap <leader>" . i . j . " :b " . i . j . "<CR>"
+    endfor
+endfor

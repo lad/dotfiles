@@ -55,8 +55,8 @@ let     Tlist_Exit_OnlyWindow=1
 let     g:giddy_dev=1
 
 " highlight spaces at the end of lines
-highlight RedundantSpaces term=standout ctermbg=red guibg=red
 match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
+highlight RedundantSpaces term=standout ctermbg=red guibg=red
 
 " Yellow titles
 highlight Title ctermfg=3 cterm=bold
@@ -242,7 +242,7 @@ map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),
                             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " quotes current word
-nnoremap    <leader>"       viw<esc>a"<esc>hbi"<esc>lel<CR>
+nnoremap    <leader>"       ve<esc>a"<esc>hbi"<esc>lel<CR>
 
 " Draw line of ----
 nnoremap    <leader>l       o75A-0k

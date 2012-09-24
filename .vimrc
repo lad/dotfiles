@@ -1,3 +1,8 @@
+
+" Giddy settings
+let GiddyTrackingBranch="origin/develop"
+
+" Basic settings
 set autoindent
 set shiftround
 set backspace=2

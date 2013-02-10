@@ -1,3 +1,9 @@
+
+" ---------------- SETTINGS ------------------------
+
+
+"match ErrorMsg '\%>100v.\+'
+
 set autoindent
 set shiftround
 set backspace=2
@@ -31,6 +37,7 @@ set titlestring=%t\ (%n)\ %m
 set tags=./tags,tags
 set splitright
 set undofile
+let c_syntax_for_h=1
 
 set backupdir=~/vim-working/bak//
 set dir=~/vim-working/swp//
@@ -38,9 +45,10 @@ set undodir=~/vim-working/undo//
 
 set path=.,./**
 
-let c_syntax_for_h=1
+" ---------------- FOR PLUGINS ---------------------
 
-let giddy_dev=1
+" Load giddy plugin each time
+let     g:giddy_dev=1
 
 filetype on
 filetype plugin indent on
@@ -51,20 +59,13 @@ let     TlistWinWidth=40
 let     Tlist_GainFocus_On_ToggleOpen=1
 let     Tlist_Exit_OnlyWindow=1
 
-" Load giddy plugin each time
-let     g:giddy_dev=1
+" Pathogen
+call pathogen#infect()
 
-" highlight spaces at the end of lines
-highlight RedundantSpaces term=standout ctermbg=red guibg=red
-match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
+" Vimclojure nailgun
+let vimclojure#WantNailgun = 1
 
-
-
-
-" Misc
-noremap Q gq
-nnoremap ' `
-nnoremap ` '
+" ---------------- VARIOUS FUNCTIONS ---------------
 
 function! GnuMapUnmap()
     if !exists("g:gnumap")
@@ -169,21 +170,30 @@ function! ToggleSpell()
     endif
 endfunction
 
+" highlight spaces at the end of lines
+highlight RedundantSpaces term=standout ctermbg=red guibg=red
+match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
+
+" Why do I have to use an au to set this everytime?
+"au BufWinEnter * silent! highlight RedundantSpaces term=standout ctermbg=red guibg=red | match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
+
 function! MyHi()
     highlight Title ctermfg=3 cterm=bold
-    highlight Identifier ctermfg=6 cterm=bold
+    highlight Identifier ctermfg=6 cterm=none
     highlight statement ctermfg=yellow
     highlight string ctermfg=grey
     highlight PreProc ctermfg=white
     highlight special ctermfg=cyan
-    highlight Comment ctermbg=0 ctermfg=123
+    highlight Comment ctermbg=0 ctermfg=4 cterm=bold
     highlight Folded ctermfg=7 ctermbg=0
     highlight String ctermfg=2 cterm=bold
-    highlight PythonExceptions ctermfg=1
+    highlight PythonExceptions ctermfg=1 cterm=bold
     highlight pythonFunction ctermfg=4 cterm=bold
     highlight Constant ctermfg=1 cterm=bold
     highlight pythonFunction ctermfg=6 cterm=bold
     highlight pythonBuiltin ctermfg=4 cterm=bold
+    highlight CursorLine guibg=grey
+    highlight CursorColumn guibg=grey
 endfunction
 
 function! ToggleSyntax()
@@ -212,7 +222,23 @@ function! ToggleQuickfix()
 endfunction
 
 
+function! CycleCursorLines()
+    if (&cursorline == 0) && (&cursorcolumn == 0)
+        set cursorline
+    elseif (&cursorline == 1) && (&cursorcolumn == 0)
+        set nocursorline
+        set cursorcolumn
+    elseif (&cursorline == 0) && (&cursorcolumn == 1)
+        set cursorline
+        set cursorcolumn
+    elseif (&cursorline == 1) && (&cursorcolumn == 1)
+        set nocursorline
+        set nocursorcolumn
+    endif
+endfunction
+
 " ---------------- COMMANDS ------------------------
+
 
 " Put 's:' before all occurances of current word (for vimscript development)
 command! Srepl execute '%s/\<' . expand('<cword>') . '\>/s:' . expand('<cword>') . '/g'
@@ -228,14 +254,19 @@ command! Wsudo w !sudo tee % >/dev/null
 
 let mapleader="\\"
 
+noremap     Q               gq
+nnoremap    '               `
+nnoremap    `               '
+
 nnoremap    W               :w<CR>
 nnoremap    \;              :so %<CR>
 
 nnoremap    <leader>n       :n<CR>
 nnoremap    <leader>N       :N<CR>
 nnoremap    <leader>h       :call ToggleSyntax()<CR>
-nnoremap    <leader>p       :call TogglePaste()<CR>
+nnoremap    <leader>P       :call TogglePaste()<CR>
 nnoremap    <leader>z       :call ToggleSpell()<CR>
+nnoremap    <leader>cc      :call CycleCursorLines()<CR>
 nnoremap    <leader>q       :silent call ToggleQuickfix()<CR>
 nnoremap    zz              :silent call ToggleFoldColumn()<CR>
 nnoremap    <leader>[       :call GnuMapUnmap()<CR>

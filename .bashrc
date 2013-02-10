@@ -56,6 +56,8 @@ alias   grep='grep --color'
 alias   fgrep='fgrep --color'
 alias   egrep='egrep --color'
 alias   yyyymmddhhmm='date +%Y-%m-%d-%H-%M'
+alias   +=pushd
+alias   -- -=popd
 
 alias   daily="vim $HOME/Documents/todo/daily.txt"
 alias   todo="vim $HOME/Documents/todo/todo.txt"
@@ -76,7 +78,7 @@ export GIT_PS1_SHOWSTASHSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWUPSTREAM=auto
 
-export CDPATH=${HOME}:~/Louis/dev/src
+export CDPATH=${HOME}:~/Louis/dev/src:~/Louis/dell/dev/src
 export LESS="-XRF -P?f%f:stdin. ?m(%i of %m) .?ltLine\: %lt. ?PB(%PB\%) ."
 export IGNOREEOF=10
 export PAGER="less"
@@ -99,22 +101,24 @@ function ff
 
 function ffn
 {
-    find . -name "*${1}*" | less
-}
-
-function ffnn
-{
-    find "$1" -name "*${2}*" | less
+    if [ $# -gt 1 ]; then
+        dir="$1"
+        shift
+    else
+        dir=.
+    fi
+    find "$dir"  -name "*${*}*" | less
 }
 
 function ffc
 {
-    find . -type f -print0 | xargs -0 grep "$1"
-}
-
-function ffcc
-{
-    find "$1" -name "*${2}*" -print0 | xargs -0 grep "$3"
+    if [ $# -gt 1 ]; then
+        dir="$1"
+        shift
+    else
+        dir=.
+    fi
+    find "$dir" -type f -print0 | xargs -0 grep "$*"
 }
 
 function ll
@@ -140,6 +144,21 @@ function i
         \rm -f "$f"
     fi
 }
+
+function activate
+{
+    . ~/venv/$1/bin/activate
+}
+
+function listvenv
+{
+    COMPREPLY=( )
+    for d in ~/venv/*; do
+        COMPREPLY+=($(basename $d))
+    done
+}
+
+complete -F listvenv activate
 
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME

@@ -4,6 +4,7 @@
 
 "match ErrorMsg '\%>100v.\+'
 
+" Basic settings
 set autoindent
 set shiftround
 set backspace=2
@@ -36,8 +37,6 @@ set statusline=%<%f\ (%n)\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set titlestring=%t\ (%n)\ %m
 set tags=./tags,tags
 set splitright
-set undofile
-let c_syntax_for_h=1
 
 set backupdir=~/vim-working/bak//
 set dir=~/vim-working/swp//
@@ -47,9 +46,12 @@ set path=.,./**
 
 " ---------------- FOR PLUGINS ---------------------
 
-" Load giddy plugin each time
-let     g:giddy_dev=1
+" Giddy settings
+let GiddyTrackingBranch="origin/develop"
+let g:giddy_dev=1
 
+
+" Filetypes
 filetype on
 filetype plugin indent on
 
@@ -65,7 +67,9 @@ call pathogen#infect()
 " Vimclojure nailgun
 let vimclojure#WantNailgun = 1
 
-" ---------------- VARIOUS FUNCTIONS ---------------
+" highlight spaces at the end of lines
+highlight RedundantSpaces term=standout ctermbg=red guibg=red
+match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
 
 function! GnuMapUnmap()
     if !exists("g:gnumap")
@@ -88,10 +92,10 @@ function! GnuMapUnmap()
 endfunction
 
 function! GnuMap()
-    map [[ ?^    \zs{:call histdel("search", -1):let @/ = histget("search", -1)
-    map ]] /^    \zs{:call histdel("search", -1):let @/ = histget("search", -1)
-    map [] ?^    \zs}:call histdel("search", -1):let @/ = histget("search", -1)
-    map ][ /^    \zs}:call histdel("search", -1):let @/ = histget("search", -1)
+    map [[ ?^    \zs{:call histdel("search", -1):let @/ = histget("search", -1)<CR>
+    map ]] /^    \zs{:call histdel("search", -1):let @/ = histget("search", -1)<CR>
+    map [] ?^    \zs}:call histdel("search", -1):let @/ = histget("search", -1)<CR>
+    map ][ /^    \zs}:call histdel("search", -1):let @/ = histget("search", -1)<CR>
 endfunction
 
 function! UnGnuMap()
@@ -126,6 +130,10 @@ function! ToggleFoldColumn()
         set foldcolumn=2
     endif
 endfunction
+
+"au BufWinLeave * silent! mkview
+"au BufWinEnter * silent! loadview
+au BufWinEnter,BufRead,BufNewFile *.pp set filetype=puppet
 
 "function! Leave()
 	"if exists("v:this_session")
@@ -169,13 +177,6 @@ function! ToggleSpell()
         echo "spell on"
     endif
 endfunction
-
-" highlight spaces at the end of lines
-highlight RedundantSpaces term=standout ctermbg=red guibg=red
-match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
-
-" Why do I have to use an au to set this everytime?
-"au BufWinEnter * silent! highlight RedundantSpaces term=standout ctermbg=red guibg=red | match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
 
 function! MyHi()
     highlight Title ctermfg=3 cterm=bold
@@ -239,8 +240,6 @@ endfunction
 
 " ---------------- COMMANDS ------------------------
 
-
-" Put 's:' before all occurances of current word (for vimscript development)
 command! Srepl execute '%s/\<' . expand('<cword>') . '\>/s:' . expand('<cword>') . '/g'
 
 " Run the current file through markdown and open in chromium
@@ -259,7 +258,7 @@ nnoremap    '               `
 nnoremap    `               '
 
 nnoremap    W               :w<CR>
-nnoremap    \;              :so %<CR>
+nnoremap    <leader>;       :so %<CR>
 
 nnoremap    <leader>n       :n<CR>
 nnoremap    <leader>N       :N<CR>
@@ -272,6 +271,7 @@ nnoremap    zz              :silent call ToggleFoldColumn()<CR>
 nnoremap    <leader>[       :call GnuMapUnmap()<CR>
 nnoremap    <leader>s       :buffers<CR>
 nnoremap    <leader>r       :reg<CR>
+nnoremap    <leader>dn      !!date<CR>
 nnoremap    <leader>e       :%s/\s\+$//g<CR>
 
 " Shows the highlighting in use for the item under the cursor
@@ -291,10 +291,7 @@ nnoremap    <leader>k       yyp:.,.s/./-/g<CR>
 
 " Todo list
 nnoremap    <leader>to      :e ~/Documents/todo/todo.txt<CR>
-" Daily
 nnoremap    <leader>da      :e ~/Documents/todo/daily.txt<CR>
-" Issues
-nnoremap    <leader>i       :e ~/Documents/todo/issue-
 
 " For tags
 nnoremap    <leader>tn      :tn<CR>
@@ -310,7 +307,6 @@ nnoremap    <leader>cl      :clist<CR>
 nnoremap    <leader>bd      :bdel<CR>
 nnoremap    <leader>bw      :bwipe<CR>
 nnoremap    <leader>bW      :bwipe!<CR>
-
 
 " Map <leader>1...9 to buffers 1...9
 for i in range(1, 9)

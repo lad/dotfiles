@@ -145,8 +145,17 @@ function i
     fi
 }
 
-function activate
-{
+function workon {
+    if [ $# -ne 1 ]; then
+        echo "Usage: workon virtual-env-name"
+        return
+    fi
+
+    type -t deactivate >> /dev/null
+    if [ $? -eq 0 ]; then
+        deactivate
+    fi
+
     . ~/venv/$1/bin/activate
 }
 
@@ -158,7 +167,6 @@ function listvenv
     done
 }
 
-complete -F listvenv activate
-
+complete -F listvenv workon
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME

@@ -71,19 +71,19 @@ for f in ~/completion/*; do
     source $f
 done
 
-#export PS1='\e[1;31m\u@\h$(term-title.sh) \e[0;36m\w\e[1;32m$(__git_ps1 ": (%s)")\e[0m\n> '
-export PS1='\e[1;31m\u@\h \e[1;36m\w\e[1;32m$(__git_ps1 ": (%s)")\e[0m\n> '
-export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_PS1_SHOWSTASHSTATE=true
-export GIT_PS1_SHOWUNTRACKEDFILES=true
-export GIT_PS1_SHOWUPSTREAM=auto
-
 export CDPATH=${HOME}:~/Louis/dev/src:~/Louis/dell/dev/src
 export LESS="-XRF -P?f%f:stdin. ?m(%i of %m) .?ltLine\: %lt. ?PB(%PB\%) ."
 export IGNOREEOF=10
 export PAGER="less"
 export EDITOR="vim"
 export HISTIGNORE="&:bg:fg:ll:h"
+
+#export PS1='\e[1;31m\u@\h$(term-title.sh) \e[0;36m\w\e[1;32m$(__git_ps1 ": (%s)")\e[0m\n> '
+export PS1='\e[1;31m\u@\h \e[1;36m\w\e[1;32m$(__git_ps1 ": (%s)")\e[0m\n> '
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWSTASHSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+export GIT_PS1_SHOWUPSTREAM=auto
 
 export red='\e[0;31m'
 export RED='\e[1;31m'
@@ -145,8 +145,45 @@ function i
     fi
 }
 
-function activate
+function makev
 {
+    [ -z "$1" ] && echo "Usage: makev virtual-env-name" && return 1
+    virtualenv ~/venv/$1
+    workon $1
+}
+
+function rmenv
+{
+    local FORCE
+
+    if [ "$1" == "-f" ]; then
+        FORCE=1
+        shift
+    fi
+
+    [ -z "$1" ] && echo "Usage: rmenv [-f] virtual-env-name" && return 1
+
+    if [ "$VIRTUAL_ENV" == ~/venv/$1 ]; then
+        if [ "$FORCE" ]; then
+            deactivate
+        else
+            echo "Currently in ${1}. Use "deactivate" or rmenv -f"
+            return
+        fi
+    fi
+
+    rm -rf ~/venv/$1
+}
+
+
+
+function workon
+{
+    [ -z "$1" ] && echo "Usage: workon virtual-env-name" && return 1
+
+    if [ $(type -t deactivate)"" == "function" ]; then
+        deactivate
+    fi
     . ~/venv/$1/bin/activate
 }
 
@@ -158,7 +195,8 @@ function listvenv
     done
 }
 
-complete -F listvenv activate
+complete -F listvenv rmenv
+complete -F listvenv workon
 
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME

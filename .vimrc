@@ -315,7 +315,7 @@ endfor
 
 " Map <leader>10...99 to buffers 10...99
 for i in range(1, 9)
-    for j in range(1, 9)
+    for j in range(0, 9)
         exe "nnoremap <leader>" . i . j . " :b " . i . j . "<CR>"
     endfor
 endfor

@@ -4,31 +4,14 @@ readline.parse_and_bind("tab: complete")
 import rlcompleter
 import os
 import sys
-cd=os.chdir
 
-"""
-from Cheetah.Template import Template as T
+cd = os.chdir
+pwd = os.getcwd
 
-G='sw/go'
+D = '/home/louis/Louis/dell/dev/src'
+DDC = os.path.join(D, 'dciam-dynamic-config')
+DAEMONLIB = os.path.join(DDC, 'daemonlib')
+CONFIGD = os.path.join(DDC, 'configd')
 
-cd(G)
-sys.path.append(os.getcwd())
-sys.path.append(os.path.join(os.getcwd(), 'bc'))
-
-import bc
-import ctrl
-import util
-
-db = None
-
-def start():
-    global db
-    db = bc.db.DB()
-    db.open_db()
-    ctrl.init(db)
-
-def listall():
-    for name in db.class_names:
-        print name
-        print db.__dict__[name]().list()
-"""
+sys.path.append(os.path.join(DAEMONLIB, 'src'))
+sys.path.append(os.path.join(CONFIGD, 'src'))

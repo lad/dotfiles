@@ -179,11 +179,12 @@ function rmenv
 
 function workon
 {
-    [ -z "$1" ] && echo "Usage: workon virtual-env-name" && return 1
+    [ $# -ne 1 ] && echo "Usage: workon virtual-env-name" && return 1
 
     if [ $(type -t deactivate)"" == "function" ]; then
         deactivate
     fi
+
     . ~/venv/$1/bin/activate
 }
 

@@ -4,6 +4,9 @@ readline.parse_and_bind("tab: complete")
 import rlcompleter
 import os
 import sys
+import pprint
+
+sys.displayhook = pprint.pprint
 
 cd = os.chdir
 pwd = os.getcwd

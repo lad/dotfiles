@@ -1,10 +1,8 @@
 
 " ---------------- SETTINGS ------------------------
 
-
 "match ErrorMsg '\%>100v.\+'
 
-" Basic settings
 set autoindent
 set shiftround
 set backspace=2
@@ -44,32 +42,13 @@ set undodir=~/vim-working/undo//
 
 set path=.,./**
 
-" ---------------- FOR PLUGINS ---------------------
-
-" Giddy settings
-let GiddyTrackingBranch="origin/develop"
-let g:giddy_dev=1
-
-
-" Filetypes
-filetype on
-filetype plugin indent on
-
-" Taglist plguin
-map     <leader>tl      :TlistToggle<CR>
-let     TlistWinWidth=40
-let     Tlist_GainFocus_On_ToggleOpen=1
-let     Tlist_Exit_OnlyWindow=1
-
-" Pathogen
-call pathogen#infect()
-
-" Vimclojure nailgun
-let vimclojure#WantNailgun = 1
-
 " highlight spaces at the end of lines
 highlight RedundantSpaces term=standout ctermbg=red guibg=red
 match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
+
+
+" ---------------- FUNCTIONS -----------------------
+
 
 function! GnuMapUnmap()
     if !exists("g:gnumap")
@@ -185,16 +164,41 @@ function! MyHi()
     highlight string ctermfg=grey
     highlight PreProc ctermfg=white
     highlight special ctermfg=cyan
-    highlight Comment ctermbg=0 ctermfg=4 cterm=bold
+    highlight Comment ctermbg=0 ctermfg=6 cterm=none
     highlight Folded ctermfg=7 ctermbg=0
-    highlight String ctermfg=2 cterm=bold
+    highlight String ctermfg=2 cterm=none
     highlight PythonExceptions ctermfg=1 cterm=bold
-    highlight pythonFunction ctermfg=4 cterm=bold
+    highlight pythonFunction ctermfg=4 cterm=none
     highlight Constant ctermfg=1 cterm=bold
     highlight pythonFunction ctermfg=6 cterm=bold
     highlight pythonBuiltin ctermfg=4 cterm=bold
     highlight CursorLine guibg=grey
     highlight CursorColumn guibg=grey
+    highlight FoldColumn ctermbg=0
+endfunction
+
+function! PabloHi()
+    highlight Constant ctermfg=87 cterm=none
+    highlight String ctermfg=46 cterm=none
+    highlight Special ctermfg=46 cterm=none
+    highlight Comment ctermfg=49 cterm=bold
+    highlight Statement ctermfg=45 cterm=bold
+    highlight pythonFunction ctermfg=202 cterm=none
+    highlight PreProc ctermfg=203 cterm=none
+    "highlight Title ctermfg=3 cterm=bold
+    "highlight statement ctermfg=yellow
+    "highlight string ctermfg=grey
+    "highlight PreProc ctermfg=white
+    "highlight special ctermfg=cyan
+    "highlight Folded ctermfg=7 ctermbg=0
+    "highlight PythonExceptions ctermfg=1 cterm=bold
+    "highlight pythonFunction ctermfg=4 cterm=none
+    "highlight Constant ctermfg=1 cterm=bold
+    "highlight pythonFunction ctermfg=6 cterm=bold
+    "highlight pythonBuiltin ctermfg=4 cterm=bold
+    "highlight CursorLine guibg=grey
+    "highlight CursorColumn guibg=grey
+    "highlight FoldColumn ctermbg=0
 endfunction
 
 function! ToggleSyntax()
@@ -203,7 +207,11 @@ function! ToggleSyntax()
         echo "syntax off"
     else
         syntax enable
-        call MyHi()
+        if g:colors_name == "pablo"
+            call PabloHi()
+        else
+            call MyHi()
+        endif
         echo "syntax on"
     endif
 endfunction
@@ -240,6 +248,7 @@ endfunction
 
 " ---------------- COMMANDS ------------------------
 
+" Add s: to all occurances of the current work
 command! Srepl execute '%s/\<' . expand('<cword>') . '\>/s:' . expand('<cword>') . '/g'
 
 " Run the current file through markdown and open in chromium
@@ -273,6 +282,8 @@ nnoremap    <leader>s       :buffers<CR>
 nnoremap    <leader>r       :reg<CR>
 nnoremap    <leader>dn      !!date<CR>
 nnoremap    <leader>e       :%s/\s\+$//g<CR>
+nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
+nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -319,3 +330,34 @@ for i in range(1, 9)
         exe "nnoremap <leader>" . i . j . " :b " . i . j . "<CR>"
     endfor
 endfor
+
+
+" ---------------- FOR PLUGINS ---------------------
+
+
+" Giddy settings
+let GiddyTrackingBranch="origin/develop"
+let g:giddy_dev=1
+
+" Filetypes
+filetype on
+filetype plugin indent on
+
+" Taglist plguin
+map     <leader>tl      :TlistToggle<CR>
+let     TlistWinWidth=40
+let     Tlist_GainFocus_On_ToggleOpen=1
+let     Tlist_Exit_OnlyWindow=1
+let     Tlist_Close_On_Select=1
+
+" Pathogen
+call pathogen#infect()
+
+" Vimclojure nailgun
+let vimclojure#WantNailgun = 1
+
+" CommandT
+map     <leader>f       :CommandT<CR>
+
+colorscheme pablo
+call PabloHi()

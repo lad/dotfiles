@@ -14,7 +14,6 @@ set ts=4
 set shortmess=aotT
 set backup
 set bex=.bak
-set viewdir=~/view
 set incsearch
 set efm=%A%f:%l:%m,
         \%C%m,
@@ -31,14 +30,16 @@ set smartcase
 set foldmethod=manual
 set sessionoptions=buffers,curdir,folds,globals,help,localoptions,options,winpos,winsize,resize,unix
 set nowrapscan
-set statusline=%<%f\ (%n)\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set titlestring=%t\ (%n)\ %m
 set tags=./tags,tags
 set splitright
+set statusline=%<%f\ (%n)\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set laststatus=2
 
 set backupdir=~/vim-working/bak//
 set dir=~/vim-working/swp//
 set undodir=~/vim-working/undo//
+set viewdir=~/vim-working/view//
 
 set path=.,./**
 
@@ -182,23 +183,18 @@ function! PabloHi()
     highlight String ctermfg=46 cterm=none
     highlight Special ctermfg=46 cterm=none
     highlight Comment ctermfg=49 cterm=bold
-    highlight Statement ctermfg=45 cterm=bold
-    highlight pythonFunction ctermfg=202 cterm=none
-    highlight PreProc ctermfg=203 cterm=none
-    "highlight Title ctermfg=3 cterm=bold
-    "highlight statement ctermfg=yellow
-    "highlight string ctermfg=grey
-    "highlight PreProc ctermfg=white
-    "highlight special ctermfg=cyan
-    "highlight Folded ctermfg=7 ctermbg=0
-    "highlight PythonExceptions ctermfg=1 cterm=bold
-    "highlight pythonFunction ctermfg=4 cterm=none
-    "highlight Constant ctermfg=1 cterm=bold
-    "highlight pythonFunction ctermfg=6 cterm=bold
-    "highlight pythonBuiltin ctermfg=4 cterm=bold
-    "highlight CursorLine guibg=grey
-    "highlight CursorColumn guibg=grey
-    "highlight FoldColumn ctermbg=0
+    highlight Statement ctermfg=226
+    highlight Identifier ctermfg=6 cterm=bold
+    highlight pythonFunction ctermfg=202 cterm=bold
+    highlight pythonFunction ctermfg=202 cterm=bold
+    highlight PreProc ctermfg=220 cterm=bold
+    highlight StatusLine ctermfg=21 cterm=bold ctermbg=117
+    highlight Folded ctermfg=230 ctermbg=238
+    highlight FoldColumn ctermbg=238 ctermfg=230
+    highlight Todo term=none ctermfg=0 ctermbg=3
+    highlight Visual term=reverse ctermbg=59
+
+    highlight shFunction ctermfg=202 cterm=bold
 endfunction
 
 function! ToggleSyntax()

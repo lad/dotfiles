@@ -27,7 +27,7 @@ set history=100
 set wildmode=list:full
 set ignorecase
 set smartcase
-set foldmethod=manual
+"set foldmethod=manual
 set sessionoptions=buffers,curdir,folds,globals,help,localoptions,options,winpos,winsize,resize,unix
 set nowrapscan
 set titlestring=%t\ (%n)\ %m
@@ -166,7 +166,6 @@ function! MyHi()
     highlight PreProc ctermfg=white
     highlight special ctermfg=cyan
     highlight Comment ctermbg=0 ctermfg=6 cterm=none
-    highlight Folded ctermfg=7 ctermbg=0
     highlight String ctermfg=2 cterm=none
     highlight PythonExceptions ctermfg=1 cterm=bold
     highlight pythonFunction ctermfg=4 cterm=none
@@ -175,26 +174,27 @@ function! MyHi()
     highlight pythonBuiltin ctermfg=4 cterm=bold
     highlight CursorLine guibg=grey
     highlight CursorColumn guibg=grey
+    highlight Folded ctermfg=7 ctermbg=0
     highlight FoldColumn ctermbg=0
 endfunction
 
 function! PabloHi()
     highlight Constant ctermfg=87 cterm=none
-    highlight String ctermfg=46 cterm=none
+    highlight String ctermfg=40 cterm=none
     highlight Special ctermfg=46 cterm=none
-    highlight Comment ctermfg=49 cterm=bold
-    highlight Statement ctermfg=226
-    highlight Identifier ctermfg=6 cterm=bold
-    highlight pythonFunction ctermfg=202 cterm=bold
-    highlight pythonFunction ctermfg=202 cterm=bold
-    highlight PreProc ctermfg=220 cterm=bold
-    highlight StatusLine ctermfg=21 cterm=bold ctermbg=117
-    highlight Folded ctermfg=230 ctermbg=238
-    highlight FoldColumn ctermbg=238 ctermfg=230
+    highlight Comment ctermfg=116 cterm=bold
+    highlight Statement ctermfg=227
+    highlight PreProc ctermfg=214 cterm=bold
+    highlight Identifier ctermfg=50 cterm=none
+    highlight pythonFunction ctermfg=123 cterm=bold
     highlight Todo term=none ctermfg=0 ctermbg=3
     highlight Visual term=reverse ctermbg=59
-
     highlight shFunction ctermfg=202 cterm=bold
+    highlight Normal ctermfg=231
+    highlight Type ctermfg=86
+    highlight StatusLine ctermfg=21 ctermbg=117 cterm=bold
+    highlight Folded ctermfg=230 ctermbg=238
+    highlight FoldColumn ctermbg=238 ctermfg=230
 endfunction
 
 function! ToggleSyntax()
@@ -326,6 +326,8 @@ for i in range(1, 9)
         exe "nnoremap <leader>" . i . j . " :b " . i . j . "<CR>"
     endfor
 endfor
+
+let g:pep8_map = '<F8>'
 
 
 " ---------------- FOR PLUGINS ---------------------

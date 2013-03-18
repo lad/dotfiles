@@ -3,6 +3,10 @@
 
 "match ErrorMsg '\%>100v.\+'
 
+set foldmethod=manual
+au! BufReadPre *.py setlocal foldmethod=indent|setlocal foldnestmax=2
+
+
 set autoindent
 set shiftround
 set backspace=2
@@ -27,7 +31,6 @@ set history=100
 set wildmode=list:full
 set ignorecase
 set smartcase
-"set foldmethod=manual
 set sessionoptions=buffers,curdir,folds,globals,help,localoptions,options,winpos,winsize,resize,unix
 set nowrapscan
 set titlestring=%t\ (%n)\ %m
@@ -108,6 +111,16 @@ function! ToggleFoldColumn()
         set foldcolumn=0
     else
         set foldcolumn=2
+    endif
+endfunction
+
+function! ToggleIgnorecase()
+    if &ignorecase == 0
+        set ignorecase
+        echo "ignorecase"
+    else
+        set noignorecase
+        echo "no-ignorecase"
     endif
 endfunction
 
@@ -270,6 +283,7 @@ nnoremap    <leader>N       :N<CR>
 nnoremap    <leader>h       :call ToggleSyntax()<CR>
 nnoremap    <leader>P       :call TogglePaste()<CR>
 nnoremap    <leader>z       :call ToggleSpell()<CR>
+nnoremap    <leader>i       :call ToggleIgnorecase()<CR>
 nnoremap    <leader>cc      :call CycleCursorLines()<CR>
 nnoremap    <leader>q       :silent call ToggleQuickfix()<CR>
 nnoremap    zz              :silent call ToggleFoldColumn()<CR>

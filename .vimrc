@@ -193,7 +193,7 @@ endfunction
 
 function! PabloHi()
     highlight Constant ctermfg=87 cterm=none
-    highlight String ctermfg=40 cterm=none
+    highlight String ctermfg=47 cterm=none
     highlight Special ctermfg=46 cterm=none
     highlight Comment ctermfg=116 cterm=bold
     highlight Statement ctermfg=227

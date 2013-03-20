@@ -71,6 +71,7 @@ for f in ~/completion/*; do
     source $f
 done
 
+export TERM=xterm-256color
 export CDPATH=${HOME}:~/Louis/dev/src:~/Louis/dell/dev/src
 export LESS="-XRF -P?f%f:stdin. ?m(%i of %m) .?ltLine\: %lt. ?PB(%PB\%) ."
 export IGNOREEOF=10

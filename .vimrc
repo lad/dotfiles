@@ -3,9 +3,17 @@
 
 "match ErrorMsg '\%>100v.\+'
 
-set foldmethod=manual
-au! BufReadPre *.py setlocal foldmethod=indent|setlocal foldnestmax=2
+" Filetypes
+filetype on
+filetype plugin indent on
 
+
+set foldmethod=manual
+if ! exists('no_plugin_maps')
+    au! BufReadPre *.py setlocal foldmethod=indent|setlocal foldnestmax=2|set foldcolumn=2
+    au! BufReadPost *.py call SyntaxOn()
+endif
+au BufWinEnter,BufRead,BufNewFile *.py set filetype=python
 
 set autoindent
 set shiftround
@@ -208,6 +216,21 @@ function! PabloHi()
     highlight StatusLine ctermfg=21 ctermbg=117 cterm=bold
     highlight Folded ctermfg=230 ctermbg=238
     highlight FoldColumn ctermbg=238 ctermfg=230
+    highlight shDerefSimple ctermfg=81
+    highlight shDerefVar ctermfg=81
+    highlight PythonExceptions ctermfg=9
+
+    highlight link shFunctionKey Statement 
+    highlight link shFunction pythonFunction
+endfunction
+
+function! SyntaxOn()
+    syntax enable
+    if g:colors_name == "pablo"
+        call PabloHi()
+    else
+        call MyHi()
+    endif
 endfunction
 
 function! ToggleSyntax()
@@ -215,12 +238,7 @@ function! ToggleSyntax()
         syntax off
         echo "syntax off"
     else
-        syntax enable
-        if g:colors_name == "pablo"
-            call PabloHi()
-        else
-            call MyHi()
-        endif
+        call SyntaxOn()
         echo "syntax on"
     endif
 endfunction
@@ -329,6 +347,10 @@ nnoremap    <leader>bd      :bdel<CR>
 nnoremap    <leader>bw      :bwipe<CR>
 nnoremap    <leader>bW      :bwipe!<CR>
 
+" Prompt to edit files in same dir as current buffer
+nnoremap    <leader>E       :let @"=expand('%:h')<CR>:e "/
+nnoremap    <leader>S       :let @"=expand('%:h')<CR>:sp "/
+
 " Map <leader>1...9 to buffers 1...9
 for i in range(1, 9)
     exe "nnoremap <leader>" . i . " :b " . i . "<CR>"
@@ -341,19 +363,15 @@ for i in range(1, 9)
     endfor
 endfor
 
-let g:pep8_map = '<F8>'
 
 
 " ---------------- FOR PLUGINS ---------------------
 
+let g:pep8_map = '<F8>'
 
 " Giddy settings
 let GiddyTrackingBranch="origin/develop"
 let g:giddy_dev=1
-
-" Filetypes
-filetype on
-filetype plugin indent on
 
 " Taglist plguin
 map     <leader>tl      :TlistToggle<CR>

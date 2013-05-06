@@ -191,10 +191,12 @@ function workon
 
 function listvenv
 {
-    COMPREPLY=( )
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    local venvs=""
     for d in ~/venv/*; do
-        COMPREPLY+=($(basename $d))
+        venvs+=" $(basename $d)"
     done
+    COMPREPLY=( $(compgen -W "$venvs" -- $cur) )
 }
 
 complete -F listvenv rmenv

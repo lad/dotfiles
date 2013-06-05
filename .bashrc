@@ -146,11 +146,11 @@ function i
     fi
 }
 
-function makev
+function mkenv
 {
     [ -z "$1" ] && echo "Usage: makev virtual-env-name" && return 1
     virtualenv ~/venv/$1
-    workon $1
+    chenv $1
 }
 
 function rmenv
@@ -176,11 +176,9 @@ function rmenv
     rm -rf ~/venv/$1
 }
 
-
-
-function workon
+function chenv
 {
-    [ $# -ne 1 ] && echo "Usage: workon virtual-env-name" && return 1
+    [ $# -ne 1 ] && echo "Usage: chenv virtual-env-name" && return 1
 
     if [ $(type -t deactivate)"" == "function" ]; then
         deactivate
@@ -189,7 +187,7 @@ function workon
     . ~/venv/$1/bin/activate
 }
 
-function listvenv
+function listenv
 {
     local cur=${COMP_WORDS[COMP_CWORD]}
     local venvs=""
@@ -199,8 +197,13 @@ function listvenv
     COMPREPLY=( $(compgen -W "$venvs" -- $cur) )
 }
 
-complete -F listvenv rmenv
-complete -F listvenv workon
+complete -F listenv rmenv
+complete -F listenv chenv
+
+function penv
+{
+    PYTHONPATH=$(python -c "import sys; print ':'.join(sys.path)") $*
+}
 
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME

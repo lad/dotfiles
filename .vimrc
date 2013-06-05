@@ -223,8 +223,10 @@ function! PabloHi()
     highlight shDerefVar ctermfg=81
     highlight PythonExceptions ctermfg=9
 
-    highlight link shFunctionKey Statement 
+    highlight link shFunctionKey Statement
     highlight link shFunction pythonFunction
+
+    highlight ColorColumn ctermbg=235
 endfunction
 
 function! SyntaxOn()
@@ -264,15 +266,32 @@ endfunction
 function! CycleCursorLines()
     if (&cursorline == 0) && (&cursorcolumn == 0)
         set cursorline
+        echo "cursorline:on / cursorcolumn:off"
     elseif (&cursorline == 1) && (&cursorcolumn == 0)
         set nocursorline
         set cursorcolumn
+        echo "cursorline:off / cursorcolumn:on"
     elseif (&cursorline == 0) && (&cursorcolumn == 1)
         set cursorline
         set cursorcolumn
+        echo "cursorline:on / cursorcolumn:on"
     elseif (&cursorline == 1) && (&cursorcolumn == 1)
         set nocursorline
         set nocursorcolumn
+        echo "cursorline:off / cursorcolumn:off"
+    endif
+endfunction
+
+function! CycleColorColumn()
+    if (&cc == 0)
+        set cc=80
+        echo "ColorColumn: 80"
+    elseif (&cc == 80)
+        echo "ColorColumn: 120"
+        set cc=120
+    elseif (&cc == 120)
+        set cc=0
+        echo "ColorColumn: off"
     endif
 endfunction
 
@@ -298,6 +317,7 @@ nnoremap    `               '
 
 nnoremap    W               :w<CR>
 nnoremap    <leader>;       :so %<CR>
+nnoremap    <leader>v       :so ~/.vimrc<CR>
 
 nnoremap    <leader>n       :n<CR>
 nnoremap    <leader>N       :N<CR>
@@ -305,7 +325,8 @@ nnoremap    <leader>h       :call ToggleSyntax()<CR>
 nnoremap    <leader>P       :call TogglePaste()<CR>
 nnoremap    <leader>z       :call ToggleSpell()<CR>
 nnoremap    <leader>i       :call ToggleIgnorecase()<CR>
-nnoremap    <leader>cc      :call CycleCursorLines()<CR>
+nnoremap    <leader>cc      :call CycleColorColumn()<CR>
+nnoremap    <leader>CC      :call CycleCursorLines()<CR>
 nnoremap    <leader>q       :silent call ToggleQuickfix()<CR>
 nnoremap    zz              :silent call ToggleFoldColumn()<CR>
 nnoremap    <leader>[       :call GnuMapUnmap()<CR>

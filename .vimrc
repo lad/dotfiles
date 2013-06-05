@@ -1,6 +1,7 @@
 
 " ---------------- SETTINGS ------------------------
 
+
 "match ErrorMsg '\%>100v.\+'
 
 " Filetypes
@@ -44,7 +45,7 @@ set nowrapscan
 set titlestring=%t\ (%n)\ %m
 set tags=./tags,tags
 set splitright
-set statusline=%<%f\ (%n)\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set statusline=[%n]\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set laststatus=2
 
 set backupdir=~/vim-working/bak//

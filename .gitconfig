@@ -1,10 +1,13 @@
 [user]
-	email = louisadunne@gmail.com
-	name = Louis A. Dunne
+    email = louisadunne@gmail.com
+    name = Louis A. Dunne
 [alias]
-	br = branch
-	st = status
+    br = branch
+    st = status
+    log-upstream = log @{u}..
+    diff-upstream = diff @{u}..
 [color]
-	ui = auto
+    ui = auto
 [core]
-	excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
+	filemode = false

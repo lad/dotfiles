@@ -47,6 +47,8 @@ set tags=./tags,tags
 set splitright
 set statusline=[%n]\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set laststatus=2
+set listchars=trail:•,tab:>-
+set list
 
 set backupdir=~/vim-working/bak//
 set dir=~/vim-working/swp//

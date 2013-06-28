@@ -10,11 +10,15 @@ filetype plugin indent on
 
 
 set foldmethod=manual
+set foldlevelstart=99
 if ! exists('no_plugin_maps')
     au! BufReadPre *.py setlocal foldmethod=indent|setlocal foldnestmax=2|set foldcolumn=2
-    au! BufReadPost *.py call SyntaxOn()
 endif
+au BufReadPost *.py call SyntaxOn()
 au BufWinEnter,BufRead,BufNewFile *.py set filetype=python
+
+au BufReadPre,BufWinEnter,BufRead,BufNewFile *\,cover setlocal filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
+"au BufReadPre *\,cover set filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
 
 set autoindent
 set shiftround
@@ -40,7 +44,7 @@ set history=100
 set wildmode=list:full
 set ignorecase
 set smartcase
-set sessionoptions=buffers,curdir,folds,globals,help,localoptions,options,winpos,winsize,resize,unix
+set sessionoptions=buffers,folds,globals,help,localoptions,options,winpos,winsize,resize,unix
 set nowrapscan
 set titlestring=%t\ (%n)\ %m
 set tags=./tags,tags
@@ -206,13 +210,11 @@ function! PabloHi()
     highlight Constant ctermfg=87 cterm=none
     highlight String ctermfg=47 cterm=none
     highlight Special ctermfg=46 cterm=none
-    highlight Comment ctermfg=116 cterm=bold
+    highlight Comment ctermfg=117 cterm=bold
     highlight Statement ctermfg=227
     highlight PreProc ctermfg=214 cterm=bold
     highlight Identifier ctermfg=50 cterm=none
-    highlight pythonFunction ctermfg=123 cterm=bold
     highlight Todo term=none ctermfg=0 ctermbg=3
-    highlight Visual term=reverse ctermbg=59
     highlight shFunction ctermfg=202 cterm=bold
     highlight Normal ctermfg=231
     highlight Type ctermfg=86
@@ -221,12 +223,19 @@ function! PabloHi()
     highlight FoldColumn ctermbg=238 ctermfg=230
     highlight shDerefSimple ctermfg=81
     highlight shDerefVar ctermfg=81
+    highlight Visual term=reverse ctermbg=27
+    highlight pythonFunction ctermfg=123 cterm=bold
     highlight PythonExceptions ctermfg=9
+    highlight pythonBuiltin ctermfg=159
 
     highlight link shFunctionKey Statement
     highlight link shFunction pythonFunction
 
-    highlight ColorColumn ctermbg=235
+    highlight ColorColumn  ctermbg=239
+    highlight CursorColumn ctermbg=239
+    highlight CursorLine   ctermbg=235
+
+    highlight CommandTSelection ctermfg=9
 endfunction
 
 function! SyntaxOn()
@@ -263,36 +272,25 @@ function! ToggleQuickfix()
 endfunction
 
 
-function! CycleCursorLines()
-    if (&cursorline == 0) && (&cursorcolumn == 0)
-        set cursorline
-        echo "cursorline:on / cursorcolumn:off"
-    elseif (&cursorline == 1) && (&cursorcolumn == 0)
-        set nocursorline
-        set cursorcolumn
-        echo "cursorline:off / cursorcolumn:on"
-    elseif (&cursorline == 0) && (&cursorcolumn == 1)
-        set cursorline
-        set cursorcolumn
-        echo "cursorline:on / cursorcolumn:on"
-    elseif (&cursorline == 1) && (&cursorcolumn == 1)
+function! SetCursorLines(flag)
+    if a:flag == 0
         set nocursorline
         set nocursorcolumn
-        echo "cursorline:off / cursorcolumn:off"
+    elseif a:flag == 1
+        set cursorline
+        set nocursorcolumn
+    elseif a:flag == 2
+        set nocursorline
+        set cursorcolumn
+    elseif a:flag == 3
+        set cursorline
+        set cursorcolumn
     endif
 endfunction
 
-function! CycleColorColumn()
-    if (&cc == 0)
-        set cc=80
-        echo "ColorColumn: 80"
-    elseif (&cc == 80)
-        echo "ColorColumn: 120"
-        set cc=120
-    elseif (&cc == 120)
-        set cc=0
-        echo "ColorColumn: off"
-    endif
+function! SetColorColumn(col)
+    let cmd='set colorcolumn=' . a:col
+    exec cmd
 endfunction
 
 " ---------------- COMMANDS ------------------------
@@ -325,8 +323,13 @@ nnoremap    <leader>h       :call ToggleSyntax()<CR>
 nnoremap    <leader>P       :call TogglePaste()<CR>
 nnoremap    <leader>z       :call ToggleSpell()<CR>
 nnoremap    <leader>i       :call ToggleIgnorecase()<CR>
-nnoremap    <leader>cc      :call CycleColorColumn()<CR>
-nnoremap    <leader>CC      :call CycleCursorLines()<CR>
+nnoremap    <leader>c0      :call SetColorColumn(0)<CR>
+nnoremap    <leader>c1      :call SetColorColumn(80)<CR>
+nnoremap    <leader>c2      :call SetColorColumn(120)<CR>
+nnoremap    <leader>C0      :call SetCursorLines(0)<CR>
+nnoremap    <leader>C1      :call SetCursorLines(1)<CR>
+nnoremap    <leader>C2      :call SetCursorLines(2)<CR>
+nnoremap    <leader>C3      :call SetCursorLines(3)<CR>
 nnoremap    <leader>q       :silent call ToggleQuickfix()<CR>
 nnoremap    zz              :silent call ToggleFoldColumn()<CR>
 nnoremap    <leader>[       :call GnuMapUnmap()<CR>
@@ -374,6 +377,7 @@ nnoremap    <leader>bW      :bwipe!<CR>
 " Prompt to edit files in same dir as current buffer
 nnoremap    <leader>E       :let @"=expand('%:h')<CR>:e "/
 nnoremap    <leader>S       :let @"=expand('%:h')<CR>:sp "/
+nnoremap    <leader>R       :let @"=expand('%:h')<CR>:r "/
 
 " Map <leader>1...9 to buffers 1...9
 for i in range(1, 9)

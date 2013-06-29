@@ -304,6 +304,8 @@ command! Markdown silent execute '!markdown ' . expand('%') . ' > /tmp/' . expan
 " Write out the current file as root
 command! Wsudo w !sudo tee % >/dev/null
 
+command! Coverage execute 'split .cover/' . expand('%:t') . ',cover'
+
 
 " ---------------- SHORTCUTS -----------------------
 

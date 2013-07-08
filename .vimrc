@@ -16,6 +16,8 @@ if ! exists('no_plugin_maps')
 endif
 au BufReadPost *.py call SyntaxOn()
 au BufWinEnter,BufRead,BufNewFile *.py set filetype=python
+au BufWinEnter,BufRead,BufNewFile *.py\,cover set filetype=python
+au BufRead,BufNewFile *.scala set filetype=scala
 
 au BufReadPre,BufWinEnter,BufRead,BufNewFile *\,cover setlocal filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
 "au BufReadPre *\,cover set filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
@@ -207,35 +209,37 @@ function! MyHi()
 endfunction
 
 function! PabloHi()
-    highlight Constant ctermfg=87 cterm=none
-    highlight String ctermfg=47 cterm=none
-    highlight Special ctermfg=46 cterm=none
-    highlight Comment ctermfg=117 cterm=bold
-    highlight Statement ctermfg=227
-    highlight PreProc ctermfg=214 cterm=bold
-    highlight Identifier ctermfg=50 cterm=none
-    highlight Todo term=none ctermfg=0 ctermbg=3
-    highlight shFunction ctermfg=202 cterm=bold
-    highlight Normal ctermfg=231
-    highlight Type ctermfg=86
-    highlight StatusLine ctermfg=21 ctermbg=117 cterm=bold
-    highlight Folded ctermfg=230 ctermbg=238
-    highlight FoldColumn ctermbg=238 ctermfg=230
-    highlight shDerefSimple ctermfg=81
-    highlight shDerefVar ctermfg=81
-    highlight Visual term=reverse ctermbg=27
-    highlight pythonFunction ctermfg=123 cterm=bold
-    highlight PythonExceptions ctermfg=9
-    highlight pythonBuiltin ctermfg=159
+    highlight Constant              ctermfg=87 cterm=none
+    highlight String                ctermfg=47 cterm=none
+    highlight Special               ctermfg=46 cterm=none
+    highlight Comment               ctermfg=117 cterm=bold
+    highlight Statement             ctermfg=227
+    highlight PreProc               ctermfg=214 cterm=bold
+    highlight Identifier            ctermfg=50 cterm=none
+    highlight Todo                  term=none ctermfg=0 ctermbg=3
+    highlight shFunction            ctermfg=202 cterm=bold
+    highlight Normal                ctermfg=231
+    highlight Type                  ctermfg=86
+    highlight StatusLine            ctermfg=21 ctermbg=117 cterm=bold
+    highlight Folded                ctermfg=230 ctermbg=238
+    highlight FoldColumn            ctermbg=238 ctermfg=230
+    highlight shDerefSimple         ctermfg=81
+    highlight shDerefVar            ctermfg=81
+    highlight Visual                term=reverse ctermbg=27
+    highlight pythonFunction        ctermfg=123 cterm=bold
+    highlight PythonExceptions      ctermfg=9
+    highlight pythonBuiltin         ctermfg=159
 
-    highlight link shFunctionKey Statement
-    highlight link shFunction pythonFunction
+    highlight ColorColumn           ctermbg=239
+    highlight CursorColumn          ctermbg=239
+    highlight CursorLine            ctermbg=235
 
-    highlight ColorColumn  ctermbg=239
-    highlight CursorColumn ctermbg=239
-    highlight CursorLine   ctermbg=235
+    highlight CommandTSelection     ctermfg=9
+    highlight MatchParen            cterm=bold ctermfg=9 ctermbg=0
 
-    highlight CommandTSelection ctermfg=9
+    highlight link shFunctionKey    Statement
+    highlight link shFunction       pythonFunction
+
 endfunction
 
 function! SyntaxOn()
@@ -304,6 +308,7 @@ command! Markdown silent execute '!markdown ' . expand('%') . ' > /tmp/' . expan
 " Write out the current file as root
 command! Wsudo w !sudo tee % >/dev/null
 
+" Split open the current file's corresponding coverage annotated source
 command! Coverage execute 'split .cover/' . expand('%:t') . ',cover'
 
 
@@ -417,7 +422,11 @@ call pathogen#infect()
 let vimclojure#WantNailgun = 1
 
 " CommandT
-map     <leader>f       :CommandT<CR>
+map         <leader>f       :CommandT<CR>
+
+" Gundo
+nnoremap    <leader>u       :GundoToggle<CR>
+nnoremap    <leader>U       :GundoToggle<CR>:GundoToggle<CR>
 
 colorscheme pablo
 call PabloHi()

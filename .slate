@@ -1,0 +1,88 @@
+
+# Global config
+config defaultToCurrentScreen true
+config windowHintsShowIcons true
+config windowHintsIgnoreHiddenWindows false
+config windowHintsSpread true
+
+# Abstract positions
+alias full          move screenOriginX;screenOriginY screenSizeX;screenSizeY
+alias tophalf       move screenOriginX;screenOriginY screenSizeX;screenSizeY/2
+alias bottomhalf    move screenOriginX;screenOriginY+screenSizeY/2 screenSizeX;screenSizeY/2
+alias lefthalf      move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
+alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+alias left2thirds   move screenOriginX;screenOriginY screenSizeX*0.66;screenSizeY
+alias right2thirds  move screenOriginX+screenSizeX*0.33;screenOriginY screenSizeX*0.66;screenSizeY
+
+# Monitor Aliases
+alias mon-0         0
+alias mon-1         1
+alias mon-2         2
+
+#screen positions
+alias 0-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 0
+alias 0-chrome      move screenOriginX;screenOriginY 1624;1200 0
+alias 0-itunes      move screenOriginX+1753;screenOriginY+1035 166;166 0
+alias 0-upm         move screenOriginX+1627;screenOriginY+0 293;555 0
+alias 1-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 1
+alias 2-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 2
+alias 3-outlook     move screenOriginX;screenOriginY screenSizeX;screenSizeY*0.95 2
+alias 3-skype       move screenOriginX+screenSizeX*0.3;screenOriginY+screenSizeY*0.2 screenSizeX*0.7;screenSizeY*0.8 2
+
+# Laptop
+layout  1monitor1   'Skype':REPEAT ${0-full}
+layout  1monitor1   'Microsoft Outlook':REPEAT ${0-full}
+layout  1monitor1   'iTerm':REPEAT ${0-full}
+layout  1monitor1   'Google Chrome':REPEAT ${0-full}
+default 1monitor1   count:1
+
+# 3 Monitor layout
+layout 3monitor1    'Google Chrome':REPEAT ${0-chrome}
+layout 3monitor1    'UPM':REPEAT ${0-upm}
+layout 3monitor1    'iTunes':REPEAT ${0-itunes}
+layout 3monitor1    'iTerm':REPEAT ${1-full}
+layout 3monitor1    'Microsoft Outlook':REPEAT ${3-outlook}
+layout 3monitor1    'Skype':REPEAT ${3-skype}
+default 3monitor1     count:3
+
+# Default Layouts
+default 1monitor1  resolutions:${mon-0}
+default 3monitor1  resolutions:${mon-0};${mon-1};${mon-2};
+
+# Bindings
+
+alias hyper ctrl;alt;cmd
+bind s:${hyper} relaunch
+
+bind 1:${hyper} layout 1monitor1
+bind 2:${hyper} layout 3monitor1
+
+# App switch bindings: CMD+E
+bind e:cmd hint ASDFGHJKLQWERTYUIOPCVBN # use whatever keys you want
+# Better application switcher (doesn't seem to work)
+bind tab:cmd switch
+
+# Application focus bindings
+#bind v:alt;shift focus 'MacVim'
+#bind x:alt;shift focus 'iTerm'
+#bind c:alt;shift focus 'Google Chrome'
+#bind o:alt;shift focus 'Microsoft Outlook'
+#bind s:alt;shift focus 'Skype'
+
+bind v:alt;ctrl focus 'MacVim'
+bind x:alt;ctrl focus 'iTerm'
+bind c:alt;ctrl focus 'Google Chrome'
+bind o:alt;ctrl focus 'Microsoft Outlook'
+bind s:alt;ctrl focus 'Skype'
+bind u:alt;ctrl focus 'UPM'
+bind i:alt;ctrl focus 'iTunes'
+
+# Move and resize presets shift-alt-[1-5]
+bind  1:alt;ctrl   ${full}
+bind  2:alt;ctrl   ${lefthalf}
+bind  3:alt;ctrl   ${righthalf}
+bind  4:alt;ctrl   ${left2thirds}
+bind  5:alt;ctrl   ${right2thirds}
+bind  6:alt;ctrl   ${tophalf}
+bind  7:alt;ctrl   ${bottomhalf}
+

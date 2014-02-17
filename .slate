@@ -7,12 +7,13 @@ config windowHintsSpread true
 
 # Abstract positions
 alias full          move screenOriginX;screenOriginY screenSizeX;screenSizeY
+alias full-verical  move windowTopLeftX;screenOriginY+0 windowSizeX;screenSizeY
 alias tophalf       move screenOriginX;screenOriginY screenSizeX;screenSizeY/2
 alias bottomhalf    move screenOriginX;screenOriginY+screenSizeY/2 screenSizeX;screenSizeY/2
 alias lefthalf      move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
 alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
 alias left2thirds   move screenOriginX;screenOriginY screenSizeX*0.66;screenSizeY
-alias right2thirds  move screenOriginX+screenSizeX*0.33;screenOriginY screenSizeX*0.66;screenSizeY
+alias right2thirds  move screenOriginX+screenSizeX*0.33;screenOriginY screenSizeX-(screenSizeX*0.33);screenSizeY
 
 # Monitor Aliases
 alias mon-0         0
@@ -23,7 +24,7 @@ alias mon-2         2
 alias 0-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 0
 alias 0-chrome      move screenOriginX;screenOriginY 1624;1200 0
 alias 0-itunes      move screenOriginX+1753;screenOriginY+1035 166;166 0
-alias 0-upm         move screenOriginX+1627;screenOriginY+0 293;555 0
+alias 0-upm         move screenOriginX+1627;screenOriginY+0 293;668 0
 alias 1-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 1
 alias 2-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 2
 alias 3-outlook     move screenOriginX;screenOriginY screenSizeX;screenSizeY*0.95 2
@@ -86,3 +87,6 @@ bind  5:alt;ctrl   ${right2thirds}
 bind  6:alt;ctrl   ${tophalf}
 bind  7:alt;ctrl   ${bottomhalf}
 
+bind down:alt;ctrl ${full-verical}
+bind left:alt;ctrl throw left
+bind right:alt;ctrl throw right

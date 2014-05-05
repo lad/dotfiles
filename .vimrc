@@ -25,6 +25,7 @@ au BufReadPost *.py call SyntaxOn()
 au BufWinEnter,BufRead,BufNewFile *.py set filetype=python
 au BufWinEnter,BufRead,BufNewFile *.py\,cover set filetype=python
 au BufRead,BufNewFile *.scala set filetype=scala
+au BufRead,BufNewFile *.ru set filetype=ruby
 
 au BufReadPre,BufWinEnter,BufRead,BufNewFile *\,cover setlocal filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
 "au BufReadPre *\,cover set filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
@@ -66,7 +67,7 @@ set list
 set backupdir=~/vim-working/bak//
 set dir=~/vim-working/swp//
 set undodir=~/vim-working/undo//
-set viewdir=~/vim-working/view//
+"set viewdir=~/vim-working/view//
 
 set path=.,./**
 
@@ -208,29 +209,29 @@ function! ToggleSpell()
     endif
 endfunction
 
-function! MyHi()
-    highlight Title ctermfg=3 cterm=bold
-    highlight Identifier ctermfg=6 cterm=none
-    highlight statement ctermfg=yellow
-    highlight string ctermfg=grey
-    highlight PreProc ctermfg=white
-    highlight special ctermfg=cyan
-    highlight Comment ctermbg=0 ctermfg=6 cterm=none
-    highlight String ctermfg=2 cterm=none
-    highlight PythonExceptions ctermfg=1 cterm=bold
-    highlight pythonFunction ctermfg=4 cterm=none
-    highlight Constant ctermfg=1 cterm=bold
-    highlight pythonFunction ctermfg=6 cterm=bold
-    highlight pythonBuiltin ctermfg=4 cterm=bold
-    highlight CursorLine guibg=grey
-    highlight CursorColumn guibg=grey
-    highlight Folded ctermfg=7 ctermbg=0
-    highlight FoldColumn ctermbg=0
-
-    highlight link rubySymbol NONE
-    highlight! rubySymbol ctermfg=33
-endfunction
-
+"   function! MyHi()
+"       highlight Title ctermfg=3 cterm=bold
+"       highlight Identifier ctermfg=6 cterm=none
+"       highlight statement ctermfg=yellow
+"       highlight string ctermfg=grey
+"       highlight PreProc ctermfg=white
+"       highlight special ctermfg=cyan
+"       highlight Comment ctermbg=0 ctermfg=6 cterm=none
+"       highlight String ctermfg=2 cterm=none
+"       highlight PythonExceptions ctermfg=1 cterm=bold
+"       highlight pythonFunction ctermfg=4 cterm=none
+        highlight Constant ctermfg=196 cterm=none
+"       highlight pythonFunction ctermfg=6 cterm=bold
+"       highlight pythonBuiltin ctermfg=4 cterm=bold
+"       highlight CursorLine guibg=grey
+"       highlight CursorColumn guibg=grey
+"       highlight Folded ctermfg=7 ctermbg=0
+"       highlight FoldColumn ctermbg=0
+"   
+"       highlight link rubySymbol NONE
+"       highlight! rubySymbol ctermfg=33
+"   endfunction
+"   
 function! PabloHi()
     highlight Constant              ctermfg=87 cterm=none
     highlight String                ctermfg=47 cterm=none
@@ -271,27 +272,27 @@ function! PabloHi()
     highlight String               ctermfg=187
 endfunction
 
-function! SyntaxOn()
-    syntax enable
-    if g:colors_name == "pablo"
-        call PabloHi()
-    else
-        call MyHi()
-    endif
-endfunction
+   function! SyntaxOn()
+       syntax enable
+       if g:colors_name == "pablo"
+           call PabloHi()
+       else
+           call MyHi()
+       endif
+   endfunction
+   
+   function! ToggleSyntax()
+       if exists("g:syntax_on")
+           syntax off
+           echo "syntax off"
+       else
+           call SyntaxOn()
+           echo "syntax on"
+       endif
+   endfunction
 
-function! ToggleSyntax()
-    if exists("g:syntax_on")
-        syntax off
-        echo "syntax off"
-    else
-        call SyntaxOn()
-        echo "syntax on"
-    endif
-endfunction
-
-syntax enable
-call MyHi()
+"syntax enable
+"call MyHi()
 
 function! ToggleQuickfix()
     if exists("g:quickfix_open")
@@ -396,6 +397,22 @@ nnoremap    <leader>k       yyp:.,.s/./-/g<CR>
 nnoremap    <leader>da      :e ~/Documents/daily.txt<CR>
 
 " For tags
+function! CtagsRuby() abort
+  let l:cmd = 'rdoc -f tags --tag-style=vim -a'
+  let l:output = system('cd $(git rev-parse --show-toplevel) && ' . l:cmd)
+  if !v:shell_error
+    echo "Done"
+  else
+    if strlen(l:output)
+      for l:line in split(l:output, '\n')
+        echo l:line
+      endfor
+    endif
+  endif
+endfunction
+
+command!    CtagsRuby       call CtagsRuby()
+map         <leader>tr      :CtagsRuby<CR>
 nnoremap    <leader>tn      :tn<CR>
 nnoremap    <leader>tp      :tp<CR>
 nnoremap    <leader>ts      :ts<CR>
@@ -456,10 +473,15 @@ let         g:CommandTMaxHeight=15
 nnoremap    <leader>u       :GundoToggle<CR>
 nnoremap    <leader>U       :GundoToggle<CR>:GundoToggle<CR>
 
-" Rubocop
+" Rubocop plugin
 let g:rubocop_config = "~/dev/wd/roux/etc/rubocop.yml"
 nnoremap    <leader>R       :RubocopThis<CR>
 nnoremap    <leader>T       :RubocopAll<CR>
+
+" Reek plugin
+let g:reek_config = "~/dev/wd/roux/etc/config.reek"
+nnoremap    <leader>Y       :ReekThis<CR>
+nnoremap    <leader>U       :ReekAll<CR>
 
 colorscheme pablo
 call PabloHi()

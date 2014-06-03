@@ -101,6 +101,16 @@ function sshvdcl
 
 complete -F _ssh sshvdcl
 
+function scpvdcl
+{
+  silo=$1
+  shift
+  echo "scp -F ~/.vdcl/vdcl-$silo/ssh/config $*"
+  scp -F ~/.vdcl/vdcl-$silo/ssh/config $*
+}
+
+complete -F _ssh scpvdcl
+
 # Completions
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion

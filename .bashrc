@@ -362,7 +362,7 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWSTASHSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWUPSTREAM=auto
-. /usr/share/git-core/git-prompt.sh
+#. /usr/share/git-core/git-prompt.sh
 export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
 
 HOSTNAME=`hostname`

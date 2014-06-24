@@ -77,7 +77,8 @@ match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces hi
 
 set showbreak=↪\   " Character to preceed line wraps
 
-set iskeyword=@,48-57,_,192-255,#
+" set iskeyword=@,48-57,_,192-255,#
+set iskeyword=@,48-57,_,192-255
 
 " ---------------- FUNCTIONS -----------------------
 
@@ -397,8 +398,8 @@ nnoremap    <leader>k       yyp:.,.s/./-/g<CR>
 nnoremap    <leader>da      :e ~/Documents/daily.txt<CR>
 
 " For tags
-function! CtagsRuby() abort
-  let l:cmd = 'rdoc -f tags --tag-style=vim -a'
+function! Ctags() abort
+  let l:cmd = 'ctags -R .'
   let l:output = system('cd $(git rev-parse --show-toplevel) && ' . l:cmd)
   if !v:shell_error
     echo "Done"
@@ -411,8 +412,8 @@ function! CtagsRuby() abort
   endif
 endfunction
 
-command!    CtagsRuby       call CtagsRuby()
-map         <leader>tr      :CtagsRuby<CR>
+command!    Ctags           call Ctags()
+map         <leader>tt      :Ctags<CR>
 nnoremap    <leader>tn      :tn<CR>
 nnoremap    <leader>tp      :tp<CR>
 nnoremap    <leader>ts      :ts<CR>

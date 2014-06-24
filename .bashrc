@@ -335,8 +335,6 @@ if [ -d ~/completions ]; then
     done
 fi
 
-. ~/.rvm/scripts/rvm
-
 # PROMPT
 
 function __ruby_ver
@@ -367,3 +365,9 @@ export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m $(_
 
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME
+
+export PATH=~/.rvm/scripts:$PATH
+. ~/.rvm/scripts/rvm
+
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

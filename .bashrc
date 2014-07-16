@@ -63,6 +63,9 @@ alias   daily="vim $HOME/Documents/todo/daily.txt"
 alias   todo="vim $HOME/Documents/todo/todo.txt"
 alias   qs="vim $HOME/Documents/todo/questions.txt"
 
+alias   gemquery="gem query --details --remote --name-matches $*"
+
+
 # Completions
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
@@ -207,3 +210,6 @@ function penv
 
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

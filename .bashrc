@@ -329,7 +329,9 @@ function rake_comp
 
 complete -F rake_comp rake
 
-. /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh
+if [ -f /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh ]; then
+  . /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh
+fi
 
 # BASH COMPLETIONS:
 if [ -d ~/completions ]; then

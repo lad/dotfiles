@@ -109,6 +109,9 @@ function scpvdcl
 
 complete -F _ssh scpvdcl
 
+alias   gemquery="gem query --details --remote --name-matches $*"
+
+
 # Completions
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
@@ -324,7 +327,9 @@ function rake_comp
 
 complete -F rake_comp rake
 
-. /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh
+if [ -f /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh ]; then
+  . /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh
+fi
 
 # BASH COMPLETIONS:
 if [ -d ~/completions ]; then

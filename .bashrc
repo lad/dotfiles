@@ -370,6 +370,6 @@ HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME
 
 if [ -d ~/.rvm ]; then
-  export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
-  .rvm/scripts/rvm && . ~/.rvm/scripts/rvm
+  export PATH="$HOME/.rvm/scripts:$PATH" # Add RVM to PATH for scripting
+  . ~/.rvm/scripts/rvm
 fi

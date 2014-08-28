@@ -12,9 +12,10 @@ fi
 
 ################################### HISTORY ###################################
 
-HISTCONTROL=ignoredups:ignorespace
-HISTSIZE=1000
-HISTFILESIZE=2000
+export HISTCONTROL=ignoredups:ignorespace
+export HISTSIZE=1000
+export HISTFILE=~/.history
+export HISTFILESIZE=2000
 
 shopt -s histappend
 
@@ -79,9 +80,6 @@ alias   rre='rake ruby:reek'
 alias   rru='rake ruby:rubocop'
 alias   rrs='rake ruby:spec'
 alias   rrc='rake ruby:cucumber'
-#alias   ctags-ruby="ctags -R --languages=ruby"
-alias   ctags-ruby="rdoc -f tags --tag-style=vim -a"
-alias   ctags-python="ctags -R --languages=python"
 
 alias   st='git st'
 alias   stt='git stt'
@@ -366,8 +364,7 @@ export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m $(_
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME
 
-export PATH=~/.rvm/scripts:$PATH
-. ~/.rvm/scripts/rvm
-
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+if [ -d ~/.rvm ]; then
+  export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
+  .rvm/scripts/rvm && . ~/.rvm/scripts/rvm
+fi

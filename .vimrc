@@ -399,7 +399,7 @@ nnoremap    <leader>da      :e ~/Documents/daily.txt<CR>
 
 " For tags
 function! Ctags() abort
-  let l:cmd = 'ctags -R .'
+  let l:cmd = 'ctags -R --exclude=vendor --exclude=build --exclude=tmp .'
   let l:output = system('cd $(git rev-parse --show-toplevel) && ' . l:cmd)
   if !v:shell_error
     echo "Done"

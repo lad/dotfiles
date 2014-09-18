@@ -20,7 +20,7 @@ alias 0-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 0
 alias 0-chrome      move screenOriginX;screenOriginY 1624;1200 0
 alias 0-itunes      move screenOriginX+1753;screenOriginY+1035 166;166 0
 alias 0-upm         move screenOriginX+1627;screenOriginY+0 293;668 0
-alias 0-evernote    move screenOriginX+728;screenOriginY+0 950;1199 0
+alias 0-evernote    move screenOriginX+533;screenOriginY+0 1145;1199 0
 alias 0-securid     move screenOriginX+1683;screenOriginY+1059 237;142 0
 
 alias 1-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 1

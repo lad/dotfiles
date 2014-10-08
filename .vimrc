@@ -153,6 +153,16 @@ function! ToggleIgnorecase()
     endif
 endfunction
 
+function! ToggleShowBreak()
+    if &showbreak != ''
+        set showbreak=
+        echo "no showbreak"
+    else
+        set showbreak=↪\   " Character to preceed line wraps
+        echo "showbreak"
+    endif
+endfunction
+
 function! ToggleList()
     if &list == 0
         set list
@@ -361,6 +371,7 @@ nnoremap    <leader>h       :call ToggleSyntax()<CR>
 nnoremap    <leader>P       :call TogglePaste()<CR>
 nnoremap    <leader>z       :call ToggleSpell()<CR>
 nnoremap    <leader>i       :call ToggleIgnorecase()<CR>
+nnoremap    <leader>B       :call ToggleShowBreak()<CR>
 nnoremap    <leader>x       :call ToggleList()<CR>
 nnoremap    <leader>c0      :call SetColorColumn(0)<CR>
 nnoremap    <leader>c1      :call SetColorColumn(80)<CR>

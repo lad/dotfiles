@@ -22,6 +22,7 @@ alias 0-itunes      move screenOriginX+1753;screenOriginY+1035 166;166 0
 alias 0-upm         move screenOriginX+1627;screenOriginY+0 293;668 0
 alias 0-evernote    move screenOriginX+533;screenOriginY+0 1145;1199 0
 alias 0-securid     move screenOriginX+1683;screenOriginY+1059 237;142 0
+alias 0-slack       move screenOriginX;screenOriginY 925;835 0
 
 alias 1-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 1
 alias 2-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 2
@@ -31,7 +32,6 @@ alias 2-securid     move screenOriginX;screenOriginY+758 237;142 2
 alias 3-outlook     move screenOriginX;screenOriginY screenSizeX;screenSizeY*0.95 2
 alias 3-skype       move screenOriginX+432;screenOriginY 1008;900 2
 
-
 # Laptop
 layout  1monitor1   'Skype':REPEAT ${0-full}
 layout  1monitor1   'Microsoft Outlook':REPEAT ${0-full}
@@ -39,6 +39,7 @@ layout  1monitor1   'iTerm':REPEAT ${0-full}
 layout  1monitor1   'Google Chrome':REPEAT ${0-full}
 layout  1monitor1   'Evernote':REPEAT ${2-evernote}
 layout  1monitor1   'SecurID':REPEAT ${2-securid}
+layout  1monitor1   'Slack':REPEAT ${0-slack}
 default 1monitor1   count:1
 
 # 3 Monitor layout
@@ -81,6 +82,7 @@ bind e:alt;ctrl focus 'Evernote'
 bind o:alt;ctrl focus 'Microsoft Outlook'
 bind s:alt;ctrl focus 'Skype'
 bind u:alt;ctrl focus 'UPM'
+bind l:alt;ctrl focus 'Slack'
 
 bind  1:alt;ctrl   ${full}
 bind  2:alt;ctrl   ${lefthalf}

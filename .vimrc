@@ -57,7 +57,7 @@ set smartcase
 set sessionoptions=buffers,folds,globals,help,localoptions,options,winpos,winsize,resize,unix
 set nowrapscan
 set titlestring=%t\ (%n)\ %m
-set tags=./tags,tags
+set tags=./tags,~/dev/wd/tags,tags
 set splitright
 set statusline=[%n]\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set laststatus=2

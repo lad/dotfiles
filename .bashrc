@@ -80,6 +80,7 @@ alias   rre='rake ruby:reek'
 alias   rru='rake ruby:rubocop'
 alias   rrs='rake ruby:spec'
 alias   rrc='rake ruby:cucumber'
+alias   be='bundle exec'
 
 alias   st='git st'
 alias   stt='git stt'
@@ -88,6 +89,7 @@ alias   stm='echo -en $red; git stm; echo -en $NC'
 alias   std='echo -en $red; git std; echo -en $NC'
 
 alias   nscript='enscript -2Gr'
+
 
 function sshvdcl
 {
@@ -123,7 +125,7 @@ if [ -d ~/completion ] ; then
 fi
 
 export TERM=xterm-256color
-export CDPATH=${HOME}:~/dev:~/dev/wd
+export CDPATH=~/dev/wd:~/dev:${HOME}
 export LESS="-XRF -P?f%f:stdin. ?m(%i of %m) .?ltLine\: %lt. ?PB(%PB\%) ."
 export LESSOPEN="| /usr/local/bin/source-highlight --failsafe -f esc --infer-lang -i %s"
 export IGNOREEOF=10

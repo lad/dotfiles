@@ -207,7 +207,7 @@ function ffci
 function ll
 {
     if [ -n "$*" ]; then
-      \ls -GAlF $*
+      \ls -GAlF "$*"
     else
       \ls -GAlF
     fi

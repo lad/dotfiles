@@ -14,6 +14,7 @@ alias lefthalf      move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
 alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
 alias left2thirds   move screenOriginX;screenOriginY screenSizeX*0.66;screenSizeY
 alias right2thirds  move screenOriginX+screenSizeX*0.33;screenOriginY screenSizeX-(screenSizeX*0.33);screenSizeY
+alias center-most   move screenOriginX+200;screenOriginY+106 1720;1030
 
 #screen positions
 alias 0-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 0
@@ -25,6 +26,8 @@ alias 0-securid     move screenOriginX+1683;screenOriginY+1059 237;142 0
 alias 0-slack       move screenOriginX;screenOriginY 925;835 0
 
 alias 1-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 1
+alias 1-most        move screenOriginX+200;screenOriginY+106 1720;1030 1
+
 alias 2-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 2
 alias 2-evernote    move screenOriginX;screenOriginY screenSizeX*0.66;screenSizeY 2
 alias 2-securid     move screenOriginX;screenOriginY+758 237;142 2
@@ -48,7 +51,7 @@ layout  3monitor1    'UPM':REPEAT ${0-upm}
 layout  3monitor1    'iTunes':REPEAT ${0-itunes}
 layout  3monitor1    'Evernote':REPEAT ${0-evernote}
 layout  3monitor1    'SecurID':REPEAT ${0-securid}
-layout  3monitor1    'iTerm':REPEAT ${1-full}
+layout  3monitor1    'iTerm':REPEAT ${1-most}
 layout  3monitor1    'Microsoft Outlook':REPEAT ${3-outlook}
 layout  3monitor1    'Skype':REPEAT ${3-skype}
 default 3monitor1    count:3

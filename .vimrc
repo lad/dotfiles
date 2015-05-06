@@ -270,7 +270,7 @@ function! PabloHi()
     highlight CursorColumn          ctermbg=9
     highlight CursorLine            ctermbg=235
 
-    highlight CommandTSelection     ctermfg=9
+    "highlight CommandTSelection     ctermfg=9
     highlight MatchParen            cterm=bold ctermfg=9 ctermbg=0
 
     highlight link shFunctionKey    Statement
@@ -476,10 +476,10 @@ let     Tlist_Close_On_Select=1
 let vimclojure#WantNailgun = 1
 
 " CommandT
-map         <leader>f       :CommandT<CR>
-map         <leader>F       :sp<CR>:CommandT<CR>
-map         <leader>      :CommandTFlush<CR>
-let         g:CommandTMaxHeight=15
+"map         <leader>f       :CommandT<CR>
+"map         <leader>F       :sp<CR>:CommandT<CR>
+"map         <leader>      :CommandTFlush<CR>
+"let         g:CommandTMaxHeight=15
 
 " Gundo
 nnoremap    <leader>u       :GundoToggle<CR>

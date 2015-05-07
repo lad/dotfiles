@@ -14,7 +14,7 @@ alias lefthalf      move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
 alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
 alias left2thirds   move screenOriginX;screenOriginY screenSizeX*0.66;screenSizeY
 alias right2thirds  move screenOriginX+screenSizeX*0.33;screenOriginY screenSizeX-(screenSizeX*0.33);screenSizeY
-alias center-most   move screenOriginX+200;screenOriginY+106 1720;1030
+alias center-most   move screenOriginX+200;screenOriginY+88 1720;1047
 
 #screen positions
 alias 0-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 0

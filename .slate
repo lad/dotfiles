@@ -27,14 +27,14 @@ alias 0-slack       move screenOriginX;screenOriginY 925;835 0
 
 alias 1-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 1
 alias 1-most        move screenOriginX+200;screenOriginY+106 1720;1030 1
+alias 1-firefox     move screenOriginX;screenOriginY screenSizeX*0.66;screenSizeY 1
 
 alias 2-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 2
 alias 2-evernote    move screenOriginX;screenOriginY screenSizeX*0.66;screenSizeY 2
 alias 2-securid     move screenOriginX;screenOriginY+758 237;142 2
-
-alias 3-outlook     move screenOriginX;screenOriginY screenSizeX;screenSizeY*0.95 2
-alias 3-skype       move screenOriginX+432;screenOriginY 1008;900 2
-alias 3-slack       move screenOriginX;screenOriginY 925;896 2
+alias 2-outlook     move screenOriginX;screenOriginY screenSizeX;screenSizeY*0.95 2
+alias 2-skype       move screenOriginX+432;screenOriginY 1008;900 2
+alias 2-slack       move screenOriginX;screenOriginY 925;896 2
 
 # Laptop
 layout  1monitor1   'Skype':REPEAT ${0-full}
@@ -52,9 +52,10 @@ layout  3monitor1    'iTunes':REPEAT ${0-itunes}
 layout  3monitor1    'Evernote':REPEAT ${0-evernote}
 layout  3monitor1    'SecurID':REPEAT ${0-securid}
 layout  3monitor1    'iTerm':REPEAT ${1-most}
-layout  3monitor1    'Microsoft Outlook':REPEAT ${3-outlook}
-layout  3monitor1    'Skype':REPEAT ${3-skype}
-layout  3monitor1    'Slack':REPEAT ${3-slack}
+layout  3monitor1    'Firefox':REPEAT ${1-firefox}
+layout  3monitor1    'Microsoft Outlook':REPEAT ${2-outlook}
+layout  3monitor1    'Skype':REPEAT ${2-skype}
+layout  3monitor1    'Slack':REPEAT ${2-slack}
 default 3monitor1    count:3
 
 # Monitor Aliases
@@ -87,6 +88,7 @@ bind o:alt;ctrl focus 'Microsoft Outlook'
 bind s:alt;ctrl focus 'Skype'
 bind u:alt;ctrl focus 'UPM'
 bind l:alt;ctrl focus 'Slack'
+bind f:alt;ctrl focus 'Firefox'
 
 bind  1:alt;ctrl   ${full}
 bind  2:alt;ctrl   ${lefthalf}

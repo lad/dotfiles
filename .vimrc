@@ -163,6 +163,16 @@ function! ToggleShowBreak()
     endif
 endfunction
 
+function! ToggleLineBreak()
+    if &linebreak
+        set nolinebreak
+        echo "no linebreak"
+    else
+        set linebreak
+        echo "linebreak"
+    endif
+endfunction
+
 function! ToggleList()
     if &list == 0
         set list
@@ -372,6 +382,7 @@ nnoremap    <leader>P       :call TogglePaste()<CR>
 nnoremap    <leader>z       :call ToggleSpell()<CR>
 nnoremap    <leader>i       :call ToggleIgnorecase()<CR>
 nnoremap    <leader>B       :call ToggleShowBreak()<CR>
+nnoremap    <leader>L       :call ToggleLineBreak()<CR>
 nnoremap    <leader>x       :call ToggleList()<CR>
 nnoremap    <leader>c0      :call SetColorColumn(0)<CR>
 nnoremap    <leader>c1      :call SetColorColumn(80)<CR>
@@ -400,7 +411,6 @@ nnoremap    <leader>"       ve<esc>a"<esc>hbi"<esc>lel<CR>
 
 " Draw line of ----
 nnoremap    <leader>l       o75A-0k
-nnoremap    <leader>L       o120A-k
 
 " Draw line under current line of text, same length
 nnoremap    <leader>k       yyp:.,.s/./-/g<CR>
@@ -476,10 +486,10 @@ let     Tlist_Close_On_Select=1
 let vimclojure#WantNailgun = 1
 
 " CommandT
-"map         <leader>f       :CommandT<CR>
-"map         <leader>F       :sp<CR>:CommandT<CR>
-"map         <leader>      :CommandTFlush<CR>
-"let         g:CommandTMaxHeight=15
+map         <leader>f       :CommandT<CR>
+map         <leader>F       :sp<CR>:CommandT<CR>
+map         <leader>      :CommandTFlush<CR>
+let         g:CommandTMaxHeight=15
 
 " Gundo
 nnoremap    <leader>u       :GundoToggle<CR>

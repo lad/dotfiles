@@ -254,6 +254,7 @@ endfunction
 "   endfunction
 "   
 function! PabloHi()
+    hi rubyLocalVariableOrMethod ctermfg=1
     highlight Constant              ctermfg=87 cterm=none
     highlight String                ctermfg=47 cterm=none
     highlight Special               ctermfg=46 cterm=none
@@ -363,6 +364,8 @@ command! Wsudo w !sudo tee % >/dev/null
 " Split open the current file's corresponding coverage annotated source
 command! Coverage execute 'split .cover/' . expand('%:t') . ',cover'
 
+command! Rubygrep execute 'vimgrep /' . expand('<cword>') . '/ lib/**/*.rb'
+
 " ---------------- SHORTCUTS -----------------------
 
 let mapleader="`"
@@ -438,6 +441,7 @@ map         <leader>tt      :Ctags<CR>
 nnoremap    <leader>tn      :tn<CR>
 nnoremap    <leader>tp      :tp<CR>
 nnoremap    <leader>ts      :ts<CR>
+nnoremap    <leader>g       :Rubygrep<CR>
 
 " For quickfix list
 nnoremap    <leader>cn      :cn<CR>

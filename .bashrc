@@ -157,12 +157,12 @@ fi
 
 function rpm-extract
 {
-    rpm2cpio.pl $1 | cpio -idmv
+    rpm2cpio $1 | cpio -idmv
 }
 
 function rpm-list
 {
-    rpm2cpio.pl $1 | cpio -vt | less
+    rpm2cpio $1 | cpio -vt | less
 }
 
 function ff

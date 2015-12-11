@@ -32,9 +32,10 @@ alias 2-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 2
 alias 2-evernote    move screenOriginX;screenOriginY screenSizeX*0.66;screenSizeY 2
 alias 2-securid     move screenOriginX;screenOriginY+758 237;142 2
 alias 2-outlook     move screenOriginX;screenOriginY screenSizeX;screenSizeY*0.95 2
-alias 2-skype       move screenOriginX+432;screenOriginY 1008;900 2
-alias 2-slack       move screenOriginX;screenOriginY 925;896 2
+alias 2-skype       move screenOriginX+432;screenOriginY 1008;850 2
+alias 2-slack       move screenOriginX;screenOriginY 925;850 2
 alias 2-firefox     move screenOriginX;screenOriginY screenSizeX*0.80;screenSizeY 2
+alias 2-jabber      move screenOriginX;screenOriginY 385;877 2
 
 # Laptop
 layout  1monitor1   'Skype':REPEAT ${0-full}
@@ -56,6 +57,7 @@ layout  3monitor1    'Firefox':REPEAT ${2-firefox}
 layout  3monitor1    'Microsoft Outlook':REPEAT ${2-outlook}
 layout  3monitor1    'Skype':REPEAT ${2-skype}
 layout  3monitor1    'Slack':REPEAT ${2-slack}
+layout  3monitor1    'Jabber':REPEAT ${2-jabber}
 default 3monitor1    count:3
 
 # Monitor Aliases
@@ -89,6 +91,7 @@ bind s:alt;ctrl focus 'Skype'
 bind u:alt;ctrl focus 'UPM'
 bind l:alt;ctrl focus 'Slack'
 bind f:alt;ctrl focus 'Firefox'
+bind j:alt;ctrl focus 'Jabber'
 
 bind  1:alt;ctrl   ${full}
 bind  2:alt;ctrl   ${lefthalf}

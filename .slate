@@ -78,7 +78,7 @@ bind 1:${hyper} layout 1monitor1
 bind 2:${hyper} layout 3monitor1
 
 # App switch bindings: CMD+E
-bind e:cmd hint ASDFGHJKLQWERTYUIOPCVBN # use whatever keys you want
+bind e:alt hint ASDFGHJKLQWERTYUIOPCVBN # use whatever keys you want
 # Better application switcher (doesn't seem to work)
 bind tab:cmd switch
 

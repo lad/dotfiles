@@ -509,5 +509,8 @@ let g:reek_config = "~/dev/wd/roux/etc/config.reek"
 nnoremap    <leader>Y       :ReekThis<CR>
 nnoremap    <leader>U       :ReekAll<CR>
 
+" Byebuf
+nnoremap    <leader>bb      Orequire 'byebug'; byebug<ESC>
+
 colorscheme pablo
 call PabloHi()

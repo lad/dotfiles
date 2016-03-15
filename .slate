@@ -92,6 +92,7 @@ bind u:alt;ctrl focus 'UPM'
 bind l:alt;ctrl focus 'Slack'
 bind f:alt;ctrl focus 'Firefox'
 bind j:alt;ctrl focus 'Jabber'
+bind w:alt;ctrl focus 'Cisco WebEx Meeting Center'
 
 bind  1:alt;ctrl   ${full}
 bind  2:alt;ctrl   ${lefthalf}

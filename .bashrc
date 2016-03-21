@@ -87,6 +87,12 @@ alias   stt='git stt'
 alias   sts='echo -en $green; git sts; echo -en $NC'
 alias   stm='echo -en $red; git stm; echo -en $NC'
 alias   std='echo -en $red; git std; echo -en $NC'
+#alias   clone="git clone ssh://gerrit-git/\$*"
+function clone
+{
+  echo "Cloning from gerrit: $*"
+  git clone ssh://gerrit-git/$*
+}
 
 alias   nscript='enscript -2Gr'
 

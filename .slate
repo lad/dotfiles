@@ -26,7 +26,7 @@ alias 0-securid     move screenOriginX+1683;screenOriginY+1059 237;142 0
 alias 0-slack       move screenOriginX;screenOriginY 925;835 0
 
 alias 1-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 1
-alias 1-most        move screenOriginX+20;screenOriginY+23 1900;1114 1
+alias 1-most        move screenOriginX+20;screenOriginY+34 1900;1102 1
 
 alias 2-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 2
 alias 2-evernote    move screenOriginX;screenOriginY screenSizeX*0.66;screenSizeY 2

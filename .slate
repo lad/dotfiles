@@ -18,16 +18,15 @@ alias center-most   move screenOriginX+200;screenOriginY+88 1720;1047
 
 #screen positions
 alias 0-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 0
-alias 0-chrome      move screenOriginX;screenOriginY 1624;1200 0
+alias 0-chrome      move screenOriginX;screenOriginY 1200;1864 0
 alias 0-itunes      move screenOriginX+1753;screenOriginY+1035 166;166 0
 alias 0-upm         move screenOriginX+1627;screenOriginY+0 293;668 0
-alias 0-evernote    move screenOriginX+533;screenOriginY+0 1145;1199 0
-alias 0-securid     move screenOriginX+1683;screenOriginY+1059 237;142 0
+alias 0-evernote    move screenOriginX+0;screenOriginY+13 1198;1884 0
 alias 0-slack       move screenOriginX;screenOriginY 925;835 0
 
 alias 1-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 1
 alias 1-most        move screenOriginX+20;screenOriginY+34 1900;1102 1
-
+alias 1-securid     move screenOriginX+0;screenOriginY+1035 241;147 1
 alias 2-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 2
 alias 2-evernote    move screenOriginX;screenOriginY screenSizeX*0.66;screenSizeY 2
 alias 2-securid     move screenOriginX;screenOriginY+758 237;142 2
@@ -51,7 +50,7 @@ layout  3monitor1    'Google Chrome':REPEAT ${0-chrome}
 layout  3monitor1    'UPM':REPEAT ${0-upm}
 layout  3monitor1    'iTunes':REPEAT ${0-itunes}
 layout  3monitor1    'Evernote':REPEAT ${0-evernote}
-layout  3monitor1    'SecurID':REPEAT ${0-securid}
+layout  3monitor1    'SecurID':REPEAT ${1-securid}
 layout  3monitor1    'iTerm':REPEAT ${1-most}
 layout  3monitor1    'Firefox':REPEAT ${2-firefox}
 layout  3monitor1    'Microsoft Outlook':REPEAT ${2-outlook}

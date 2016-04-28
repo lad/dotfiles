@@ -51,7 +51,7 @@ layout  3monitor1    'UPM':REPEAT ${0-upm}
 layout  3monitor1    'iTunes':REPEAT ${0-itunes}
 layout  3monitor1    'Evernote':REPEAT ${0-evernote}
 layout  3monitor1    'SecurID':REPEAT ${1-securid}
-layout  3monitor1    'iTerm':REPEAT ${1-most}
+layout  3monitor1    'iTerm':REPEAT ${1-full}
 layout  3monitor1    'Firefox':REPEAT ${2-firefox}
 layout  3monitor1    'Microsoft Outlook':REPEAT ${2-outlook}
 layout  3monitor1    'Skype':REPEAT ${2-skype}

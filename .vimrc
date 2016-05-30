@@ -1,10 +1,8 @@
 
 " ---------------- SETTINGS ------------------------
 
-
 set t_ti= t_te=
 set nostartofline
-
 
 "match ErrorMsg '\%>100v.\+'
 
@@ -366,6 +364,29 @@ command! Coverage execute 'split .cover/' . expand('%:t') . ',cover'
 
 command! Rubygrep execute 'vimgrep /' . expand('<cword>') . '/ lib/**/*.rb'
 
+"command! RubocopThis execute '!rubocop -c etc/rubocop.yml ' . expand('%')
+"command! RubocopAll execute '!rubocop -c etc/rubocop.yml .'
+"command! RubocopLib execute '!rubocop -c etc/rubocop.yml ' . expand('%:p:h') . '/lib'
+
+function! RubocopThis() abort
+  let l:cmd = 'rubocop -c etc/rubocop.yml ' . expand('%') . ' >| /tmp/e ; cat /tmp/e'
+  echo system(l:cmd)
+  cfile /tmp/e
+endfunction
+
+function! RubocopAll() abort
+  let l:cmd = 'rubocop -c etc/rubocop.yml . >| /tmp/e ; cat /tmp/e'
+  echo system(l:cmd)
+  cfile /tmp/e
+endfunction
+
+function! RubocopLib() abort
+  let l:cmd = 'rubocop -c etc/rubocop.yml lib >| /tmp/e'
+  call system('cd $(git rev-parse --show-toplevel) && ' . l:cmd)
+  cfile /tmp/e
+endfunction
+
+
 " ---------------- SHORTCUTS -----------------------
 
 let mapleader="`"
@@ -403,6 +424,7 @@ nnoremap    <leader>dn      !!date<CR>
 nnoremap    <leader>e       :%s/\s\+$//g<CR>
 nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
+vnoremap    <leader>X       :s/^/#/g<CR>
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -441,7 +463,7 @@ map         <leader>tt      :Ctags<CR>
 nnoremap    <leader>tn      :tn<CR>
 nnoremap    <leader>tp      :tp<CR>
 nnoremap    <leader>ts      :ts<CR>
-nnoremap    <leader>g       :Rubygrep<CR>
+" nnoremap    <leader>g       :Rubygrep<CR>
 
 " For quickfix list
 nnoremap    <leader>cn      :cn<CR>
@@ -501,13 +523,9 @@ nnoremap    <leader>U       :GundoToggle<CR>:GundoToggle<CR>
 
 " Rubocop plugin
 let g:rubocop_config = "~/dev/wd/roux/etc/rubocop.yml"
-nnoremap    <leader>R       :RubocopThis<CR>
-nnoremap    <leader>T       :RubocopAll<CR>
-
-" Reek plugin
-let g:reek_config = "~/dev/wd/roux/etc/config.reek"
-nnoremap    <leader>Y       :ReekThis<CR>
-nnoremap    <leader>U       :ReekAll<CR>
+nnoremap    <leader>R       :call RubocopThis()<CR>
+nnoremap    <leader>T       :call RubocopAll()<CR>
+nnoremap    <leader>Y       :RubocopLib<CR>
 
 " Byebuf
 nnoremap    <leader>bb      Orequire 'byebug'; byebug<ESC>

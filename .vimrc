@@ -80,6 +80,31 @@ set iskeyword=@,48-57,_,192-255
 
 " ---------------- FUNCTIONS -----------------------
 
+function! CommentLines(first, last)
+  if &filetype == "vim"
+    let l:comment = '"'
+  elseif &filetype == "cpp"
+    let l:comment = '//'
+  else
+    let l:comment = '#'
+  end
+
+  for l:n in range(a:first, a:last, 1)
+    let l:line = getline(l:n)
+    if strlen(l:line) == 0
+      continue
+    endif
+
+    let l:match = matchstr(l:line, "^" . l:comment)
+    if strlen(l:match) == 0
+      let l:replace_text = l:comment . l:line
+    else
+      let l:replace_text = substitute(l:line, "^" . l:comment, "", "g")
+    endif
+
+    call setline(l:n, replace_text)
+  endfor
+endfunction
 
 function! GnuMapUnmap()
     if !exists("g:gnumap")
@@ -424,7 +449,11 @@ nnoremap    <leader>dn      !!date<CR>
 nnoremap    <leader>e       :%s/\s\+$//g<CR>
 nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
-vnoremap    <leader>X       :s/^/#/g<CR>
+
+" Shortcuts for CommentLines
+command!    -range=%        CL  call CommentLines(<line1>, <line2>)
+vnoremap    <leader>X       :CL<CR>
+
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'

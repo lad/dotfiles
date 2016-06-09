@@ -39,7 +39,7 @@ alias 2-jabber      move screenOriginX;screenOriginY 385;877 2
 # Laptop
 layout  1monitor1   'Skype':REPEAT ${0-full}
 layout  1monitor1   'Microsoft Outlook':REPEAT ${0-full}
-layout  1monitor1   'iTerm':REPEAT ${0-full}
+layout  1monitor1   'iTerm2':REPEAT ${0-full}
 layout  1monitor1   'Google Chrome':REPEAT ${0-full}
 layout  1monitor1   'Evernote':REPEAT ${2-evernote}
 layout  1monitor1   'SecurID':REPEAT ${2-securid}
@@ -51,7 +51,7 @@ layout  3monitor1    'UPM':REPEAT ${0-upm}
 layout  3monitor1    'iTunes':REPEAT ${0-itunes}
 layout  3monitor1    'Evernote':REPEAT ${0-evernote}
 layout  3monitor1    'SecurID':REPEAT ${1-securid}
-layout  3monitor1    'iTerm':REPEAT ${1-full}
+layout  3monitor1    'iTerm2':REPEAT ${1-full}
 layout  3monitor1    'Firefox':REPEAT ${2-firefox}
 layout  3monitor1    'Microsoft Outlook':REPEAT ${2-outlook}
 layout  3monitor1    'Skype':REPEAT ${2-skype}
@@ -83,7 +83,7 @@ bind tab:cmd switch
 
 # Application focus bindings
 bind c:alt;ctrl focus 'Google Chrome'
-bind i:alt;ctrl focus 'iTerm'
+bind i:alt;ctrl focus 'iTerm2'
 bind e:alt;ctrl focus 'Evernote'
 bind o:alt;ctrl focus 'Microsoft Outlook'
 bind s:alt;ctrl focus 'Skype'

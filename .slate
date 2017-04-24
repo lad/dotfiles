@@ -83,14 +83,15 @@ bind tab:cmd switch
 
 # Application focus bindings
 bind c:alt;ctrl focus 'Google Chrome'
-bind i:alt;ctrl focus 'iTerm2'
 bind e:alt;ctrl focus 'Evernote'
+bind f:alt;ctrl focus 'Firefox'
+bind i:alt;ctrl focus 'iTerm2'
+bind j:alt;ctrl focus 'Jabber'
+bind l:alt;ctrl focus 'Slack'
 bind o:alt;ctrl focus 'Microsoft Outlook'
+bind p:alt;ctrl focus 'Preview'
 bind s:alt;ctrl focus 'Skype'
 bind u:alt;ctrl focus 'UPM'
-bind l:alt;ctrl focus 'Slack'
-bind f:alt;ctrl focus 'Firefox'
-bind j:alt;ctrl focus 'Jabber'
 bind w:alt;ctrl focus 'Cisco WebEx Meeting Center'
 
 bind  1:alt;ctrl   ${full}

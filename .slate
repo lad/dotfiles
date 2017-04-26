@@ -90,7 +90,7 @@ bind j:alt;ctrl focus 'Jabber'
 bind l:alt;ctrl focus 'Slack'
 bind o:alt;ctrl focus 'Microsoft Outlook'
 bind p:alt;ctrl focus 'Preview'
-bind s:alt;ctrl focus 'Skype'
+bind s:alt;ctrl focus 'Safari'
 bind u:alt;ctrl focus 'UPM'
 bind w:alt;ctrl focus 'Cisco WebEx Meeting Center'
 

@@ -124,11 +124,11 @@ alias   gemquery="gem query --details --remote --name-matches $*"
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
-if [ -d ~/completion ] ; then
-    for f in ~/completion/*; do
-        source $f
-    done
-fi
+#if [ -d ~/completion ] ; then
+    #for f in ~/completion/*; do
+        #source $f
+    #done
+#fi
 
 export TERM=xterm-256color
 export CDPATH=~/dev/wd:~/dev:${HOME}
@@ -161,9 +161,20 @@ else
   export NC='\e[0m'
 fi
 
+function sedrm()
+{
+  NUM=$1
+  sed -ie "${NUM}d" ~/.ssh/known_hosts
+}
+
 function rpm-extract
 {
     rpm2cpio $1 | cpio -idmv
+}
+
+function rpm-script-extract
+{
+  rpm -qp --scripts $1 > $1.scripts
 }
 
 function rpm-list
@@ -210,14 +221,15 @@ function ffci
     find "$dir" -path "$dir/.git" -prune -o -type f -print0 | xargs -0 grep -i "$*"
 }
 
-function ll
-{
-    if [ -n "$*" ]; then
-      \ls -GAlF "$*"
-    else
-      \ls -GAlF
-    fi
-}
+#function ll
+#{
+    #if [ -n "$*" ]; then
+      #\ls -GAlF "$*"
+    #else
+      #\ls -GAlF
+    #fi
+#}
+alias ll='\ls -GAlF'
 
 function lll
 {
@@ -337,13 +349,6 @@ complete -F rake_comp rake
 
 if [ -f /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh ]; then
   . /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh
-fi
-
-# BASH COMPLETIONS:
-if [ -d ~/completions ]; then
-    for f in ~/completions/*; do
-        . $f
-    done
 fi
 
 # PROMPT

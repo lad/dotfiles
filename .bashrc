@@ -1,9 +1,15 @@
 [ -z "$PS1" ] && return
 
+export OSC=10.96.2.160
+alias kc="kubectl --kubeconfig=$HOME/scylla/current/kubeconfig"
+
 export PATH=${HOME}/bin:/usr/local/bin:/usr/local/sbin:/opt/ImageMagick/bin:${PATH}
 if [ -d ~/bin/ec2-api-tools ]; then
   export EC2_HOME=~/bin/ec2-api-tools
   export PATH=${PATH}:${EC2_HOME}/bin
+fi
+if [ -d /usr/local/go/bin ]; then
+  export PATH=/usr/local/go/bin:${PATH}
 fi
 
 if [ -f /usr/libexec/java_home ]; then
@@ -56,6 +62,7 @@ fi
 
 # enable color support of ls and also add handy aliases
 #eval "$(dircolors -b ~/.dircolors)"
+export LSCOLORS=gxfxcxdxbxegedabagacad
 
 alias   l='ls -GalhF'
 # ll() function is below
@@ -133,7 +140,7 @@ fi
 export TERM=xterm-256color
 export CDPATH=~/dev/wd:~/dev:${HOME}
 export LESS="-XRF -P?f%f:stdin. ?m(%i of %m) .?ltLine\: %lt. ?PB(%PB\%) ."
-export LESSOPEN="| /usr/local/bin/source-highlight --failsafe -f esc --infer-lang -i %s"
+#export LESSOPEN="| /usr/local/bin/source-highlight --failsafe -f esc --infer-lang -i %s"
 export IGNOREEOF=10
 export PAGER="less"
 export EDITOR="vim"
@@ -377,9 +384,14 @@ export GIT_PS1_SHOWSTASHSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWUPSTREAM=auto
 [ -f ~/bin/git-prompt.sh ] && . ~/bin/git-prompt.sh
-export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
+#export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
+#export PS1='\e[1;36m\w:\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
+export PS1='\e[1;36m\w: \e[0m\n> '
 
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME
 
 [ -f ~/.rvm/scripts/rvm ] && . ~/.rvm/scripts/rvm
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

@@ -6,8 +6,8 @@ set nostartofline
 
 "match ErrorMsg '\%>100v.\+'
 
-" Filetypes
-" call pathogen#infect()
+" Pathogen
+call pathogen#infect()
 syntax on
 filetype on
 filetype plugin indent on
@@ -16,16 +16,12 @@ set t_Co=256
 
 set foldmethod=manual
 set foldlevelstart=99
-if ! exists('no_plugin_maps')
-    au! BufReadPre *.py setlocal foldmethod=indent|setlocal foldnestmax=2|set foldcolumn=2
-endif
-au BufReadPost *.py call SyntaxOn()
-au BufWinEnter,BufRead,BufNewFile *.py set filetype=python
-au BufWinEnter,BufRead,BufNewFile *.py\,cover set filetype=python
-au BufRead,BufNewFile *.scala set filetype=scala
-au BufRead,BufNewFile *.ru set filetype=ruby
-
-au BufReadPre,BufWinEnter,BufRead,BufNewFile *\,cover setlocal filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
+"au BufReadPost *.py call SyntaxOn()
+"au BufWinEnter,BufRead,BufNewFile *.py set filetype=python
+"au BufWinEnter,BufRead,BufNewFile *.py\,cover set filetype=python
+"au BufRead,BufNewFile *.scala set filetype=scala
+"au BufRead,BufNewFile *.ru set filetype=ruby
+"au BufReadPre,BufWinEnter,BufRead,BufNewFile *\,cover setlocal filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
 "au BufReadPre *\,cover set filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
 
 set autoindent
@@ -35,7 +31,6 @@ set ruler
 set tw=0
 set shiftwidth=2
 set expandtab
-set ts=2
 set shortmess=aotT
 set backup
 set bex=.bak
@@ -52,7 +47,6 @@ set history=100
 set wildmode=list:full
 set ignorecase
 set smartcase
-set sessionoptions=buffers,folds,globals,help,localoptions,options,winpos,winsize,resize,unix
 set nowrapscan
 set titlestring=%t\ (%n)\ %m
 set tags=./tags,~/dev/wd/tags,tags
@@ -60,95 +54,22 @@ set splitright
 set statusline=[%n]\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set laststatus=2
 set listchars=trail:•,tab:>-
-set list
+set showbreak=↪\   " Character to preceed line wraps
+set iskeyword=@,48-57,_,192-255
+"set list
+"set sessionoptions=buffers,folds,globals,help,localoptions,options,winpos,winsize,resize,unix
 
 set backupdir=~/vim-working/bak//
 set dir=~/vim-working/swp//
 set undodir=~/vim-working/undo//
-"set viewdir=~/vim-working/view//
-
+set viewdir=~/vim-working/view//
 set path=.,./**
 
 " highlight spaces at the end of lines
 highlight RedundantSpaces term=standout ctermbg=red guibg=red
 match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces highlighted
 
-set showbreak=↪\   " Character to preceed line wraps
-
-" set iskeyword=@,48-57,_,192-255,#
-set iskeyword=@,48-57,_,192-255
-
 " ---------------- FUNCTIONS -----------------------
-
-function! CommentLines(first, last)
-  if &filetype == "vim"
-    let l:comment = '"'
-  elseif &filetype == "cpp"
-    let l:comment = '//'
-  else
-    let l:comment = '#'
-  end
-
-  for l:n in range(a:first, a:last, 1)
-    let l:line = getline(l:n)
-    if strlen(l:line) == 0
-      continue
-    endif
-
-    let l:match = matchstr(l:line, "^" . l:comment)
-    if strlen(l:match) == 0
-      let l:replace_text = l:comment . l:line
-    else
-      let l:replace_text = substitute(l:line, "^" . l:comment, "", "g")
-    endif
-
-    call setline(l:n, replace_text)
-  endfor
-endfunction
-
-function! GnuMapUnmap()
-    if !exists("g:gnumap")
-        let g:gnumap = "unmap"
-    endif
-
-    if g:gnumap == "map"
-        echo "Gnu Style"
-
-        call GnuMap()
-        call GnuIndent()
-        let g:gnumap = "unmap"
-    else
-        echo "ANSI Style"
-
-        call UnGnuMap()
-        call UnGnuIndent()
-        let g:gnumap = "map"
-    endif
-endfunction
-
-function! GnuMap()
-    map [[ ?^    \zs{:call histdel("search", -1):let @/ = histget("search", -1)<CR>
-    map ]] /^    \zs{:call histdel("search", -1):let @/ = histget("search", -1)<CR>
-    map [] ?^    \zs}:call histdel("search", -1):let @/ = histget("search", -1)<CR>
-    map ][ /^    \zs}:call histdel("search", -1):let @/ = histget("search", -1)<CR>
-endfunction
-
-function! UnGnuMap()
-    unmap [[
-    unmap ]]
-    unmap []
-    unmap ][
-endfunction
-
-function! GnuIndent()
-    set cinoptions=>2,f1s,{1s,^-2,:1s,=1s,g0,h2,p5,t0,+2,(0,u0,w1,m1,W1s
-endfunction
-
-function! UnGnuIndent()
-    set cinoptions=>2,(0,w1,W1s
-endfunction
-
-call UnGnuIndent()
 
 set foldtext=MyFoldText()
 function! MyFoldText()
@@ -208,7 +129,7 @@ endfunction
 
 "au BufWinLeave * silent! mkview
 "au BufWinEnter * silent! loadview
-au BufWinEnter,BufRead,BufNewFile *.pp set filetype=puppet
+"au BufWinEnter,BufRead,BufNewFile *.pp set filetype=puppet
 
 "function! Leave()
 	"if exists("v:this_session")
@@ -224,8 +145,8 @@ au BufWinEnter,BufRead,BufNewFile *.pp set filetype=puppet
 
 "au BufWinLeave *.c,*.cpp,*.h,*.java,*.py mkview
 "au BufWinEnter *.c,*.cpp,*.h,*.java,*.py silent loadview
-au BufWinLeave * silent! mkview
-au BufWinEnter * silent! loadview
+"au BufWinLeave * silent! mkview
+"au BufWinEnter * silent! loadview
 
 set nopaste
 function! TogglePaste()
@@ -271,11 +192,11 @@ endfunction
 "       highlight CursorColumn guibg=grey
 "       highlight Folded ctermfg=7 ctermbg=0
 "       highlight FoldColumn ctermbg=0
-"   
+"
 "       highlight link rubySymbol NONE
 "       highlight! rubySymbol ctermfg=33
 "   endfunction
-"   
+"
 function! PabloHi()
     hi rubyLocalVariableOrMethod ctermfg=1
     highlight Constant              ctermfg=87 cterm=none
@@ -317,24 +238,24 @@ function! PabloHi()
     highlight String               ctermfg=187
 endfunction
 
-   function! SyntaxOn()
-       syntax enable
-       if g:colors_name == "pablo"
-           call PabloHi()
-       else
-           call MyHi()
-       endif
-   endfunction
-   
-   function! ToggleSyntax()
-       if exists("g:syntax_on")
-           syntax off
-           echo "syntax off"
-       else
-           call SyntaxOn()
-           echo "syntax on"
-       endif
-   endfunction
+function! SyntaxOn()
+    syntax enable
+    if g:colors_name == "pablo"
+        call PabloHi()
+    else
+        call MyHi()
+    endif
+endfunction
+
+function! ToggleSyntax()
+    if exists("g:syntax_on")
+        syntax off
+        echo "syntax off"
+    else
+        call SyntaxOn()
+        echo "syntax on"
+    endif
+endfunction
 
 "syntax enable
 "call MyHi()
@@ -442,18 +363,12 @@ nnoremap    <leader>C2      :call SetCursorLines(2)<CR>
 nnoremap    <leader>C3      :call SetCursorLines(3)<CR>
 nnoremap    <leader>q       :silent call ToggleQuickfix()<CR>
 nnoremap    zz              :silent call ToggleFoldColumn()<CR>
-nnoremap    <leader>[       :call GnuMapUnmap()<CR>
 nnoremap    <leader>s       :buffers<CR>
 nnoremap    <leader>r       :reg<CR>
 nnoremap    <leader>dn      !!date<CR>
 nnoremap    <leader>e       :%s/\s\+$//g<CR>
 nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
-
-" Shortcuts for CommentLines
-command!    -range=%        CL  call CommentLines(<line1>, <line2>)
-vnoremap    <leader>X       :CL<CR>
-
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -501,8 +416,6 @@ nnoremap    <leader>cl      :clist<CR>
 
 " For buffers
 nnoremap    <leader>bd      :bdel<CR>
-nnoremap    <leader>bw      :bwipe<CR>
-nnoremap    <leader>bW      :bwipe!<CR>
 
 " Prompt to edit files in same dir as current buffer
 nnoremap    <leader>E       :let @x=expand('%:h')<CR>:e x/
@@ -530,34 +443,6 @@ let g:pep8_map = '<F8>'
 let GiddyTrackingBranch="origin/master"
 let g:giddy_dev=1
 
-" Taglist plguin
-map     <leader>tl      :TlistToggle<CR>
-let     TlistWinWidth=40
-let     Tlist_GainFocus_On_ToggleOpen=1
-let     Tlist_Exit_OnlyWindow=1
-let     Tlist_Close_On_Select=1
-
-" Vimclojure nailgun
-let vimclojure#WantNailgun = 1
-
-" CommandT
-map         <leader>f       :CommandT<CR>
-map         <leader>F       :sp<CR>:CommandT<CR>
-map         <leader>      :CommandTFlush<CR>
-let         g:CommandTMaxHeight=15
-
-" Gundo
-nnoremap    <leader>u       :GundoToggle<CR>
-nnoremap    <leader>U       :GundoToggle<CR>:GundoToggle<CR>
-
-" Rubocop plugin
-let g:rubocop_config = "~/dev/wd/roux/etc/rubocop.yml"
-nnoremap    <leader>R       :call RubocopThis()<CR>
-nnoremap    <leader>T       :call RubocopAll()<CR>
-nnoremap    <leader>Y       :RubocopLib<CR>
-
-" Byebuf
-nnoremap    <leader>bb      Orequire 'byebug'; byebug<ESC>
 
 colorscheme pablo
 call PabloHi()

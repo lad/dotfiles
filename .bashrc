@@ -1,7 +1,6 @@
 [ -z "$PS1" ] && return
 
 export OSC=10.96.2.160
-alias kc="kubectl --kubeconfig=$HOME/scylla/current/kubeconfig"
 
 export PATH=${HOME}/bin:/usr/local/bin:/usr/local/sbin:/opt/ImageMagick/bin:${PATH}
 if [ -d ~/bin/ec2-api-tools ]; then
@@ -15,6 +14,9 @@ fi
 if [ -f /usr/libexec/java_home ]; then
   export JAVA_HOME=$(/usr/libexec/java_home)
 fi
+
+export GOPATH=$HOME/go
+export PATH=${PATH}:${GOPATH}/bin
 
 ################################### HISTORY ###################################
 
@@ -73,58 +75,16 @@ alias   h="history"
 alias   j="jobs -l"
 alias   rm="rm -i"
 alias   more=less
-alias   grep='grep --color'
-alias   fgrep='fgrep --color'
-alias   egrep='egrep --color'
 alias   yyyymmddhhmm='date +%Y-%m-%d-%H-%M'
-alias   +=pushd
-alias   -- -=popd
-
-alias   daily="vim $HOME/Documents/daily.txt"
-
-alias   openchrome='open -a Google\ Chrome $*'
-alias   rre='rake ruby:reek'
-alias   rru='rake ruby:rubocop'
-alias   rrs='rake ruby:spec'
-alias   rrc='rake ruby:cucumber'
-alias   be='bundle exec'
+alias   nscript='enscript -2Gr'
+alias   gemquery="gem query --details --remote --name-matches $*"
 
 alias   st='git st'
 alias   stt='git stt'
-alias   sts='echo -en $green; git sts; echo -en $NC'
-alias   stm='echo -en $red; git stm; echo -en $NC'
-alias   std='echo -en $red; git std; echo -en $NC'
-#alias   clone="git clone ssh://gerrit-git/\$*"
-function clone
-{
-  echo "Cloning from gerrit: $*"
-  git clone ssh://gerrit-git/$*
-}
 
-alias   nscript='enscript -2Gr'
+alias   k=kubectl
+alias   kc="kubectl --kubeconfig=$HOME/scylla/current/kubeconfig"
 
-
-function sshvdcl
-{
-  silo=$1
-  shift
-  echo "ssh -F ~/.vdcl/vdcl-$silo/ssh/config $*"
-  ssh -F ~/.vdcl/vdcl-$silo/ssh/config $*
-}
-
-complete -F _ssh sshvdcl
-
-function scpvdcl
-{
-  silo=$1
-  shift
-  echo "scp -F ~/.vdcl/vdcl-$silo/ssh/config $*"
-  scp -F ~/.vdcl/vdcl-$silo/ssh/config $*
-}
-
-complete -F _ssh scpvdcl
-
-alias   gemquery="gem query --details --remote --name-matches $*"
 
 
 # Completions
@@ -189,170 +149,8 @@ function rpm-list
     rpm2cpio $1 | cpio -vt | less
 }
 
-function ff
-{
-    if [ -n "$1" ]; then d="$1"; else d="."; fi
-    find "$d" | less
-}
-
-function ffn
-{
-    if [ $# -gt 1 ]; then
-        dir="$1"
-        shift
-    else
-        dir=.
-    fi
-    find "$dir"  -name "*${*}*" | less
-}
-
-function ffc
-{
-    if [ $# -gt 1 ]; then
-        dir="$1"
-        shift
-    else
-        dir=.
-    fi
-    find "$dir" -path "$dir/.git" -prune -o -type f -print0 | xargs -0 grep "$*"
-}
-
-function ffci
-{
-    if [ $# -gt 1 ]; then
-        dir="$1"
-        shift
-    else
-        dir=.
-    fi
-    find "$dir" -path "$dir/.git" -prune -o -type f -print0 | xargs -0 grep -i "$*"
-}
-
-#function ll
-#{
-    #if [ -n "$*" ]; then
-      #\ls -GAlF "$*"
-    #else
-      #\ls -GAlF
-    #fi
-#}
 alias ll='\ls -GAlF'
 
-function lll
-{
-  ll | awk 'BEGIN { nd=nf=0 } \
-    /^total/  { total=$0; next } \
-    /^d/      { dirs[nd]=$0; nd += 1 } \
-    /^[^d]/   { files[nf]=$0; nf += 1 } \
-    END { \
-    print total
-    for (i = 0; i < nd; i ++) \
-      print dirs[i]; \
-    for (i = 0; i < nf; i ++) \
-      print files[i]; \
-  }'
-}
-
-function i
-{
-    if [ -z "$1" ]; then
-        echo "Usage: i <name>"
-        return 1
-    fi
-
-    f="$HOME/Documents/todo/issue-${1}.txt"
-    if [ ! -f "$f" ]; then
-        echo -e "Issue $1 - $(date)\n" >> "$f"
-    fi
-    vim "$f"
-    if [ $(wc -l "$f" | cut -d " " -f 1) -eq 0 ]; then
-        echo "Removed $f"
-        \rm -f "$f"
-    fi
-}
-
-function penv
-{
-    PYTHONPATH=$(python -c "import sys; print ':'.join(sys.path)") $*
-}
-
-function mkenv
-{
-    [ -z "$1" ] && echo "Usage: mkenv virtual-env-name" && return 1
-    virtualenv ~/venv/$1
-    chenv $1
-}
-
-function rmenv
-{
-    local FORCE
-
-    if [ "$1" == "-f" ]; then
-        FORCE=1
-        shift
-    fi
-
-    [ -z "$1" ] && echo "Usage: rmenv [-f] virtual-env-name" && return 1
-
-    if [ "$VIRTUAL_ENV" == ~/venv/$1 ]; then
-        if [ "$FORCE" ]; then
-            deactivate
-        else
-            echo "Currently in ${1}. Use "deactivate" or rmenv -f"
-            return
-        fi
-    fi
-
-    rm -rf ~/venv/$1
-}
-
-function chenv
-{
-    [ $# -ne 1 ] && echo "Usage: chenv virtual-env-name" && return 1
-
-    if [ $(type -t deactivate)"" == "function" ]; then
-        deactivate
-    fi
-
-    . ~/venv/$1/bin/activate
-}
-
-pman ()
-{
-      man -t "${1}" | open -f -a /Applications/Preview.app
-}
-
-# BASH COMPLETION: chenv, rmenv
-
-function listenv
-{
-    local cur=${COMP_WORDS[COMP_CWORD]}
-    local venvs=""
-    for d in ~/venv/*; do
-        venvs+=" $(basename $d)"
-    done
-    COMPREPLY=( $(compgen -W "$venvs" -- $cur) )
-}
-
-complete -F listenv rmenv
-complete -F listenv chenv
-
-# BASH COMPLETION: rake
-
-function rake_comp
-{
-    local cur="${COMP_WORDS[COMP_CWORD]}"
-    local tasks=""
-    TOP_LEVEL=$(git rev-parse --show-toplevel 2>> /dev/null)
-    if [ -f "${TOP_LEVEL}/Rakefile" -o -f ./Rakefile ]; then
-        for task in $(rake -T 2>> /dev/null | awk '{ print $2 }'); do
-            tasks+=" $task"
-        done
-        COMPREPLY=( $(compgen -W "$tasks" -- $cur ) )
-    fi
-}
-
-complete -F rake_comp rake
 
 if [ -f /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh ]; then
   . /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh
@@ -384,9 +182,9 @@ export GIT_PS1_SHOWSTASHSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWUPSTREAM=auto
 [ -f ~/bin/git-prompt.sh ] && . ~/bin/git-prompt.sh
-#export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
+export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
 #export PS1='\e[1;36m\w:\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
-export PS1='\e[1;36m\w: \e[0m\n> '
+#export PS1='\e[1;36m\w: \e[0m\n> '
 
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME

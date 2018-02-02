@@ -92,6 +92,7 @@ bind o:alt;ctrl focus 'Microsoft Outlook'
 bind p:alt;ctrl focus 'Preview'
 bind s:alt;ctrl focus 'Safari'
 bind u:alt;ctrl focus 'UPM'
+bind v:alt;ctrl focus 'VLC'
 bind w:alt;ctrl focus 'Cisco WebEx Meeting Center'
 
 bind  1:alt;ctrl   ${full}

@@ -63,12 +63,13 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # enable color support of ls and also add handy aliases
-eval "$(dircolors -b ~/.dircolors)"
+#eval "$(dircolors -b ~/.dircolors)"
 export LSCOLORS=gxfxcxdxbxegedabagacad
 
-alias   l='ls -GalhF'
-# ll() function is below
+alias   l='\ls -GalhF'
+alias   ll='\ls -GAlF'
 alias   lm='ll | less'
+
 alias   ..="cd .."
 alias   cd..="cd .."
 alias   h="history"
@@ -149,8 +150,6 @@ function rpm-list
     rpm2cpio $1 | cpio -vt | less
 }
 
-alias ll='\ls -GAlF'
-
 
 if [ -f /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh ]; then
   . /usr/local/Cellar/bash-completion/1.3/etc/profile.d/bash_completion.sh
@@ -186,10 +185,11 @@ export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m $(_
 #export PS1='\e[1;36m\w:\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
 #export PS1='\e[1;36m\w: \e[0m\n> '
 
-HOSTNAME=`hostname`
-test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME
-
 [ -f ~/.rvm/scripts/rvm ] && . ~/.rvm/scripts/rvm
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+HOSTNAME=`hostname`
+test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME
+

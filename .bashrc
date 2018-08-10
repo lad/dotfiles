@@ -63,7 +63,7 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # enable color support of ls and also add handy aliases
-#eval "$(dircolors -b ~/.dircolors)"
+eval "$(dircolors -b ~/.dircolors)"
 export LSCOLORS=gxfxcxdxbxegedabagacad
 
 alias   l='ls -GalhF'

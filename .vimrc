@@ -7,7 +7,7 @@ set nostartofline
 "match ErrorMsg '\%>100v.\+'
 
 " Pathogen
-call pathogen#infect()
+" call pathogen#infect()
 syntax on
 filetype on
 filetype plugin indent on

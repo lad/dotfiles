@@ -1,0 +1,20 @@
+import readline
+readline.parse_and_bind("tab: complete")
+
+import rlcompleter
+import os
+import sys
+import pprint
+
+#sys.displayhook = pprint.pprint
+
+cd = os.chdir
+pwd = os.getcwd
+
+D = '/home/louis/Louis/dell/dev/src'
+DDC = os.path.join(D, 'dciam-dynamic-config')
+DAEMONLIB = os.path.join(DDC, 'daemonlib')
+CONFIGD = os.path.join(DDC, 'configd')
+
+sys.path.append(os.path.join(DAEMONLIB, 'src'))
+sys.path.append(os.path.join(CONFIGD, 'src'))

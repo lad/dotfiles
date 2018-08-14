@@ -429,48 +429,35 @@ for i in range(1, 9)
 endfor
 
 
-function! RunJira() abort
-  let l:input = input('> ')
+function! RunJira(cmd) abort
+  if strlen(a:cmd) == 0
+    let l:cmd = input('> ')
+  else
+    let l:cmd = a:cmd
+  endif
 
-  if strlen(l:input) != 0
-    let l:output = systemlist("jira " . l:input)
+  if strlen(l:cmd) != 0
+    echo "working..."
+    let l:output = systemlist("jira " . l:cmd)
     if v:shell_error
       let l:err = "Error running jira command: " . join(l:output, "\n")
       echo l:err
       return
     endif
 
-    execute 'new ' . l:input
+    execute 'new ' . l:cmd
     setlocal buftype=nofile bufhidden=hide nobuflisted noswapfile
     call append(line('$'), l:output)
-  else
-    echo "No Jira ID found on this line"
   endif
 endfunction
 
 function! JiraView() abort
-  let l:jira_id = matchstr(getline('.'), 'PENG-\d\+')
-  if strlen(l:jira_id) != 0
-    echo "Looking up Jira ID: " . l:jira_id
-    let l:output = systemlist("jira view " . l:jira_id)
-    if v:shell_error
-      let l:err = "Error running jira command: " . join(l:output, "\n")
-      echo l:err
-      return
-    endif
-
-    execute 'new ' . l:jira_id
-    setlocal buftype=nofile bufhidden=hide nobuflisted noswapfile
-    call append(line('$'), l:output)
-  else
-    echo "No Jira ID found on this line"
-  endif
 endfunction
 
-command!    JiraView   call JiraView()
+command!    JiraView   call RunJira("view " . expand('<cWORD>'))
 map <leader>j :JiraView<CR>
 
-command!    RunJira   call RunJira()
+command!    RunJira   call RunJira("")
 map <leader>J :RunJira<CR>
 
 

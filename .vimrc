@@ -8,10 +8,6 @@ set nostartofline
 
 "match ErrorMsg '\%>100v.\+'
 
-" Sets a red mark at column 81 iff text is present
-call matchadd('ColorColumn', '\%81v', 100)
-call matchadd('ColorColumn', '\%101v', 101)
-
 " Pathogen
 " call pathogen#infect()
 syntax on
@@ -130,6 +126,19 @@ function! ToggleList()
     else
         set nolist
         echo "nolist"
+    endif
+endfunction
+
+function! ToggleColorColumn()
+    if exists("g:cciff")
+        unlet g:cciff
+        " Unset mark
+        call clearmatches()
+    else
+        let g:cciff = 1
+        " Sets a mark at column 81 iff text is present
+        call matchadd('ColorColumn', '\%81v')
+        call matchadd('ColorColumn', '\%101v')
     endif
 endfunction
 
@@ -373,6 +382,7 @@ nnoremap    <leader>dn      !!date<CR>
 nnoremap    <leader>e       :%s/\s\+$//g<CR>
 nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
+nnoremap    <leader>cc      :call ToggleColorColumn()<CR>
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'

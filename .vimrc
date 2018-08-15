@@ -8,6 +8,10 @@ set nostartofline
 
 "match ErrorMsg '\%>100v.\+'
 
+" Sets a red mark at column 81 iff text is present
+call matchadd('ColorColumn', '\%81v', 100)
+call matchadd('ColorColumn', '\%101v', 101)
+
 " Pathogen
 " call pathogen#infect()
 syntax on

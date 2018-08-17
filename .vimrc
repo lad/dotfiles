@@ -317,6 +317,7 @@ command! Markdown silent execute '!~/bin/Markdown.pl ' . expand('%') . ' > /tmp/
 command! Wsudo w !sudo tee % >/dev/null
 
 command! Chrome silent execute '!open -a Google\ Chrome ' . expand('<cfile>') <bar> redraw!
+command! Open silent execute '!open ' . expand('<cfile>') <bar> redraw!
 
 " Split open the current file's corresponding coverage annotated source
 command! Coverage execute 'split .cover/' . expand('%:t') . ',cover'
@@ -378,7 +379,6 @@ nnoremap    <leader>q       :silent call ToggleQuickfix()<CR>
 nnoremap    zz              :silent call ToggleFoldColumn()<CR>
 nnoremap    <leader>s       :buffers<CR>
 nnoremap    <leader>r       :reg<CR>
-nnoremap    <leader>dn      !!date<CR>
 nnoremap    <leader>e       :%s/\s\+$//g<CR>
 nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
@@ -397,9 +397,6 @@ nnoremap    <leader>l       o75A-0k
 
 " Draw line under current line of text, same length
 nnoremap    <leader>k       yyp:.,.s/./-/g<CR>
-
-" Todo list
-nnoremap    <leader>da      :e ~/Documents/daily.txt<CR>
 
 " For tags
 function! Ctags() abort
@@ -474,6 +471,7 @@ map <leader>j :JiraView<CR>
 command!    RunJira   call RunJira("")
 map <leader>J :RunJira<CR>
 
+call ToggleColorColumn()
 
 " ---------------- FOR PLUGINS ---------------------
 

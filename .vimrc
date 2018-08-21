@@ -127,6 +127,19 @@ function! ToggleList()
     endif
 endfunction
 
+function! ToggleColorColumn()
+    if exists("g:cciff")
+        unlet g:cciff
+        " Unset mark
+        call clearmatches()
+    else
+        let g:cciff = 1
+        " Sets a mark at column 81 iff text is present
+        call matchadd('ColorColumn', '\%81v')
+        call matchadd('ColorColumn', '\%101v')
+    endif
+endfunction
+
 "au BufWinLeave * silent! mkview
 "au BufWinEnter * silent! loadview
 "au BufWinEnter,BufRead,BufNewFile *.pp set filetype=puppet
@@ -152,11 +165,9 @@ set nopaste
 function! TogglePaste()
     if &paste
         set nopaste
-        let g:togglepaste = 0
         echo "paste off"
     else
         set paste
-        let g:togglepaste = 1
         echo "paste on"
     endif
 endfunction
@@ -165,11 +176,9 @@ set nospell
 function! ToggleSpell()
     if &spell
         set nospell
-        let g:togglespell = 0
         echo "spell off"
     else
         set spell
-        let g:togglespell = 1
         echo "spell on"
     endif
 endfunction
@@ -305,6 +314,9 @@ command! Markdown silent execute '!~/bin/Markdown.pl ' . expand('%') . ' > /tmp/
 " Write out the current file as root
 command! Wsudo w !sudo tee % >/dev/null
 
+command! Chrome silent execute '!open -a Google\ Chrome ' . expand('<cfile>') <bar> redraw!
+command! Open silent execute '!open ' . expand('<cfile>') <bar> redraw!
+
 " Split open the current file's corresponding coverage annotated source
 command! Coverage execute 'split .cover/' . expand('%:t') . ',cover'
 
@@ -365,10 +377,13 @@ nnoremap    <leader>q       :silent call ToggleQuickfix()<CR>
 nnoremap    zz              :silent call ToggleFoldColumn()<CR>
 nnoremap    <leader>s       :buffers<CR>
 nnoremap    <leader>r       :reg<CR>
-nnoremap    <leader>dn      !!date<CR>
 nnoremap    <leader>e       :%s/\s\+$//g<CR>
 nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
+nnoremap    <leader>cc      :call ToggleColorColumn()<CR>
+nnoremap    <leader>g       :!go build %<CR>
+nnoremap    <leader>G       :!./%:r<CR>
+nnoremap    <leader>F       :!gofmt -w %<CR>:e<CR>
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -383,9 +398,6 @@ nnoremap    <leader>l       o75A-0k
 
 " Draw line under current line of text, same length
 nnoremap    <leader>k       yyp:.,.s/./-/g<CR>
-
-" Todo list
-nnoremap    <leader>da      :e ~/Documents/daily.txt<CR>
 
 " For tags
 function! Ctags() abort
@@ -434,6 +446,38 @@ for i in range(1, 9)
 endfor
 
 
+function! RunJira(cmd) abort
+  if strlen(a:cmd) == 0
+    let l:cmd = input('> ')
+  else
+    let l:cmd = a:cmd
+  endif
+
+  if strlen(l:cmd) != 0
+    echo "working..."
+    let l:output = systemlist("jira " . l:cmd)
+    if v:shell_error
+      let l:err = "Error running jira command: " . join(l:output, "\n")
+      echo l:err
+      return
+    endif
+
+    execute 'new ' . l:cmd
+    setlocal buftype=nofile bufhidden=hide nobuflisted noswapfile
+    call append(line('$'), l:output)
+  endif
+endfunction
+
+function! JiraView() abort
+endfunction
+
+command!    JiraView   call RunJira("view " . expand('<cWORD>'))
+map <leader>j :JiraView<CR>
+
+command!    RunJira   call RunJira("")
+map <leader>J :RunJira<CR>
+
+call ToggleColorColumn()
 
 " ---------------- FOR PLUGINS ---------------------
 

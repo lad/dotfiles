@@ -1,7 +1,5 @@
 [ -z "$PS1" ] && return
 
-export OSC=10.96.2.160
-
 export PATH=${HOME}/bin:/usr/local/bin:/usr/local/sbin:/opt/ImageMagick/bin:${PATH}
 if [ -d ~/bin/ec2-api-tools ]; then
   export EC2_HOME=~/bin/ec2-api-tools

@@ -383,6 +383,10 @@ nnoremap    <leader>e       :%s/\s\+$//g<CR>
 nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
 nnoremap    <leader>cc      :call ToggleColorColumn()<CR>
+nnoremap    <leader>g       :!go build %<CR>
+nnoremap    <leader>G       :!./%:r<CR>
+nnoremap    <leader>F       :!gofmt -w %<CR>:e<CR>
+
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'

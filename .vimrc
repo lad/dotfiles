@@ -137,7 +137,7 @@ function! ToggleColorColumn()
     else
         let g:cciff = 1
         " Sets a mark at column 81 iff text is present
-        call matchadd('ColorColumn', '\%81v')
+        call matchadd('ColorColumn', '\%82v')
         call matchadd('ColorColumn', '\%101v')
     endif
 endfunction
@@ -383,8 +383,10 @@ nnoremap    <leader>e       :%s/\s\+$//g<CR>
 nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
 nnoremap    <leader>cc      :call ToggleColorColumn()<CR>
-nnoremap    <leader>g       :!go build %<CR>
-nnoremap    <leader>G       :!./%:r<CR>
+
+set makeprg=go\ build\ %
+nnoremap    <leader>m       :make<CR>
+nnoremap    <leader>g       :!./%:r<CR>
 nnoremap    <leader>F       :!gofmt -w %<CR>:e<CR>
 
 

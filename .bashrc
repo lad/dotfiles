@@ -9,9 +9,9 @@ if [ -d /usr/local/go/bin ]; then
   export PATH=/usr/local/go/bin:${PATH}
 fi
 
-if [ -f /usr/libexec/java_home ]; then
-  export JAVA_HOME=$(/usr/libexec/java_home)
-fi
+#if [ -f /usr/libexec/java_home ]; then
+  #export JAVA_HOME=$(/usr/libexec/java_home)
+#fi
 
 export GOPATH=$HOME/go
 export PATH=${PATH}:${GOPATH}/bin
@@ -82,7 +82,19 @@ alias   st='git st'
 alias   stt='git stt'
 
 alias   k=kubectl
-alias   kc="kubectl --kubeconfig=$HOME/scylla/current/kubeconfig"
+alias   kcc='kubectl --kubeconfig=$PWD/kubeconfig'
+function kcurrent()
+{
+  export  KUBECONFIG=$HOME/scylla/current/kubeconfig
+}
+kcurrent
+
+#alias   kc="kubectl --kubeconfig=$HOME/scylla/current/kubeconfig"
+
+function psg()
+{
+  ps -ef | grep $* | grep -v grep
+}
 
 
 

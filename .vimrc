@@ -26,12 +26,16 @@ set foldlevelstart=99
 "au BufReadPre,BufWinEnter,BufRead,BufNewFile *\,cover setlocal filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
 "au BufReadPre *\,cover set filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
 
+autocmd FileType go setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=8 nolist
+autocmd FileType go call ColorColumnOff()
+
+
 set autoindent
 set shiftround
 set backspace=2
+set shiftwidth=2
 set ruler
 set tw=0
-set shiftwidth=2
 set expandtab
 set shortmess=aotT
 set backup
@@ -140,6 +144,11 @@ function! ToggleColorColumn()
         call matchadd('ColorColumn', '\%82v')
         call matchadd('ColorColumn', '\%101v')
     endif
+endfunction
+
+function! ColorColumnOff()
+  let g:cciff = 1
+  call ToggleColorColumn()
 endfunction
 
 "au BufWinLeave * silent! mkview
@@ -420,6 +429,11 @@ function! Ctags() abort
 endfunction
 
 " nnoremap    <leader>g       :Rubygrep<CR>
+
+" For tags
+nnoremap    <leader>tn      :tl<CR>
+nnoremap    <leader>tl      :tl<CR>
+nnoremap    <leader>ts      :ts<CR>
 
 " For quickfix list
 nnoremap    <leader>cn      :cn<CR>

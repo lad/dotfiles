@@ -1,12 +1,9 @@
 [ -z "$PS1" ] && return
 
-export PATH=${HOME}/bin:/usr/local/bin:/usr/local/sbin:/opt/ImageMagick/bin:${PATH}
+export PATH=${HOME}/bin:/usr/local/bin:${PATH}
 if [ -d ~/bin/ec2-api-tools ]; then
   export EC2_HOME=~/bin/ec2-api-tools
   export PATH=${PATH}:${EC2_HOME}/bin
-fi
-if [ -d /usr/local/go/bin ]; then
-  export PATH=/usr/local/go/bin:${PATH}
 fi
 
 #if [ -f /usr/libexec/java_home ]; then
@@ -80,6 +77,11 @@ alias   gemquery="gem query --details --remote --name-matches $*"
 
 alias   st='git st'
 alias   stt='git stt'
+
+function activate() 
+{
+  source $HOME/venv/$1/bin/activate
+}
 
 alias   k=kubectl
 alias   kcc='kubectl --kubeconfig=$PWD/kubeconfig'
@@ -202,4 +204,3 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME
-

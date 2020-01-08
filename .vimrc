@@ -18,6 +18,7 @@ set t_Co=256
 
 set foldmethod=manual
 set foldlevelstart=99
+au BufRead,BufNewFile Jenkinsfile set filetype=groovy
 "au BufReadPost *.py call SyntaxOn()
 "au BufWinEnter,BufRead,BufNewFile *.py set filetype=python
 "au BufWinEnter,BufRead,BufNewFile *.py\,cover set filetype=python

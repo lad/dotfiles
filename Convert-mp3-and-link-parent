@@ -11,12 +11,11 @@ for path in os.environ['NAUTILUS_SCRIPT_SELECTED_FILE_PATHS'].split('\n'):
     continue
 
   (dirname, filename) = os.path.split(path)
-  title = os.path.split(dirname)[1]
+  title = os.path.splitext(os.path.split(filename)[1])[0]
   output_filename = title + '.mp3'
   output_path = os.path.join(dirname, output_filename)
 
-  if os.path.isfile(output_path):
-      continue
+  # overwrites output if it exists
 
   cmd = 'lame --quiet --preset standard --tt "%s" ' \
         '--ta "beat cleaver" "%s" "%s"' % (title, path, output_path)
@@ -29,13 +28,9 @@ for path in os.environ['NAUTILUS_SCRIPT_SELECTED_FILE_PATHS'].split('\n'):
     if os.path.islink(link_path):
         os.unlink(link_path)
     else:
-        print "Parent exists and is not a link: %s" % link_path
-        exit(1)
+      cmd = "zenity --error --text 'Parent exists and is not a link: %s'" % link_path
+      subprocess.check_output(cmd, shell=True)
+      exit(1)
 
   cmd = 'ln -s "%s" "%s"' % (output_path, link_path)
   subprocess.check_output(cmd, shell=True)
-
-  done = os.path.join(dirname, '__DONE__')
-  open(done, 'w').close()
-  time.sleep(2)
-  os.unlink(done)

@@ -49,9 +49,9 @@ set ignorecase
 set smartcase
 set nowrapscan
 set titlestring=%t\ (%n)\ %m
-set tags=./tags,~/dev/wd/tags,tags
 set splitright
 set statusline=[%n]\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+"set statusline=[%n]\ %<%f\ %h%m%r%=
 set laststatus=2
 set listchars=trail:•,tab:>-
 set showbreak=↪\   " Character to preceed line wraps
@@ -132,11 +132,13 @@ function! ToggleColorColumn()
         unlet g:cciff
         " Unset mark
         call clearmatches()
+        echo "ColorColumn: off"
     else
         let g:cciff = 1
         " Sets a mark at column 81 iff text is present
         call matchadd('ColorColumn', '\%81v')
         call matchadd('ColorColumn', '\%101v')
+        echo "ColorColumn: on"
     endif
 endfunction
 
@@ -347,7 +349,7 @@ endfunction
 
 " ---------------- SHORTCUTS -----------------------
 
-let mapleader="`"
+let mapleader="\\"
 
 noremap     Q               gq
 nnoremap    '               `
@@ -381,9 +383,9 @@ nnoremap    <leader>e       :%s/\s\+$//g<CR>
 nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
 nnoremap    <leader>cc      :call ToggleColorColumn()<CR>
-nnoremap    <leader>g       :!go build %<CR>
-nnoremap    <leader>G       :!./%:r<CR>
-nnoremap    <leader>F       :!gofmt -w %<CR>:e<CR>
+"nnoremap    <leader>g       :!go build %<CR>
+"nnoremap    <leader>G       :!./%:r<CR>
+"nnoremap    <leader>F       :!gofmt -w %<CR>:e<CR>
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -477,7 +479,7 @@ map <leader>j :JiraView<CR>
 command!    RunJira   call RunJira("")
 map <leader>J :RunJira<CR>
 
-call ToggleColorColumn()
+silent call ToggleColorColumn()
 
 " ---------------- FOR PLUGINS ---------------------
 

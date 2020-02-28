@@ -16,6 +16,7 @@ set t_Co=256
 
 set foldmethod=manual
 set foldlevelstart=99
+au BufRead,BufNewFile Jenkinsfile set filetype=groovy
 "au BufReadPost *.py call SyntaxOn()
 "au BufWinEnter,BufRead,BufNewFile *.py set filetype=python
 "au BufWinEnter,BufRead,BufNewFile *.py\,cover set filetype=python
@@ -24,12 +25,16 @@ set foldlevelstart=99
 "au BufReadPre,BufWinEnter,BufRead,BufNewFile *\,cover setlocal filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
 "au BufReadPre *\,cover set filetype=python|set syntax=python|hi NotTested ctermbg=52|2match NotTested '^!.*'
 
+autocmd FileType go setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=8 nolist
+autocmd FileType go call ColorColumnOff()
+
+
 set autoindent
 set shiftround
 set backspace=2
+set shiftwidth=2
 set ruler
 set tw=0
-set shiftwidth=2
 set expandtab
 set shortmess=aotT
 set backup
@@ -136,10 +141,15 @@ function! ToggleColorColumn()
     else
         let g:cciff = 1
         " Sets a mark at column 81 iff text is present
-        call matchadd('ColorColumn', '\%81v')
+        call matchadd('ColorColumn', '\%82v')
         call matchadd('ColorColumn', '\%101v')
         echo "ColorColumn: on"
     endif
+endfunction
+
+function! ColorColumnOff()
+  let g:cciff = 1
+  call ToggleColorColumn()
 endfunction
 
 "au BufWinLeave * silent! mkview
@@ -383,9 +393,6 @@ nnoremap    <leader>e       :%s/\s\+$//g<CR>
 nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
 nnoremap    <leader>cc      :call ToggleColorColumn()<CR>
-"nnoremap    <leader>g       :!go build %<CR>
-"nnoremap    <leader>G       :!./%:r<CR>
-"nnoremap    <leader>F       :!gofmt -w %<CR>:e<CR>
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -422,6 +429,11 @@ nnoremap    <leader>tn      :tn<CR>
 nnoremap    <leader>tp      :tp<CR>
 nnoremap    <leader>ts      :ts<CR>
 " nnoremap    <leader>g       :Rubygrep<CR>
+
+" For tags
+nnoremap    <leader>tn      :tl<CR>
+nnoremap    <leader>tl      :tl<CR>
+nnoremap    <leader>ts      :ts<CR>
 
 " For quickfix list
 nnoremap    <leader>cn      :cn<CR>

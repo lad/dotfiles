@@ -1,17 +1,14 @@
 [ -z "$PS1" ] && return
 
-export PATH=${HOME}/bin:/usr/local/bin:/usr/local/sbin:/opt/ImageMagick/bin:${PATH}
+export PATH=${HOME}/bin:/usr/local/bin:${PATH}
 if [ -d ~/bin/ec2-api-tools ]; then
   export EC2_HOME=~/bin/ec2-api-tools
   export PATH=${PATH}:${EC2_HOME}/bin
 fi
-if [ -d /usr/local/go/bin ]; then
-  export PATH=/usr/local/go/bin:${PATH}
-fi
 
-if [ -f /usr/libexec/java_home ]; then
-  export JAVA_HOME=$(/usr/libexec/java_home)
-fi
+#if [ -f /usr/libexec/java_home ]; then
+  #export JAVA_HOME=$(/usr/libexec/java_home)
+#fi
 
 export GOPATH=$HOME/go
 export PATH=${PATH}:${GOPATH}/bin
@@ -81,8 +78,20 @@ alias   gemquery="gem query --details --remote --name-matches $*"
 alias   st='git st'
 alias   stt='git stt'
 
+function activate() 
+{
+  source $HOME/venv/$1/bin/activate
+}
+
 alias   k=kubectl
-alias   kc="kubectl --kubeconfig=$HOME/scylla/current/kubeconfig"
+alias   kcc='kubectl --kubeconfig=$PWD/kubeconfig'
+function kc()
+{
+  KUBECONFIG=$HOME/sdc/current/kubeconfig kubectl $*
+}
+
+#alias   kc="kubectl --kubeconfig=$HOME/sdc/current/kubeconfig"
+
 
 
 
@@ -183,11 +192,11 @@ export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m $(_
 #export PS1='\e[1;36m\w:\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
 #export PS1='\e[1;36m\w: \e[0m\n> '
 
-[ -f ~/.rvm/scripts/rvm ] && . ~/.rvm/scripts/rvm
+#[ -f ~/.rvm/scripts/rvm ] && . ~/.rvm/scripts/rvm
+eval "$(rbenv init -)"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+#export PATH="$PATH:$HOME/.rvm/bin"
 
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME
-

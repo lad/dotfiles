@@ -4,13 +4,19 @@ import os
 import sys
 import subprocess
 import tempfile
+from datetime import datetime
 
 class Main(object):
+    TRACKS_DIR=os.path.expandvars('$HOME/Tracks/eurorack noodles/2020')
+
     PROJECT_DIR="WAV/Drive1/Project01 - Proj Name/"
     LISTING_DATE='Jan  1  2001'
 
     def __init__(self, args):
-        self.args=args[1:]
+        self.dir = args[1] if args[1:] else None
+        dt = datetime.now()
+        # YYYYMMDD
+        self.today = '%s%s%s' % (dt.year, dt.month, dt.day)
 
     def line_to_file(self, line):
         return line.rsplit(self.LISTING_DATE)[-1].strip()
@@ -45,11 +51,7 @@ class Main(object):
 
     def choose_track_numbers(self, track_numbers):
         print 'Available Track Numbers:', ' '.join(track_numbers)
-        if self.args:
-            chosen = self.args
-        else:
-            chosen = raw_input('Enter track numbers (separated by space): ').split()
-
+        chosen = raw_input('Enter track numbers (separated by space): ').split()
         chosen = ["0" + n if n[0] != '0' and int(n) < 10 else n for n in chosen]
         
         for num_str in chosen:
@@ -77,9 +79,31 @@ class Main(object):
     def files_to_track_numbers(self, files):
         return [os.path.splitext(track)[0].rsplit('Track')[-1] for track in files]
 
+    def make_new_dir(self):
+        bdir = os.path.join(self.TRACKS_DIR, datetime.now().strftime('%Y%m%d'))
+        n = 1
+        while True:
+            new_dir = '%s-%d' % (bdir, n)
+            if not os.path.exists(new_dir):
+                break
+            n += 1
+        os.mkdir(new_dir)
+        return new_dir
+
     def main(self):
-        last_dir = self.get_last_dir()
+        new_dir = self.make_new_dir()
+        os.chdir(new_dir)
+
+        if self.dir:
+            last_dir = self.dir
+        else:
+            last_dir = self.get_last_dir()
+
+        print "New Dir: %s" % new_dir
         print "Using last directory: %s" % last_dir
+
+        with open('song_dir', 'w') as fd:
+           fd.write(last_dir)
 
         files = self.get_file_list(last_dir)
         track_numbers = self.files_to_track_numbers(files)

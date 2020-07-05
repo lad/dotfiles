@@ -192,11 +192,5 @@ export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m $(_
 #export PS1='\e[1;36m\w:\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
 #export PS1='\e[1;36m\w: \e[0m\n> '
 
-#[ -f ~/.rvm/scripts/rvm ] && . ~/.rvm/scripts/rvm
-eval "$(rbenv init -)"
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-#export PATH="$PATH:$HOME/.rvm/bin"
-
 HOSTNAME=`hostname`
 test -f $HOME/.bashrc.env.$HOSTNAME && . $HOME/.bashrc.env.$HOSTNAME

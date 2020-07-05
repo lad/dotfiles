@@ -13,7 +13,7 @@ class Main(object):
     LISTING_DATE='Jan  1  2001'
 
     def __init__(self, args):
-        self.dir = args[1] if args[1:] else None
+        self.song_dir = args[1] if args[1:] else None
         dt = datetime.now()
         # YYYYMMDD
         self.today = '%s%s%s' % (dt.year, dt.month, dt.day)
@@ -32,7 +32,7 @@ class Main(object):
         stdout, stderr = p2.communicate(input=cmd)
         return stdout
 
-    def get_last_dir(self):
+    def get_last_song_dir(self):
         CMD = ["cd \"%s\"" % self.PROJECT_DIR,
                'dir']
         listing = self.runftp("\n".join(CMD)).split("\n")
@@ -93,24 +93,23 @@ class Main(object):
     def main(self):
         new_dir = self.make_new_dir()
         os.chdir(new_dir)
+        #new_dir = os.getcwd()
 
-        if self.dir:
-            last_dir = self.dir
-        else:
-            last_dir = self.get_last_dir()
+        if not self.song_dir:
+            self.song_dir = self.get_last_song_dir()
 
         print "New Dir: %s" % new_dir
-        print "Using last directory: %s" % last_dir
+        print "Using song directory: %s" % self.song_dir
 
         with open('song_dir', 'w') as fd:
-           fd.write(last_dir)
+           fd.write(self.song_dir)
 
-        files = self.get_file_list(last_dir)
+        files = self.get_file_list(self.song_dir)
         track_numbers = self.files_to_track_numbers(files)
         chosen_tracks = self.choose_track_numbers(track_numbers)
 
         print "Chosen tracks: %s" % ' '.join(chosen_tracks)
-        self.get_tracks(last_dir, chosen_tracks)
+        self.get_tracks(self.song_dir, chosen_tracks)
 
 
 if __name__ == '__main__':

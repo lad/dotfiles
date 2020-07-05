@@ -1,0 +1,21 @@
+#!/usr/bin/env python2
+
+import os
+import subprocess
+
+def run():
+    for path in os.environ['NAUTILUS_SCRIPT_SELECTED_FILE_PATHS'].split('\n'):
+        if not path:
+            continue
+
+        out_path = os.path.splitext(path)[0] + '.wav'
+        cmd = 'flac --decode "%s" -o "%s"' % (path, out_path)
+
+        print "Running...", cmd
+        subprocess.check_output(cmd, shell=True)
+        print '------'
+
+
+print __name__
+if __name__ == '__main__':
+    run()

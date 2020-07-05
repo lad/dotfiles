@@ -1,0 +1,25 @@
+#!/usr/bin/env python2
+
+# link parent
+
+import os
+import subprocess
+import time
+
+
+for path in os.environ['NAUTILUS_SCRIPT_SELECTED_FILE_PATHS'].split('\n'):
+  if not path:
+    continue
+
+  (dirname, filename) = os.path.split(path)
+  link_path = os.path.join(os.path.dirname(dirname), filename)
+
+  if os.path.exists(link_path):
+    if os.path.islink(link_path):
+        os.unlink(link_path)
+    else:
+        print "Parent exists and is not a link: %s" % link_path
+        exit(1)
+
+  cmd = 'ln -s "%s" "%s"' % (path, link_path)
+  subprocess.check_output(cmd, shell=True)

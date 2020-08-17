@@ -491,7 +491,6 @@ map <leader>j :JiraView<CR>
 command!    RunJira   call RunJira("")
 map <leader>J :RunJira<CR>
 
-silent call ToggleColorColumn()
 
 " ---------------- FOR PLUGINS ---------------------
 

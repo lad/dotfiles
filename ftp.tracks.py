@@ -101,7 +101,7 @@ class Main(object):
         print "New Dir: %s" % new_dir
         print "Using song directory: %s" % self.song_dir
 
-        with open('song_dir', 'w') as fd:
+        with open('song_dir.txt', 'w') as fd:
            fd.write(self.song_dir)
 
         files = self.get_file_list(self.song_dir)

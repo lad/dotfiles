@@ -230,14 +230,19 @@ function! PabloHi()
     highlight Todo                  term=none ctermfg=0 ctermbg=3
     highlight shFunction            ctermfg=202 cterm=bold
     "highlight Normal                ctermfg=231
-    highlight Normal                ctermfg=41 guifg=#00af5f
+    "highlight Normal                ctermfg=41 guifg=#00af5f
+    highlight Normal                ctermfg=41 guifg=#00cc1f
     highlight Type                  ctermfg=86
     highlight StatusLine            ctermfg=21 ctermbg=117 cterm=bold
-    highlight Folded                ctermfg=230 ctermbg=238
+    highlight Folded                guibg=#a0a0a0 guifg=Blue
+    " highlight Folded                ctermfg=230 ctermbg=238 guifg=230 guibg=238 term=standout
+    " Folded         xxx term=standout ctermfg=230 ctermbg=238 guifg=Cyan guibg=DarkGrey
+
     highlight FoldColumn            ctermbg=238 ctermfg=230
     highlight shDerefSimple         ctermfg=81
     highlight shDerefVar            ctermfg=81
-    highlight Visual                term=reverse ctermbg=27
+    "highlight Visual                term=reverse ctermbg=27
+    highlight Visual                guibg=Gray guifg=Blue
     highlight pythonFunction        ctermfg=123 cterm=bold
     highlight PythonExceptions      ctermfg=9
     highlight pythonBuiltin         ctermfg=159
@@ -393,6 +398,7 @@ nnoremap    <leader>e       :%s/\s\+$//g<CR>
 nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
 nnoremap    <leader>cc      :call ToggleColorColumn()<CR>
+nnoremap    <leader>O       :browse oldfiles<CR>
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'

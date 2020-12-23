@@ -12,6 +12,6 @@ sleep 0.2
 
 WID=$(xdotool search --name "VLC Media Player")
 xdotool windowsize $WID 960 977
-xdotool windowmove $WID 950 52
+xdotool windowmove $WID 960 52
 
 $HOME/dotfiles/nautilus/play_folder.py -r "/home/louis/Music/Aphex Twin/Mix"

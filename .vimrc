@@ -76,10 +76,9 @@ match RedundantSpaces /\s\+$\| \+\ze\t/ "\ze sets end of match so only spaces hi
 
 " ---------------- FUNCTIONS -----------------------
 
-set foldtext=MyFoldText()
+"set foldtext=MyFoldText()
 function! MyFoldText()
   let line = getline(v:foldstart)
-  let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
   "return v:folddashes . sub
   return sub
 endfunction
@@ -321,7 +320,7 @@ endfunction
 
 " ---------------- COMMANDS ------------------------
 
-" Add s: to all occurances of the current work
+" Add s: to all occurances of the current word
 command! Srepl execute '%s/\<' . expand('<cword>') . '\>/s:' . expand('<cword>') . '/g'
 
 " Run the current file through markdown and open in chromium
@@ -406,7 +405,9 @@ map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),
                             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " quotes around current word
-nnoremap    <leader>"       ve<esc>a"<esc>hbi"<esc>lel<CR>
+nnoremap    <leader>"       :execute 's/\(\<' . expand('<cword>') . '\>\)/"\1\"/'<CR>
+nnoremap    <leader>'       :execute 's/\(\<' . expand('<cword>') . '\>\)/' . "'"  . '\1'  . "'"  . '/'<CR>
+
 
 " Draw line of ----
 nnoremap    <leader>l       o75A-0k

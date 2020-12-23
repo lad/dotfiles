@@ -13,6 +13,8 @@ fi
 export GOPATH=$HOME/go
 export PATH=${PATH}:${GOPATH}/bin
 
+export PYTHONSTARTUP=${HOME}/.python3
+
 ################################### HISTORY ###################################
 
 export HISTCONTROL=ignoredups:ignorespace

@@ -80,6 +80,9 @@ alias   gemquery="gem query --details --remote --name-matches $*"
 alias   st='git st'
 alias   stt='git stt'
 
+alias   gopen=gnome-open
+alias   glaunch=gtk-launch
+
 function activate() 
 {
   source $HOME/venv/$1/bin/activate

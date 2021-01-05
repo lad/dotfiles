@@ -30,17 +30,26 @@ def append_folder():
 
     entries = os.listdir(folder)
     if entries:
-        files = [os.path.join(folder, entry) for entry in entries]
+        files = [os.path.join(folder, entry) for entry in entries 
+                 if vlc_type(entry)]
+
+    if files:
         cmd = 'vlc --one-instance --playlist-enqueue %s' % ' '.join(
                 ['"%s"' % f for f in sorted(files, key=leading_numeric_key)])
     else:
         # append the empty dir
-        cmd = 'vlc --one-instance --playlist-enqueue "%s"' % folder
+        #cmd = 'vlc --one-instance --playlist-enqueue "%s"' % folder
+        cmd = 'notify-send "nothing to append"'
 
     print("Running: %s" % cmd)
     subprocess.check_output(cmd, shell=True)
 
     print('--append_folder: END')
+
+
+VLC_TYPES = ['.mp3', '.wav', '.flac', '.avi', '.flv', '.m4a', '.mkv', '.mp4']
+def vlc_type(path):
+    return os.path.splitext(path)[1] in VLC_TYPES
 
 
 # This is a bit dodgy. There is no MAXINT in python3, so these are not

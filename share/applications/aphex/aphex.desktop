@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Terminal=false
-StartupNotification=False
-Name=Aphex Random Mix
-Icon=/usr/share/applications/aphex.icon
-Exec=/usr/share/applications/aphex.sh

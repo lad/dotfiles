@@ -9,6 +9,7 @@ set nostartofline
 " Pathogen
 " call pathogen#infect()
 syntax on
+syntax sync fromstart
 filetype on
 filetype plugin indent on
 
@@ -398,6 +399,8 @@ nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
 nnoremap    <leader>cc      :call ToggleColorColumn()<CR>
 nnoremap    <leader>O       :browse oldfiles<CR>
+nnoremap    <leader>w       :set nowrap<CR>
+nnoremap    <leader>W       :set wrap<CR>
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'

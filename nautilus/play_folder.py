@@ -5,20 +5,28 @@ import sys
 import subprocess
 
 
-def play_folder(random=False, folder=None):
-    print "--play_folder(%s): START" % str(random)
+def play_folder(random=False, path=None):
+    """path may point to a folder or file. If it's a file, play all files in
+       the same directory as that file."""
+    print "--play_folder(random=%s, path=%s): START" % (str(random), str(path))
 
-    if not folder:
+    if not path:
         try:
             names = os.environ['NAUTILUS_SCRIPT_SELECTED_FILE_PATHS'].split('\n')
         except KeyError:
-            print('No folder argument and $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS '
+            print('No path argument and $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS '
                   'is not set.')
             sys.exit(1)
 
+        print "--play_folder: NAMES: %s" % str(names)
         for name in names:
             if name:
+                path = name
                 break
+
+        if not path:
+            print('No paths found in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS')
+            sys.exit(1)
 
         # $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS is terminated with a \n even with a
         # single entry selected.
@@ -29,12 +37,17 @@ def play_folder(random=False, folder=None):
 
         print "Name: %s" % name
         if isfolder(names):
+            print "Name: %s (IS folder)" % name
             # play the selected folder
             folder = name
         else:
             # play the files in the same directory as the selected file
+            print "Name: %s (IS NOT folder)" % name
             folder = os.path.dirname(name)
-
+    elif not os.path.isdir(path):
+        folder = os.path.dirname(path)
+    else:
+        folder = path
 
     print "Folder: %s" % folder
 
@@ -54,4 +67,4 @@ if __name__ == '__main__':
     parser.add_argument(action='store', dest='path', nargs='?', help='path')
     ns = parser.parse_args()
 
-    play_folder(random=ns.random, folder=ns.path)
+    play_folder(random=ns.random, path=ns.path)

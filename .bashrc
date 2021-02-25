@@ -15,6 +15,10 @@ export PATH=${PATH}:${GOPATH}/bin
 
 export PYTHONSTARTUP=${HOME}/.python3
 
+export PATH="/home/louis/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 ################################### HISTORY ###################################
 
 export HISTCONTROL=ignoredups:ignorespace

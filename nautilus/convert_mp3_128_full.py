@@ -16,7 +16,13 @@ def album_artist(path):
 
   # If we found the "Music" directory, the last two parts should be the album
   # and artist name
-  return parts[-2:]
+  album_artist = parts[-2:]
+  if len(album_artist) == 2:
+      return album_artist
+  elif len(album_artist) == 1:
+      return '', album_artist[0]
+  else:
+      return '', ''
 
 
 def run(path):

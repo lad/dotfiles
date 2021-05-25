@@ -401,6 +401,7 @@ nnoremap    <leader>cc      :call ToggleColorColumn()<CR>
 nnoremap    <leader>O       :browse oldfiles<CR>
 nnoremap    <leader>w       :set nowrap<CR>
 nnoremap    <leader>W       :set wrap<CR>
+nnoremap    <leader>p       Oimport pdb; pdb.set_trace()<ESC>
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'

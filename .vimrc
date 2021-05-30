@@ -18,6 +18,11 @@ set t_Co=256
 set foldmethod=manual
 set foldlevelstart=99
 au BufRead,BufNewFile Jenkinsfile set filetype=groovy
+au BufRead,BufNewFile *.mdb       set filetype=mdb
+
+au Filetype mdb source ~/.vim/scripts/mdb.vim
+
+
 "au BufReadPost *.py call SyntaxOn()
 "au BufWinEnter,BufRead,BufNewFile *.py set filetype=python
 "au BufWinEnter,BufRead,BufNewFile *.py\,cover set filetype=python

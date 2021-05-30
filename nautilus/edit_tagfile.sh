@@ -1,22 +1,30 @@
 #!/bin/bash
 
-FILE="$(echo $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS | tr -d '\n')"
+FILE="$(echo "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" | tr -d '\n')"
 DIR="$(dirname "$FILE")"
 
 PY=/home/louis/.pyenv/shims/python3.9
 
 cd $HOME/dev/src/musicdb
 export EDITOR=gvim
-$PY ./mdb.py --db .music et -f "$DIR"
 
-# DRY=($($PY ./mdb.py --db .music at --dryrun "$DIR"))
-# echo ${DRY[@]} | yad --text-info \
+trap 'rm -f /tmp/mdb.*.$$' EXIT
 
-DRYOUT=/tmp/et.$$
+OUT=/tmp/mdb.et.$$
+$PY ./mdb.py --db .music et -f "$DIR" > "$OUT"
+if [ $? -ne 0 ]; then
+  notify-send "Edit Tagfile failed: $(cat $OUT)"
+  exit 1
+fi
+
+DRYOUT=/tmp/mdb.at.$$
 $PY ./mdb.py --db .music at --force --dryrun "$DIR" > $DRYOUT
-trap rm -f $DRYOUT EXIT
+if [ $? -ne 0 ]; then
+  notify-send "Dryrun failed: $(cat $DRYOUT)"
+  exit 1
+fi
 
-N=$(wc -l $DRYOUT|awk '{print $1}')
+N=$(wc -l "$DRYOUT"|awk '{print $1}')
 if [ $N -eq 0 ]; then
   notify-send "No changes made for $DIR"
   exit
@@ -41,3 +49,4 @@ if [ $? -eq 1 ]; then
 else
   notify-send "NOT Applying tagfile for $DIR"
 fi
+

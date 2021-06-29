@@ -1,9 +1,14 @@
 #!/bin/bash
 
 FILE="$(echo "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" | tr -d '\n')"
-DIR="$(dirname "$FILE")"
+if [ -f "$FILE" ]; then
+  DIR="$(dirname "$FILE")"
+else
+  DIR="$FILE"
+fi
 
 PY=/home/louis/.pyenv/shims/python3.9
+DB=$HOME/.musicdb
 
 cd $HOME/dev/src/musicdb
 export EDITOR=gvim
@@ -11,14 +16,16 @@ export EDITOR=gvim
 trap 'rm -f /tmp/mdb.*.$$' EXIT
 
 OUT=/tmp/mdb.et.$$
-$PY ./mdb.py --db .music et -f "$DIR" > "$OUT"
+$PY ./mdb.py --db $DB et -f "$DIR" > "$OUT"
 if [ $? -ne 0 ]; then
+  echo "Edit Tagfile failed: $(cat $OUT)"
   notify-send "Edit Tagfile failed: $(cat $OUT)"
   exit 1
 fi
 
-DRYOUT=/tmp/mdb.at.$$
-$PY ./mdb.py --db .music at --force --dryrun "$DIR" > $DRYOUT
+#DRYOUT=/tmp/mdb.at.$$
+DRYOUT=/tmp/aa
+$PY ./mdb.py --db $DB at --force --dryrun "$DIR" > $DRYOUT
 if [ $? -ne 0 ]; then
   notify-send "Dryrun failed: $(cat $DRYOUT)"
   exit 1
@@ -44,7 +51,7 @@ yad --text-info \
 
 if [ $? -eq 1 ]; then
   echo "Applying tagfile for $DIR"
-  $PY ./mdb.py --db .music at --force "$DIR"
+  $PY ./mdb.py --db $DB at --force "$DIR"
   notify-send "Applied tagfile for $DIR"
 else
   notify-send "NOT Applying tagfile for $DIR"

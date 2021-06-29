@@ -2,6 +2,7 @@
     email = 1081096+lad@users.noreply.github.com
     name = lad
 [alias]
+    co = checkout
     br = branch
     st = status
     log-upstream = log @{u}..

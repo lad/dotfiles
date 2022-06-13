@@ -3,9 +3,11 @@
 # shopt -s nullglob
 # shopt -s nocaseglob
 
+shopt -s nocasematch
+
 while read f; do
-  echo "Trying $f"
-  if [ "${f##*.}" == "jpg" ] || \
+  if [ "${f##*.}" == jpg ] || \
+     [ "${f##*.}" == jpeg ] || \
      [ "${f##*.}" == "png" ] || \
      [ "${f##*.}" == "gif" ]; then
     export IMGFILE="$f"
@@ -14,13 +16,16 @@ while read f; do
 done <<< "$(echo -e "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS")"
 
 if [ -z "$IMGFILE" ]; then
-  echo "set_icon_files: No imgfile found in selected files"
-  exit 1
-else
-  echo "set_icon_files: Image File: $IMGFILE"
+  IMGFILE="$(yad --file --geometry=800x900+10+10)"
+  if [ -z "$IMGFILE" ]; then
+    notify-send "set_icon_files: cancelled"
+    exit 1
+  fi
 fi
 
 IMGURL=$(python3 -c "import sys; import urllib; import urllib.parse; print('file://{}'.format(urllib.parse.quote(sys.argv[1])))" "$IMGFILE")
+
+N=0
 
 while read f; do
   if [ "$f" != "$IMGFILE" ]; then
@@ -30,7 +35,9 @@ while read f; do
        [ "${f##*.}" == "m4a" ]; then
 
       gvfs-set-attribute "$f"  metadata::custom-icon $IMGURL
-      echo "Icon set for $f"
+      N=$((N+1))
     fi
   fi
 done <<< "$(echo -e "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS")"
+
+notify-send "set_icon_files: icon set for $N file(s)"

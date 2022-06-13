@@ -10,7 +10,8 @@ fi
 PY=/home/louis/.pyenv/shims/python3.9
 DB=$HOME/.musicdb
 
-cd $HOME/dev/src/musicdb
+cd $HOME/dev/src/musicdb/cmd
+export PYTHONPATH=$HOME/dev/src
 export EDITOR=gvim
 
 trap 'rm -f /tmp/mdb.*.$$' EXIT

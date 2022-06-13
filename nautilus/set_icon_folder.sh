@@ -9,8 +9,10 @@ cd "$DIR"
 shopt -s nullglob
 shopt -s nocaseglob
 
+N=0
 for i in *.{mp3,flac,opus,m4a,wav}; do
     gvfs-set-attribute "$i"  metadata::custom-icon $FURL
-    echo "Icon set for $i"
+    N=$((N+1))
 done
 
+notify-send "set_icon_folder: set icon for $N file(s)"

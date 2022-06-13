@@ -404,6 +404,7 @@ nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
 nnoremap    <leader>cc      :call ToggleColorColumn()<CR>
 nnoremap    <leader>O       :browse oldfiles<CR>
+nnoremap    <leader>o       O<ESC>
 nnoremap    <leader>w       :set nowrap<CR>
 nnoremap    <leader>W       :set wrap<CR>
 nnoremap    <leader>p       Oimport pdb; pdb.set_trace()<ESC>

@@ -1,4 +1,3 @@
-
 # Global config
 config defaultToCurrentScreen true
 config windowHintsShowIcons true
@@ -77,24 +76,19 @@ bind 1:${hyper} layout 1monitor1
 bind 2:${hyper} layout 3monitor1
 
 # App switch bindings: CMD+E
-bind e:alt hint ASDFGHJKLQWERTYUIOPCVBN # use whatever keys you want
+#bind e:alt hint ASDFGHJKLQWERTYUIOPCVBN # use whatever keys you want
 # Better application switcher (doesn't seem to work)
-bind tab:cmd switch
+#bind tab:cmd switch
 
 # Application focus bindings
-bind c:alt;ctrl focus 'Google Chrome'
-bind e:alt;ctrl focus 'Evernote'
+bind a:alt;ctrl focus 'Finder'
 bind f:alt;ctrl focus 'Firefox'
 bind i:alt;ctrl focus 'iTerm2'
-bind j:alt;ctrl focus 'Jabber'
-bind l:alt;ctrl focus 'Slack'
-bind o:alt;ctrl focus 'Microsoft Outlook'
 bind p:alt;ctrl focus 'Preview'
 bind s:alt;ctrl focus 'Safari'
 bind u:alt;ctrl focus 'UPM'
-bind v:alt;ctrl focus 'VLC'
-bind w:alt;ctrl focus 'Cisco WebEx Meeting Center'
-bind z:alt;ctrl focus 'zoom.us'
+bind w:alt;ctrl focus 'VLC'
+bind v:alt;ctrl focus 'MacVim'
 
 bind  1:alt;ctrl   ${full}
 bind  2:alt;ctrl   ${lefthalf}

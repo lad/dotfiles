@@ -1,0 +1,8 @@
+import sys
+if sys.version_info.major == 3:
+  from importlib import reload
+
+import readline
+readline.parse_and_bind("tab: complete")
+
+import rlcompleter

@@ -3,6 +3,8 @@
 
 set t_ti= t_te=
 set nostartofline
+set modeline
+set modelines=1
 
 "match ErrorMsg '\%>100v.\+'
 
@@ -227,12 +229,12 @@ function! PabloHi()
     hi rubyLocalVariableOrMethod ctermfg=1
     highlight Constant              ctermfg=87 cterm=none
     highlight String                ctermfg=47 cterm=none
-    highlight Special               ctermfg=46 cterm=none
-    highlight Comment               ctermfg=117 cterm=bold
+    highlight Special               ctermfg=46 cterm=none guifg=#00ffff
+    highlight Comment               ctermfg=117 cterm=bold guifg=#898989
     highlight Statement             ctermfg=227
     highlight PreProc               ctermfg=214 cterm=bold
     highlight Identifier            ctermfg=50 cterm=none
-    highlight Todo                  term=none ctermfg=0 ctermbg=3
+    highlight Todo                  ctermfg=11 ctermbg=1 term=none
     highlight shFunction            ctermfg=202 cterm=bold
     "highlight Normal                ctermfg=231
     "highlight Normal                ctermfg=41 guifg=#00af5f
@@ -267,6 +269,7 @@ function! PabloHi()
 
     "maybe
     highlight String               ctermfg=187
+    highlight SpellBad             gui=underline,bold guifg=White
 endfunction
 
 function! SyntaxOn()
@@ -379,6 +382,7 @@ nnoremap    W               :w<CR>
 nnoremap    <leader>;       :so %<CR>
 nnoremap    <leader>v       :so ~/.vimrc<CR>
 
+nnoremap    <leader>d       !!date '+\%a \%Y-\%m-\%d \%H:\%M'<CR>
 nnoremap    <leader>n       :n<CR>
 nnoremap    <leader>N       :N<CR>
 nnoremap    <leader>h       :call ToggleSyntax()<CR>
@@ -404,10 +408,21 @@ nnoremap    <leader>cd      :cd %:h<CR>:pwd<CR>
 nnoremap    <leader>..      :cd ..<CR>:pwd<CR>
 nnoremap    <leader>cc      :call ToggleColorColumn()<CR>
 nnoremap    <leader>O       :browse oldfiles<CR>
-nnoremap    <leader>o       O<ESC>
+" nnoremap    <leader>o       O<ESC>
 nnoremap    <leader>w       :set nowrap<CR>
 nnoremap    <leader>W       :set wrap<CR>
 nnoremap    <leader>p       Oimport pdb; pdb.set_trace()<ESC>
+nnoremap    <leader>t0      :set tw=0<CR>
+nnoremap    <leader>t8      :set tw=80<CR>
+nnoremap    <leader>t1      :set tw=110<CR>
+nnoremap    <leader>t2      :set tw=120<CR>
+nnoremap    <leader>m       :execute 'edit ' . expand('$HOME') . '/medical/health.txt'<CR>
+nnoremap    <leader>M       :execute 'edit ' . expand('$HOME') . '/medical/weight.txt'<CR>
+nnoremap    <leader>,       :execute 'edit ' . expand('$HOME') . '/noise.txt'<CR>
+nnoremap    <leader>a       :execute 'edit ' . expand('$HOME') . '/Anatomy/anatomy-notes.txt'<CR>
+nnoremap    <leader>o       :execute 'edit ' . expand('$HOME') . '/Anatomy/osteology-notes.txt'<CR>
+
+
 
 " Shows the highlighting in use for the item under the cursor
 map         <leader>H       :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'

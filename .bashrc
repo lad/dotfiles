@@ -10,8 +10,12 @@ fi
   #export JAVA_HOME=$(/usr/libexec/java_home)
 #fi
 
-export GOPATH=$HOME/go
-export PATH=${PATH}:${GOPATH}/bin
+export HOMEBREW_PREFIX="/opt/homebrew";
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+export HOMEBREW_REPOSITORY="/opt/homebrew";
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 
 export PYTHONSTARTUP=${HOME}/.python3
 
@@ -65,7 +69,14 @@ fi
 
 # enable color support of ls and also add handy aliases
 #eval "$(dircolors -b ~/.dircolors)"
-export LSCOLORS=gxfxcxdxbxegedabagacad
+
+
+# 1 directory / 2 symbolic link / 3 socket / 4 pipe / 5 executable / 6 block special
+# 7 character special / 8 executable + setuid / 9 executable + setgid
+# 10 directory writable to others, with sticky bit
+# 11 directory writable to others, without sticky bit
+# gx fx cx dx dx eg ed ab ag ac ad
+export LSCOLORS=gxfxcxdxdxegedabagacad
 
 alias   l='\ls -GalhF'
 alias   ll='\ls -GAlF'
@@ -197,7 +208,7 @@ export GIT_PS1_SHOWSTASHSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWUPSTREAM=auto
 [ -f ~/bin/git-prompt.sh ] && . ~/bin/git-prompt.sh
-export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
+export PS1='\e[1;36m\w:\e[1;33m$(__ruby_ver)\e[1;37m$(__ruby_gemset)\e[1;32m \e[0m\n> '
 #export PS1='\e[1;36m\w:\e[1;32m $(__git_ps1 "%s") \e[0m\n> '
 #export PS1='\e[1;36m\w: \e[0m\n> '
 

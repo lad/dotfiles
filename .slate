@@ -17,45 +17,22 @@ alias center-most   move screenOriginX+200;screenOriginY+88 1720;1047
 
 #screen positions
 alias 0-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 0
-alias 0-chrome      move screenOriginX;screenOriginY 1200;1848 0
-alias 0-itunes      move screenOriginX+1753;screenOriginY+1035 166;166 0
-alias 0-slack       move screenOriginX;screenOriginY 925;835 0
 
 alias 1-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 1
 alias 1-most        move screenOriginX+20;screenOriginY+34 1900;1102 1
-alias 1-securid     move screenOriginX+0;screenOriginY+1035 241;147 1
 alias 1-upm         move screenOriginX+240;screenOriginY+0 293;1176 1
 
 alias 2-full        move screenOriginX;screenOriginY screenSizeX;screenSizeY 2
-alias 2-securid     move screenOriginX;screenOriginY+758 237;142 2
-alias 2-outlook     move screenOriginX;screenOriginY screenSizeX;screenSizeY*0.95 2
-alias 2-skype       move screenOriginX+432;screenOriginY 1008;850 2
-alias 2-slack       move screenOriginX;screenOriginY 925;850 2
 alias 2-firefox     move screenOriginX;screenOriginY screenSizeX*0.80;screenSizeY 2
-alias 2-jabber      move screenOriginX;screenOriginY 385;877 2
-alias 2-evernote    move screenOriginX;screenOriginY 1196;1867 2
 
 # Laptop
-layout  1monitor1   'Skype':REPEAT ${0-full}
-layout  1monitor1   'Microsoft Outlook':REPEAT ${0-full}
 layout  1monitor1   'iTerm2':REPEAT ${0-full}
-layout  1monitor1   'Google Chrome':REPEAT ${0-full}
-layout  1monitor1   'Evernote':REPEAT ${2-evernote}
-layout  1monitor1   'SecurID':REPEAT ${2-securid}
+layout  1monitor1   'UPM':REPEAT ${1-upm}
 default 1monitor1   count:1
 
 # 3 Monitor layout
-layout  3monitor1    'Google Chrome':REPEAT ${0-chrome}
-layout  3monitor1    'iTunes':REPEAT ${0-itunes}
-layout  3monitor1    'Evernote':REPEAT ${2-evernote}
-layout  3monitor1    'SecurID':REPEAT ${1-securid}
-layout  3monitor1    'UPM':REPEAT ${1-upm}
 layout  3monitor1    'iTerm2':REPEAT ${1-full}
 layout  3monitor1    'Firefox':REPEAT ${2-firefox}
-layout  3monitor1    'Microsoft Outlook':REPEAT ${2-outlook}
-layout  3monitor1    'Skype':REPEAT ${2-skype}
-layout  3monitor1    'Slack':REPEAT ${2-slack}
-layout  3monitor1    'Jabber':REPEAT ${2-jabber}
 default 3monitor1    count:3
 
 # Monitor Aliases
@@ -80,15 +57,18 @@ bind 2:${hyper} layout 3monitor1
 # Better application switcher (doesn't seem to work)
 #bind tab:cmd switch
 
+bind 1:alt,ctrl relaunch
+
 # Application focus bindings
 bind a:alt;ctrl focus 'Finder'
 bind f:alt;ctrl focus 'Firefox'
 bind i:alt;ctrl focus 'iTerm2'
-bind p:alt;ctrl focus 'Preview'
-bind s:alt;ctrl focus 'Safari'
+bind l:alt;ctrl focus 'Live'
+bind m:alt;ctrl focus 'Max'
 bind u:alt;ctrl focus 'UPM'
-bind w:alt;ctrl focus 'VLC'
 bind v:alt;ctrl focus 'MacVim'
+bind w:alt;ctrl focus 'VLC'
+bind z:alt;ctrl focus 'zoom.us'
 
 bind  1:alt;ctrl   ${full}
 bind  2:alt;ctrl   ${lefthalf}
@@ -97,7 +77,6 @@ bind  4:alt;ctrl   ${left2thirds}
 bind  5:alt;ctrl   ${right2thirds}
 bind  6:alt;ctrl   ${tophalf}
 bind  7:alt;ctrl   ${bottomhalf}
-bind  8:alt;ctrl   ${2-evernote}
 
 bind down:alt;ctrl ${full-verical}
 bind left:alt;ctrl throw left

@@ -16,12 +16,23 @@ export HOMEBREW_REPOSITORY="/opt/homebrew";
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
 export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+export MAGICK_HOME=/opt/homebrew/Cellar/imagemagick/7.1.1-43/
 
 export PYTHONSTARTUP=${HOME}/.python3
 
-export PATH="/home/louis/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
+# To select a Pyenv-installed Python as the version to use, run one of the
+# following commands:
+#   pyenv shell <version> -- select just for current shell session
+#   pyenv local <version> -- automatically select whenever you are in the
+#                            current directory (or its subdirectories)
+#   pyenv global <version> -- select globally for your user account
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
 eval "$(pyenv virtualenv-init -)"
+
+#python install dependencies
+#brew install openssl readline sqlite3 xz zlib tcl-tk@8
 
 ################################### HISTORY ###################################
 
@@ -110,7 +121,7 @@ function kc()
   KUBECONFIG=$HOME/sdc/current/kubeconfig kubectl $*
 }
 
-#alias   kc="kubectl --kubeconfig=$HOME/sdc/current/kubeconfig"
+alias   yt-dlp-x='yt-dlp -x'
 
 
 

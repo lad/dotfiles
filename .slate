@@ -52,12 +52,13 @@ bind s:${hyper} relaunch
 bind 1:${hyper} layout 1monitor1
 bind 2:${hyper} layout 3monitor1
 
+bind 0:${hyper} relaunch
+
+
 # App switch bindings: CMD+E
 #bind e:alt hint ASDFGHJKLQWERTYUIOPCVBN # use whatever keys you want
 # Better application switcher (doesn't seem to work)
 #bind tab:cmd switch
-
-bind 1:alt,ctrl relaunch
 
 # Application focus bindings
 bind a:alt;ctrl focus 'Finder'
@@ -69,6 +70,7 @@ bind u:alt;ctrl focus 'UPM'
 bind v:alt;ctrl focus 'MacVim'
 bind w:alt;ctrl focus 'VLC'
 bind z:alt;ctrl focus 'zoom.us'
+bind q:alt;ctrl focus 'qBittorrent'
 
 bind  1:alt;ctrl   ${full}
 bind  2:alt;ctrl   ${lefthalf}
@@ -78,6 +80,6 @@ bind  5:alt;ctrl   ${right2thirds}
 bind  6:alt;ctrl   ${tophalf}
 bind  7:alt;ctrl   ${bottomhalf}
 
-bind down:alt;ctrl ${full-verical}
-bind left:alt;ctrl throw left
-bind right:alt;ctrl throw right
+# bind down:alt;ctrl ${full-verical}
+# bind left:alt;ctrl throw left
+# bind right:alt;ctrl throw right

@@ -26,8 +26,8 @@ export PYTHONSTARTUP=${HOME}/.python3
 #   pyenv local <version> -- automatically select whenever you are in the
 #                            current directory (or its subdirectories)
 #   pyenv global <version> -- select globally for your user account
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - bash)"
 eval "$(pyenv virtualenv-init -)"
 

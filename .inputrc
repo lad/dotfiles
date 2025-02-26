@@ -2,4 +2,5 @@ set show-all-if-ambiguous on
 set completion-ignore-case on
 "\e[A": history-search-backward
 "\e[B": history-search-forward
-# ^W is set in .bashrc
+# ^W is set in .bashrc but we have it here for python3
+"\C-w": backward-kill-word

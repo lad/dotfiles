@@ -66,11 +66,13 @@ bind f:alt;ctrl focus 'Firefox'
 bind i:alt;ctrl focus 'iTerm2'
 bind l:alt;ctrl focus 'Live'
 bind m:alt;ctrl focus 'Max'
+bind o:alt;ctrl focus 'Podcasts'
+bind p:alt;ctrl focus 'Photos'
+bind q:alt;ctrl focus 'qBittorrent'
 bind u:alt;ctrl focus 'UPM'
 bind v:alt;ctrl focus 'MacVim'
 bind w:alt;ctrl focus 'VLC'
 bind z:alt;ctrl focus 'zoom.us'
-bind q:alt;ctrl focus 'qBittorrent'
 
 bind  1:alt;ctrl   ${full}
 bind  2:alt;ctrl   ${lefthalf}

@@ -16,7 +16,7 @@ export HOMEBREW_REPOSITORY="/opt/homebrew";
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
 export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
-export MAGICK_HOME=/opt/homebrew/Cellar/imagemagick/7.1.1-43/
+export MAGICK_HOME=/opt/homebrew/Cellar/imagemagick/7.1.1-44/
 
 export PYTHONSTARTUP=${HOME}/.python3
 

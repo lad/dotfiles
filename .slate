@@ -64,7 +64,7 @@ bind 0:${hyper} relaunch
 bind a:alt;ctrl focus 'Finder'
 bind f:alt;ctrl focus 'Firefox'
 bind i:alt;ctrl focus 'iTerm2'
-bind l:alt;ctrl focus 'Live'
+bind l:alt;ctrl focus 'Lightroom Classic'
 bind m:alt;ctrl focus 'Max'
 bind o:alt;ctrl focus 'Podcasts'
 bind p:alt;ctrl focus 'Photos'

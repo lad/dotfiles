@@ -8,8 +8,6 @@ set modelines=1
 
 "match ErrorMsg '\%>100v.\+'
 
-" Pathogen
-" call pathogen#infect()
 syntax on
 syntax sync fromstart
 filetype on
@@ -19,11 +17,9 @@ set t_Co=256
 
 set foldmethod=manual
 set foldlevelstart=99
-au BufRead,BufNewFile Jenkinsfile set filetype=groovy
 au BufRead,BufNewFile *.mdb       set filetype=mdb
 
 au Filetype mdb source ~/.vim/scripts/mdb.vim
-
 
 "au BufReadPost *.py call SyntaxOn()
 "au BufWinEnter,BufRead,BufNewFile *.py set filetype=python
@@ -35,7 +31,6 @@ au Filetype mdb source ~/.vim/scripts/mdb.vim
 
 autocmd FileType go setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=8 nolist
 autocmd FileType go call ColorColumnOff()
-
 
 set autoindent
 set shiftround
@@ -106,16 +101,6 @@ function! ToggleIgnorecase()
     else
         set noignorecase
         echo "no-ignorecase"
-    endif
-endfunction
-
-function! ToggleShowBreak()
-    if &showbreak != ''
-        set showbreak=
-        echo "no showbreak"
-    else
-        set showbreak=↪\   " Character to preceed line wraps
-        echo "showbreak"
     endif
 endfunction
 
@@ -340,35 +325,7 @@ command! Markdown silent execute '!~/bin/Markdown.pl ' . expand('%') . ' > /tmp/
 command! Wsudo w !sudo tee % >/dev/null
 
 command! Chrome silent execute '!open -a Google\ Chrome ' . expand('<cfile>') <bar> redraw!
-command! Open silent execute '!open ' . expand('<cfile>') <bar> redraw!
-
-" Split open the current file's corresponding coverage annotated source
-command! Coverage execute 'split .cover/' . expand('%:t') . ',cover'
-
-command! Rubygrep execute 'vimgrep /' . expand('<cword>') . '/ lib/**/*.rb'
-
-"command! RubocopThis execute '!rubocop -c etc/rubocop.yml ' . expand('%')
-"command! RubocopAll execute '!rubocop -c etc/rubocop.yml .'
-"command! RubocopLib execute '!rubocop -c etc/rubocop.yml ' . expand('%:p:h') . '/lib'
-
-function! RubocopThis() abort
-  let l:cmd = 'rubocop -c etc/rubocop.yml ' . expand('%') . ' >| /tmp/e ; cat /tmp/e'
-  echo system(l:cmd)
-  cfile /tmp/e
-endfunction
-
-function! RubocopAll() abort
-  let l:cmd = 'rubocop -c etc/rubocop.yml . >| /tmp/e ; cat /tmp/e'
-  echo system(l:cmd)
-  cfile /tmp/e
-endfunction
-
-function! RubocopLib() abort
-  let l:cmd = 'rubocop -c etc/rubocop.yml lib >| /tmp/e'
-  call system('cd $(git rev-parse --show-toplevel) && ' . l:cmd)
-  cfile /tmp/e
-endfunction
-
+"command! Open silent execute '!open ' . expand('<cfile>') <bar> redraw!
 
 " ---------------- SHORTCUTS -----------------------
 
@@ -389,7 +346,6 @@ nnoremap    <leader>h       :call ToggleSyntax()<CR>
 nnoremap    <leader>P       :call TogglePaste()<CR>
 nnoremap    <leader>z       :call ToggleSpell()<CR>
 nnoremap    <leader>i       :call ToggleIgnorecase()<CR>
-nnoremap    <leader>B       :call ToggleShowBreak()<CR>
 nnoremap    <leader>L       :call ToggleLineBreak()<CR>
 nnoremap    <leader>x       :call ToggleList()<CR>
 nnoremap    <leader>c0      :call SetColorColumn(0)<CR>
@@ -418,10 +374,7 @@ nnoremap    <leader>t1      :set tw=110<CR>
 nnoremap    <leader>t2      :set tw=120<CR>
 nnoremap    <leader>m       :execute 'edit ' . expand('$HOME') . '/medical/health.txt'<CR>
 nnoremap    <leader>M       :execute 'edit ' . expand('$HOME') . '/medical/weight.txt'<CR>
-nnoremap    <leader>,       :execute 'edit ' . expand('$HOME') . '/noise.txt'<CR>
-nnoremap    <leader>a       :execute 'edit ' . expand('$HOME') . '/Anatomy/anatomy-notes.txt'<CR>
-nnoremap    <leader>o       :execute 'edit ' . expand('$HOME') . '/Anatomy/osteology-notes.txt'<CR>
-
+nnoremap    <leader>B       :execute 'edit ' . expand('$HOME') . '/Pictures/BlueSkyPosted.txt'<CR>
 
 
 " Shows the highlighting in use for the item under the cursor
@@ -490,38 +443,6 @@ for i in range(1, 9)
         exe "nnoremap <leader>" . i . j . " :b " . i . j . "<CR>"
     endfor
 endfor
-
-
-function! RunJira(cmd) abort
-  if strlen(a:cmd) == 0
-    let l:cmd = input('> ')
-  else
-    let l:cmd = a:cmd
-  endif
-
-  if strlen(l:cmd) != 0
-    echo "working..."
-    let l:output = systemlist("jira " . l:cmd)
-    if v:shell_error
-      let l:err = "Error running jira command: " . join(l:output, "\n")
-      echo l:err
-      return
-    endif
-
-    execute 'new ' . l:cmd
-    setlocal buftype=nofile bufhidden=hide nobuflisted noswapfile
-    call append(line('$'), l:output)
-  endif
-endfunction
-
-function! JiraView() abort
-endfunction
-
-command!    JiraView   call RunJira("view " . expand('<cWORD>'))
-map <leader>j :JiraView<CR>
-
-command!    RunJira   call RunJira("")
-map <leader>J :RunJira<CR>
 
 
 " ---------------- FOR PLUGINS ---------------------
